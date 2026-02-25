@@ -1,0 +1,11 @@
+export { AnimationClip } from './AnimationClip';
+export { KeyFrame } from './KeyFrame';
+export { KeyframeSequence } from './KeyframeSequence';
+export { AnimationChannel } from './AnimationChannel';
+export { AnimationNode } from './AnimationNode';
+export { ExtrapolationType } from './ExtrapolationType';
+export { Interpolation } from './Interpolation';
+export { WeightedMode } from './WeightedMode';
+export { StepMode } from './StepMode';
+export { Extrapolation } from './Extrapolation';
+export { BindPoint } from './BindPoint';
