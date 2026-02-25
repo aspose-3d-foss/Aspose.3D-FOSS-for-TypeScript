@@ -98,10 +98,11 @@ for (const node of scene.rootNode.childNodes) {
 
 ## Documentation
 
-- [API Reference](https://reference.aspose.com/3d/python-net/) - Complete API documentation
+- [API Reference](https://reference.aspose.com/3d/python-net/) - Complete API documentation (Python API, same structure as TypeScript)
 
 ## TypeScript Version Support
 
+- TypeScript 5.0+
 - Node.js 16+
 - Node.js 18+
 - Node.js 20+
