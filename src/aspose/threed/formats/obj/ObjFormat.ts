@@ -1,4 +1,4 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { ObjLoadOptions } from './ObjLoadOptions';
 import { ObjSaveOptions } from './ObjSaveOptions';
 

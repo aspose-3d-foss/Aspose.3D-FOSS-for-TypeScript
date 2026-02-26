@@ -1,5 +1,6 @@
 import { FormatDetector } from '../FormatDetector';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { ObjFormat } from './ObjFormat';
 
 export class ObjFormatDetector extends FormatDetector {
     constructor() {

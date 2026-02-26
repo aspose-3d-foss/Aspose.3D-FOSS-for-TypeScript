@@ -1,5 +1,5 @@
 import { Scene } from '../src/aspose/threed';
-import { ObjLoadOptions, ObjImporter } from '../src/aspose/threed/formats/obj';
+import { ObjLoadOptions, ObjImporter, ObjFormat } from '../src/aspose/threed/formats/obj';
 
 describe('TestObjImporter', () => {
     test('test_basic_cube_import', () => {
