@@ -1,13 +1,12 @@
 import { FileFormat } from '../FileFormat';
-import { SaveOptions } from './SaveOptions';
 
 export abstract class SaveOptions {
-    private _fileFormat: FileFormat | null = null;
-    private _encoding: string | null = null;
-    private _fileSystem: any | null = null;
-    private _lookupPaths: string[] = [];
-    private _fileName: string | null = null;
-    private _exportTextures: boolean = false;
+    protected _fileFormat: FileFormat | null = null;
+    protected _encoding: string | null = null;
+    protected _fileSystem: any | null = null;
+    protected _lookupPaths: string[] = [];
+    protected _fileName: string | null = null;
+    protected _exportTextures: boolean = false;
 
     constructor() {}
 

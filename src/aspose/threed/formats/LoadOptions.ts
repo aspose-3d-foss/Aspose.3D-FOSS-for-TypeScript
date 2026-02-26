@@ -1,4 +1,4 @@
-import { LoadOptions } from './LoadOptions';
+import { FileFormat } from '../FileFormat';
 
 export abstract class LoadOptions {
     private _fileFormat: FileFormat | null = null;
