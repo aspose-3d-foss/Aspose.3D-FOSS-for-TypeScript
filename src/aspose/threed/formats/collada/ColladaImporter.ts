@@ -10,7 +10,6 @@ import { Mesh } from '../../entities/Mesh';
 import { Vector4 } from '../../utilities/Vector4';
 import { Vector3 } from '../../utilities/Vector3';
 import { Quaternion } from '../../utilities/Quaternion';
-import { Material } from '../../shading/Material';
 import { LambertMaterial } from '../../shading/LambertMaterial';
 import { PhongMaterial } from '../../shading/PhongMaterial';
 
@@ -331,9 +330,9 @@ export class ColladaImporter extends Importer {
                     let rz = parseFloat(values[2]);
                     let angleDeg = parseFloat(values[3]);
                     let angleRad = angleDeg * Math.PI / 180.0;
-                    let axis = new Vector4(rx, ry, rz, 0);
+                    let axis = new Vector3(rx, ry, rz);
                     if (flipCoords) {
-                        axis.y = axis.z;
+                        [axis.y, axis.z] = [axis.z, axis.y];
                     }
                     rotation = Quaternion.fromAngleAxis(angleRad, axis);
                 }
@@ -497,7 +496,6 @@ export class ColladaImporter extends Importer {
             return;
         }
 
-        const symbol = instanceMaterial.getAttribute('symbol') || '';
         const target = instanceMaterial.getAttribute('target') || '';
 
         const materialInfo = materialMap.get(target.replace('#', ''));
@@ -508,19 +506,19 @@ export class ColladaImporter extends Importer {
     }
 
     private _applyMaterialToNode(node: Node, effectData: any): void {
-        let material: Material;
+        let material: LambertMaterial | PhongMaterial;
         const type = effectData.type;
 
         if (type === 'phong') {
             material = new PhongMaterial();
             if (effectData.specular) {
-                material.specularColor = effectData.specular;
+                (material as PhongMaterial).specularColor = effectData.specular;
             }
-            material.shininess = effectData.shininess;
+            (material as PhongMaterial).shininess = effectData.shininess;
             if (effectData.reflective) {
-                material.reflectionColor = effectData.reflective;
+                (material as PhongMaterial).reflectionColor = effectData.reflective;
             }
-            material.reflectionFactor = effectData.reflectivity;
+            (material as PhongMaterial).reflectionFactor = effectData.reflectivity;
         } else {
             material = new LambertMaterial();
         }
