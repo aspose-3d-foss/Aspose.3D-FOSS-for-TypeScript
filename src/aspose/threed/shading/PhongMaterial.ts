@@ -1,22 +1,22 @@
-import { Material } from './Material';
-import { Vector3 } from '../../utilities/Vector3';
+import { LambertMaterial } from './LambertMaterial';
+import { Vector3 } from '../utilities/Vector3';
 
-export class PhongMaterial extends Material {
-    private _specularColor: Vector3 = null;
+export class PhongMaterial extends LambertMaterial {
+    private _specularColor: Vector3 | null = null;
     private _specularFactor = 0.0;
     private _shininess = 0.0;
-    private _reflectionColor: Vector3 = null;
+    private _reflectionColor: Vector3 | null = null;
     private _reflectionFactor = 0.0;
 
-    constructor(name: string = null) {
+    constructor(name?: string) {
         super(name);
     }
 
-    get specularColor(): Vector3 {
+    get specularColor(): Vector3 | null {
         return this._specularColor;
     }
 
-    set specularColor(value: Vector3) {
+    set specularColor(value: Vector3 | null) {
         this._specularColor = value;
     }
 
@@ -36,11 +36,11 @@ export class PhongMaterial extends Material {
         this._shininess = parseFloat(value.toString());
     }
 
-    get reflectionColor(): Vector3 {
+    get reflectionColor(): Vector3 | null {
         return this._reflectionColor;
     }
 
-    set reflectionColor(value: Vector3) {
+    set reflectionColor(value: Vector3 | null) {
         this._reflectionColor = value;
     }
 
