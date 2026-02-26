@@ -1,44 +1,44 @@
 import { Plugin } from '../Plugin';
-import { Importer } from '../Importer';
-import { Exporter } from '../Exporter';
-import { FormatDetector } from '../FormatDetector';
-import { LoadOptions } from '../LoadOptions';
-import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../FileFormat';
+import { ThreeMfImporter } from './ThreeMfImporter';
+import { ThreeMfExporter } from './ThreeMfExporter';
+import { ThreeMfFormatDetector } from './ThreeMfFormatDetector';
 import { ThreeMfFormat } from './ThreeMfFormat';
 import { ThreeMfLoadOptions } from './ThreeMfLoadOptions';
 import { ThreeMfSaveOptions } from './ThreeMfSaveOptions';
-import { ThreeMfFormatDetector } from './ThreeMfFormatDetector';
 
-export abstract class ThreeMfPlugin extends Plugin {
-    protected _importer: Importer;
-    protected _exporter: Exporter;
-    protected _formatDetector: FormatDetector;
+export class ThreeMfPlugin extends Plugin {
+    private static _instance: ThreeMfPlugin | null = null;
+    private _importer: ThreeMfImporter;
+    private _exporter: ThreeMfExporter;
+    private _formatDetector: ThreeMfFormatDetector;
 
     constructor() {
         super();
-        this._importer = this.createImporter();
-        this._exporter = this.createExporter();
+        this._importer = new ThreeMfImporter();
+        this._exporter = new ThreeMfExporter();
         this._formatDetector = new ThreeMfFormatDetector();
     }
 
-    abstract createImporter(): Importer;
+    static getInstance(): ThreeMfPlugin {
+        if (!ThreeMfPlugin._instance) {
+            ThreeMfPlugin._instance = new ThreeMfPlugin();
+        }
+        return ThreeMfPlugin._instance;
+    }
 
-    abstract createExporter(): Exporter;
-
-    getFileFormat(): FileFormat {
+    getFileFormat(): ThreeMfFormat {
         return ThreeMfFormat.getInstance();
     }
 
-    getImporter(): Importer {
+    getImporter(): ThreeMfImporter {
         return this._importer;
     }
 
-    getExporter(): Exporter {
+    getExporter(): ThreeMfExporter {
         return this._exporter;
     }
 
-    getFormatDetector(): FormatDetector {
+    getFormatDetector(): ThreeMfFormatDetector {
         return this._formatDetector;
     }
 
@@ -46,7 +46,7 @@ export abstract class ThreeMfPlugin extends Plugin {
         return new ThreeMfLoadOptions();
     }
 
-    createSaveOptions(): SaveOptions {
+    createSaveOptions(): ThreeMfSaveOptions {
         return new ThreeMfSaveOptions();
     }
 }

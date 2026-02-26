@@ -1,13 +1,13 @@
 import { Geometry } from './Geometry';
-import { Vector4 } from '../../utilities/Vector4';
+import { Vector4 } from '../utilities/Vector4';
 import { VertexElement } from './VertexElement';
 import { VertexElementUV } from './VertexElementUV';
 import { TextureMapping } from './TextureMapping';
 import { MappingMode } from './MappingMode';
 import { ReferenceMode } from './ReferenceMode';
 import { VertexElementType } from './VertexElementType';
-import { Vector2 } from '../../utilities/Vector2';
-import { FVector2, FVector3, FVector4 } from '../../utilities';
+import { Vector2 } from '../utilities/Vector2';
+import { FVector2, FVector3, FVector4 } from '../utilities';
 
 export class Mesh extends Geometry {
     private _controlPoints: Vector4[] = [];
@@ -126,7 +126,7 @@ export class Mesh extends Geometry {
     }
 
     getBoundingBox(): any {
-        const { BoundingBox } = require('../../utilities');
+        const { BoundingBox } = require('../utilities');
         return new BoundingBox();
     }
 

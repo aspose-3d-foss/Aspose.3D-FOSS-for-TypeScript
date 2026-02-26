@@ -1,6 +1,6 @@
-import { Vector4 } from '../../utilities/Vector4';
-import { Vector3 } from '../../utilities/Vector3';
-import { Vector2 } from '../../utilities/Vector2';
+import { Vector4 } from '../utilities/Vector4';
+import { Vector3 } from '../utilities/Vector3';
+import { Vector2 } from '../utilities/Vector2';
 
 export class PolygonModifier {
     static triangulate(arg1: any, arg2: any = null, arg3: boolean = false, arg4: any = null): any {

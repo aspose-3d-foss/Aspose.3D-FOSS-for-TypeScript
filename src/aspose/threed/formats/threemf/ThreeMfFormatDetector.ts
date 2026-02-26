@@ -1,5 +1,6 @@
 import { FormatDetector } from '../FormatDetector';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { ThreeMfFormat } from './ThreeMfFormat';
 
 export class ThreeMfFormatDetector extends FormatDetector {
     constructor() {

@@ -53,10 +53,10 @@ describe('Test3MFRoundTrip', () => {
 
         expect(newScene.rootNode.childNodes.length).toBeGreaterThan(0);
 
-        const newMesh = newScene.rootNode.childNodes[0].entity;
+        const newMesh = newScene.rootNode.childNodes[0].entity as Mesh;
         expect(newMesh).toBeInstanceOf(Mesh);
 
-        expect(newMesh.controlPoints.length).toBe(originalVertices);
-        expect(newMesh.polygonCount).toBe(originalPolygons);
+        expect(newMesh!.controlPoints.length).toBe(originalVertices);
+        expect(newMesh!.polygonCount).toBe(originalPolygons);
     });
 });

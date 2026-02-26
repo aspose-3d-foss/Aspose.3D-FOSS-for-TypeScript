@@ -103,7 +103,7 @@ export class Vector4 {
 
     [key: number]: number;
 
-    __repr__(): string {
+    toString(): string {
         return `Vector4(${this._x}, ${this._y}, ${this._z}, ${this._w})`;
     }
 

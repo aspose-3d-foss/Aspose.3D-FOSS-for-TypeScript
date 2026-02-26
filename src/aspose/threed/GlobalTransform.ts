@@ -1,6 +1,6 @@
-import { Matrix4 } from '../utilities/Matrix4';
-import { Vector3 } from '../utilities/Vector3';
-import { Quaternion } from '../utilities/Quaternion';
+import { Matrix4 } from './utilities/Matrix4';
+import { Vector3 } from './utilities/Vector3';
+import { Quaternion } from './utilities/Quaternion';
 
 export class GlobalTransform {
     private _matrix: Matrix4;
@@ -39,7 +39,7 @@ export class GlobalTransform {
         return this._matrix;
     }
 
-    __repr__(): string {
-        return `GlobalTransform(translation=${this._translation.__repr__()}, scale=${this._scale.__repr__()})`;
+    toString(): string {
+        return `GlobalTransform(translation=${this._translation.toString()}, scale=${this._scale.toString()})`;
     }
 }

@@ -1,5 +1,5 @@
 import { SceneObject } from './SceneObject';
-import { BoundingBox } from '../utilities/BoundingBox';
+import { BoundingBox } from './utilities/BoundingBox';
 
 export class Entity extends SceneObject {
     private _parentNodes: Node[] = [];

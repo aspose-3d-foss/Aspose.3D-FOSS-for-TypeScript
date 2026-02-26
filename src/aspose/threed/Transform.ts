@@ -1,7 +1,7 @@
 import { A3DObject } from '../A3DObject';
-import { Vector3 } from '../utilities/Vector3';
-import { Quaternion } from '../utilities/Quaternion';
-import { Matrix4 } from '../utilities/Matrix4';
+import { Vector3 } from './utilities/Vector3';
+import { Quaternion } from './utilities/Quaternion';
+import { Matrix4 } from './utilities/Matrix4';
 
 export class Transform extends A3DObject {
     private _translation: Vector3 = new Vector3(0, 0, 0);
@@ -254,7 +254,7 @@ export class Transform extends A3DObject {
         return this;
     }
 
-    __repr__(): string {
-        return `Transform(translation=${this._translation.__repr__()})`;
+    toString(): string {
+        return `Transform(translation=${this._translation.toString()})`;
     }
 }

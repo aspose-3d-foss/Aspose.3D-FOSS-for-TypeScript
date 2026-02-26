@@ -1,8 +1,8 @@
 import { SceneObject } from './SceneObject';
 import { Transform } from './Transform';
 import { GlobalTransform } from './GlobalTransform';
-import { BoundingBox } from '../utilities/BoundingBox';
-import { Matrix4 } from '../utilities/Matrix4';
+import { BoundingBox } from './utilities/BoundingBox';
+import { Matrix4 } from './utilities/Matrix4';
 import { Entity } from './Entity';
 import { Material } from '../shading/Material';
 
@@ -226,7 +226,7 @@ export class Node extends SceneObject {
         }
     }
 
-    __repr__(): string {
+    toString(): string {
         return `Node(${this.name}, children=${this._childNodes.length}, entities=${this._entities.length})`;
     }
 }

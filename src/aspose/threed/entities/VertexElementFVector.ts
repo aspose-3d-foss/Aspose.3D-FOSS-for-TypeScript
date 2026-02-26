@@ -2,7 +2,7 @@ import { VertexElement } from './VertexElement';
 import { MappingMode } from './MappingMode';
 import { ReferenceMode } from './ReferenceMode';
 import { VertexElementType } from './VertexElementType';
-import { FVector2, FVector3, FVector4 } from '../../utilities';
+import { FVector2, FVector3, FVector4 } from '../utilities';
 
 export class VertexElementFVector extends VertexElement {
     private _data: FVector4[] = [];

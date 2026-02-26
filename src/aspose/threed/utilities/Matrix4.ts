@@ -392,7 +392,7 @@ export class Matrix4 {
         return q.toMatrix();
     }
 
-    __repr__(): string {
+    toString(): string {
         return `Matrix4(${this._m})`;
     }
 

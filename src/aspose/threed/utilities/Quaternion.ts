@@ -238,7 +238,7 @@ export class Quaternion {
         return Quaternion.interpolate(t, v1, v2);
     }
 
-    __repr__(): string {
+    toString(): string {
         return `Quaternion(${this._w}, ${this._x}, ${this._y}, ${this._z})`;
     }
 

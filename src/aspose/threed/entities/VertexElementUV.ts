@@ -3,7 +3,7 @@ import { VertexElementType } from './VertexElementType';
 import { TextureMapping } from './TextureMapping';
 import { MappingMode } from './MappingMode';
 import { ReferenceMode } from './ReferenceMode';
-import { FVector2, FVector3, FVector4 } from '../../utilities';
+import { FVector2, FVector3, FVector4 } from '../utilities';
 
 export class VertexElementUV extends VertexElementFVector {
     private _textureMapping: TextureMapping;

@@ -23,7 +23,7 @@ export class FVector2 {
         this._y = Number(value);
     }
 
-    __repr__(): string {
+    toString(): string {
         return `FVector2(${this._x}, ${this._y})`;
     }
 

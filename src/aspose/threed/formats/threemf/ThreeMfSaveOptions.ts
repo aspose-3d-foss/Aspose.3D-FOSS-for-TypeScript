@@ -1,8 +1,6 @@
 import { SaveOptions } from '../SaveOptions';
-import { ThreeMfFormat } from './ThreeMfFormat';
 
 export class ThreeMfSaveOptions extends SaveOptions {
-    private _fileFormat: ThreeMfFormat = ThreeMfFormat.getInstance();
     private _enableCompression: boolean = true;
     private _buildAll: boolean = true;
     private _flipCoordinateSystem: boolean = false;

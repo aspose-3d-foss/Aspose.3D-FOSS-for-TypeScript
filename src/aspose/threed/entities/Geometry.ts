@@ -2,7 +2,7 @@ import { Entity } from '../Entity';
 import { Property } from '../Property';
 import { PropertyCollection } from '../PropertyCollection';
 import { Scene } from '../Scene';
-import { Vector4 } from '../../utilities/Vector4';
+import { Vector4 } from '../utilities/Vector4';
 import { VertexElement } from './VertexElement';
 import { VertexElementUV } from './VertexElementUV';
 import { TextureMapping } from './TextureMapping';
@@ -106,7 +106,7 @@ export class Geometry extends Entity {
     }
 
     getBoundingBox(): any {
-        const { BoundingBox } = require('../../utilities');
+        const { BoundingBox } = require('../utilities');
         return new BoundingBox();
     }
 

@@ -145,7 +145,7 @@ export class Scene extends SceneObject {
         }
     }
 
-    __repr__(): string {
+    toString(): string {
         const rootName = this._rootNode.name !== '' ? this._rootNode.name : 'None';
         return `Scene(${this.name}, root=${rootName})`;
     }

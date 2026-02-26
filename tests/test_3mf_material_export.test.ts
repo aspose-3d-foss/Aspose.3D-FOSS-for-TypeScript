@@ -1,4 +1,4 @@
-import { Scene } from '../src/aspose/threed';
+import { Scene, Node } from '../src/aspose/threed';
 import { ThreeMfSaveOptions, ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4, Vector3 } from '../src/aspose/threed/utilities';
@@ -6,11 +6,9 @@ import { LambertMaterial } from '../src/aspose/threed/shading';
 
 describe('Test3MFMaterialExport', () => {
     let plugin: ThreeMfPlugin;
-    let format: any;
 
     beforeEach(() => {
         plugin = new ThreeMfPlugin();
-        format = plugin.getPluginFileFormat();
     });
 
     it('testExportObjectMaterial', () => {

@@ -33,7 +33,7 @@ export class Property {
         this._extraData.set(name, value);
     }
 
-    __repr__(): string {
+    toString(): string {
         return `Property(${this._name}, ${this._value})`;
     }
 }

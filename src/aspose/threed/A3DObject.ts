@@ -42,7 +42,7 @@ export class A3DObject implements INamedObject {
         return this._properties.removeProperty(property);
     }
 
-    __repr__(): string {
+    toString(): string {
         return `${this.constructor.name}(${this._name})`;
     }
 }

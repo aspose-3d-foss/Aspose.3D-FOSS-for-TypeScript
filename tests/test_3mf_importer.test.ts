@@ -1,4 +1,3 @@
-import { Scene } from '../src/aspose/threed';
 import { ThreeMfLoadOptions, ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
 
 describe('Test3MFImporter', () => {
@@ -7,7 +6,7 @@ describe('Test3MFImporter', () => {
 
     beforeEach(() => {
         plugin = new ThreeMfPlugin();
-        format = plugin.getPluginFileFormat();
+        format = plugin.getFileFormat();
     });
 
     it('testFormatDetection', () => {

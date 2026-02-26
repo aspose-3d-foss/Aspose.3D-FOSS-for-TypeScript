@@ -1,4 +1,4 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { ThreeMfLoadOptions } from './ThreeMfLoadOptions';
 import { ThreeMfSaveOptions } from './ThreeMfSaveOptions';
 

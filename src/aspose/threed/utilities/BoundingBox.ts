@@ -178,7 +178,7 @@ export class BoundingBox {
         );
     }
 
-    __repr__(): string {
+    toString(): string {
         if (this._isNull) {
             return `BoundingBox(null)`;
         }
@@ -209,7 +209,7 @@ export class BoundingBoxExtent {
         return this._extentZ;
     }
 
-    __repr__(): string {
+    toString(): string {
         return `BoundingBoxExtent(${this._extentX}, ${this._extentY}, ${this._extentZ})`;
     }
 }

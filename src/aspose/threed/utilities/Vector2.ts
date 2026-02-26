@@ -66,7 +66,7 @@ export class Vector2 {
 
     [key: number]: number;
 
-    __repr__(): string {
+    toString(): string {
         return `Vector2(${this._x}, ${this._y})`;
     }
 

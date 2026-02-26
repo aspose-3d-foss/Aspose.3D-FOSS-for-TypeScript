@@ -3,11 +3,9 @@ import { ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
 
 describe('Test3MFMaterialImport', () => {
     let plugin: ThreeMfPlugin;
-    let format: any;
 
     beforeEach(() => {
         plugin = new ThreeMfPlugin();
-        format = plugin.getPluginFileFormat();
     });
 
     it('testMaterialImport', () => {

@@ -53,7 +53,7 @@ export class PropertyCollection {
         return this._properties[Symbol.iterator]();
     }
 
-    __repr__(): string {
+    toString(): string {
         return `PropertyCollection(${this._properties.length} properties)`;
     }
 }

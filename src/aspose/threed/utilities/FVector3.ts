@@ -103,7 +103,7 @@ export class FVector3 {
 
     [key: number]: number;
 
-    __repr__(): string {
+    toString(): string {
         return `FVector3(${this._x}, ${this._y}, ${this._z})`;
     }
 
