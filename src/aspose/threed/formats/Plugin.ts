@@ -17,4 +17,8 @@ export abstract class Plugin {
     abstract createLoadOptions(): LoadOptions;
 
     abstract createSaveOptions(): SaveOptions;
+    
+    getConstructorName(): string {
+        return this.constructor.name;
+    }
 }

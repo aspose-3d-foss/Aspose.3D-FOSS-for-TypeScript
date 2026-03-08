@@ -1,8 +1,11 @@
-export class A3DObject implements INamedObject {
-    private _name: string;
-    private _properties: PropertyCollection;
+import { INamedObject } from './INamedObject';
+import { PropertyCollection } from './PropertyCollection';
+import { Property } from './Property';
 
-    constructor(name: string = '');
+export class A3DObject implements INamedObject {
+    protected _name: string;
+    protected _properties: PropertyCollection;
+
     constructor(name?: string) {
         this._name = name !== undefined ? name : '';
         this._properties = new PropertyCollection();
@@ -20,7 +23,7 @@ export class A3DObject implements INamedObject {
         return this._properties;
     }
 
-    findProperty(propertyName: string): Property {
+    findProperty(propertyName: string): Property | null {
         return this._properties.findProperty(propertyName);
     }
 

@@ -1,8 +1,7 @@
 import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 
 export class GltfSaveOptions extends SaveOptions {
-    private _fileFormat: FileFormat | null = null;
     private _binaryMode: boolean = false;
     private _flipTexCoordV: boolean = true;
 
@@ -11,10 +10,6 @@ export class GltfSaveOptions extends SaveOptions {
         if (fileFormat) {
             this._fileFormat = fileFormat;
         }
-    }
-
-    get fileFormat(): FileFormat | null {
-        return this._fileFormat;
     }
 
     get binaryMode(): boolean {

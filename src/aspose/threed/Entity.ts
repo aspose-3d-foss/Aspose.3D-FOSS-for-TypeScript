@@ -1,8 +1,9 @@
 import { SceneObject } from './SceneObject';
 import { BoundingBox } from './utilities/BoundingBox';
+import { Node } from './Node';
 
 export class Entity extends SceneObject {
-    private _parentNodes: Node[] = [];
+    protected _parentNodes: Node[] = [];
     private _excluded: boolean = false;
 
     constructor(name?: string) {
@@ -41,5 +42,23 @@ export class Entity extends SceneObject {
 
     getEntityRendererKey(): any {
         throw new Error('getEntityRendererKey is not implemented for base Entity class');
+    }
+
+    
+    _addParentNode(node: Node): void {
+        if (!this._parentNodes.includes(node)) {
+            this._parentNodes.push(node);
+        }
+    }
+
+    _removeParentNode(node: Node): void {
+        const index = this._parentNodes.indexOf(node);
+        if (index > -1) {
+            this._parentNodes.splice(index, 1);
+        }
+    }
+
+    _hasParentNode(node: Node): boolean {
+        return this._parentNodes.includes(node);
     }
 }

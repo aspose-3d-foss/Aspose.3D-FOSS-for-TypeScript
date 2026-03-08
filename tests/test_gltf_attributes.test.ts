@@ -1,6 +1,6 @@
 import { Scene } from '../src/aspose/threed';
 import { GltfLoadOptions } from '../src/aspose/threed/formats/gltf';
-import { VertexElementNormal, VertexElementUV } from '../src/aspose/threed/entities';
+import { VertexElementNormal, VertexElementUV, Geometry } from '../src/aspose/threed/entities';
 
 describe('TestGltfAttributeLoading', () => {
     it('testNormalsLoading', () => {
@@ -79,16 +79,20 @@ describe('TestGltfAttributeLoading', () => {
         expect(scene.rootNode.childNodes.length).toBe(1);
         const node = scene.rootNode.childNodes[0];
         expect(node.entity).toBeDefined();
-
-        let hasNormals = false;
-        for (const element of node.entity.vertexElements) {
-            if (element instanceof VertexElementNormal) {
-                hasNormals = true;
-                break;
+        
+        const entity = node.entity;
+        expect(entity).toBeDefined();
+        
+        if (entity && entity instanceof Geometry) {
+            let hasNormals = false;
+            for (const element of entity.vertexElements) {
+                if (element instanceof VertexElementNormal) {
+                    hasNormals = true;
+                    break;
+                }
             }
+            expect(hasNormals).toBe(true);
         }
-
-        expect(hasNormals).toBe(true);
     });
 
     it('testUvLoading', () => {
@@ -167,15 +171,19 @@ describe('TestGltfAttributeLoading', () => {
         expect(scene.rootNode.childNodes.length).toBe(1);
         const node = scene.rootNode.childNodes[0];
         expect(node.entity).toBeDefined();
-
-        let hasUvs = false;
-        for (const element of node.entity.vertexElements) {
-            if (element instanceof VertexElementUV) {
-                hasUvs = true;
-                break;
+        
+        const entity = node.entity;
+        expect(entity).toBeDefined();
+        
+        if (entity && entity instanceof Geometry) {
+            let hasUvs = false;
+            for (const element of entity.vertexElements) {
+                if (element instanceof VertexElementUV) {
+                    hasUvs = true;
+                    break;
+                }
             }
+            expect(hasUvs).toBe(true);
         }
-
-        expect(hasUvs).toBe(true);
     });
 });

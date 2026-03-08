@@ -1,10 +1,11 @@
 import { SceneObject } from './SceneObject';
+import { Scene } from './Scene';
 import { Transform } from './Transform';
 import { GlobalTransform } from './GlobalTransform';
 import { BoundingBox } from './utilities/BoundingBox';
 import { Matrix4 } from './utilities/Matrix4';
 import { Entity } from './Entity';
-import { Material } from '../shading/Material';
+import { Material } from './shading/Material';
 
 export class Node extends SceneObject {
     private _parentNode: Node | null = null;
@@ -39,11 +40,11 @@ export class Node extends SceneObject {
 
         this._parentNode = value;
         if (value !== null) {
-            if (!this._parentNode._childNodes.includes(this)) {
-                this._parentNode._childNodes.push(this);
+            if (!value._childNodes.includes(this)) {
+                value._childNodes.push(this);
             }
-            if (this._parentNode.scene !== null) {
-                this._propagateScene(this._parentNode.scene);
+            if (value.scene !== null) {
+                this._propagateScene(value.scene);
             }
         } else {
             this._propagateScene(null);
@@ -66,8 +67,8 @@ export class Node extends SceneObject {
         this._entities = [];
         if (value !== undefined) {
             this._entities.push(value);
-            if (!value._parentNodes.includes(this)) {
-                value._parentNodes.push(this);
+            if (!value._hasParentNode(this)) {
+                value._addParentNode(this);
             }
         }
     }
@@ -76,13 +77,13 @@ export class Node extends SceneObject {
         return [...this._materials];
     }
 
-    get material(): Material | undefined {
-        return this._materials[0];
+    get material(): Material | null {
+        return this._materials.length > 0 ? this._materials[0] : null;
     }
 
-    set material(value: Material | undefined) {
+    set material(value: Material | null) {
         this._materials = [];
-        if (value !== undefined) {
+        if (value !== null && value !== undefined) {
             this._materials.push(value);
         }
     }
@@ -127,8 +128,8 @@ export class Node extends SceneObject {
     addEntity(entity: Entity): void {
         if (!this._entities.includes(entity)) {
             this._entities.push(entity);
-            if (!entity._parentNodes.includes(this)) {
-                entity._parentNodes.push(this);
+            if (!entity._hasParentNode(this)) {
+                entity._addParentNode(this);
             }
         }
     }
@@ -208,11 +209,11 @@ export class Node extends SceneObject {
         return bbox;
     }
 
-    selectSingleObject(path: string): any {
+    selectSingleObject(_path: string): any {
         throw new Error('selectSingleObject is not implemented');
     }
 
-    selectObjects(path: string): any[] {
+    selectObjects(_path: string): any[] {
         throw new Error('selectObjects is not implemented');
     }
 

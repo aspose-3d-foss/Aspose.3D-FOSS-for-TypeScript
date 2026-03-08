@@ -1,9 +1,29 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { GltfLoadOptions } from './GltfLoadOptions';
 import { GltfSaveOptions } from './GltfSaveOptions';
 
 export class GltfFormat extends FileFormat {
     private static _instance: GltfFormat | null = null;
+    
+    static get canImport(): boolean {
+        return true;
+    }
+    
+    static get canExport(): boolean {
+        return true;
+    }
+    
+    static get extension(): string {
+        return 'gltf';
+    }
+    
+    static get extensions(): string[] {
+        return ['gltf', 'glb'];
+    }
+    
+    static get version(): string {
+        return '2.0';
+    }
 
     constructor() {
         super();

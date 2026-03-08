@@ -3,7 +3,7 @@ import { Node } from './Node';
 import { Entity } from './Entity';
 import { AssetInfo } from './AssetInfo';
 import { CustomObject } from './CustomObject';
-import { AnimationClip } from '../animation/AnimationClip';
+import { AnimationClip } from './animation/AnimationClip';
 
 export class Scene extends SceneObject {
     static readonly VERSION = '24.12.0';
@@ -22,6 +22,7 @@ export class Scene extends SceneObject {
     constructor(...args: any[]) {
         let name: string | undefined;
         let entity: Entity | undefined;
+        let parentScene: Scene | undefined;
 
         if (args.length === 0) {
             name = '';
@@ -34,14 +35,16 @@ export class Scene extends SceneObject {
             }
         } else if (args.length === 2) {
             if (args[0] instanceof Scene && typeof args[1] === 'string') {
-                const [parentScene, sceneName] = args as [Scene, string];
-                parentScene._subScenes.push(this);
-                name = sceneName;
+                parentScene = args[0];
+                name = args[1];
             }
         }
 
         super(name);
-        this._rootNode = new Node();
+
+        if (parentScene !== undefined) {
+            parentScene._subScenes.push(this);
+        }
 
         if (entity !== undefined) {
             this._rootNode.entity = entity;
@@ -115,16 +118,181 @@ export class Scene extends SceneObject {
         return null;
     }
 
-    open(fileOrStream: any, options?: any): void {
+    open(_fileOrStream: any, _options?: any): void {
         this.clear();
         throw new Error('open is not implemented');
     }
 
-    save(fileOrStream: any, formatOrOptions?: any): void {
-        throw new Error('save is not implemented');
+    openFromBuffer(buffer: Buffer | Uint8Array, options?: any): void {
+        this.clear();
+        
+        let detectedFormat: string | null = null;
+        const buf = buffer instanceof Buffer ? buffer : Buffer.from(buffer);
+        
+        if (buf.length >= 4) {
+            const magic = buf.readUInt32LE(0);
+            if (magic === 0x46546C67) {
+                detectedFormat = 'glb';
+            }
+        }
+        
+        if (!detectedFormat) {
+            const content = buf.toString('utf-8', 0, Math.min(100, buf.length)).trim();
+            if (content.startsWith('{') || content.startsWith('"asset"')) {
+                try {
+                    const json = JSON.parse(buf.toString('utf-8'));
+                    if (json.asset && json.asset.version) {
+                        detectedFormat = 'gltf';
+                    }
+                } catch {
+                }
+            }
+        }
+        
+        if (!detectedFormat) {
+            const header = buf.toString('ascii', 0, Math.min(80, buf.length)).toLowerCase();
+            if (header.startsWith('solid') || !header.startsWith('solid')) {
+                const numTriangles = buf.length >= 84 ? buf.readUInt32LE(80) : 0;
+                const expectedSize = 84 + numTriangles * 50;
+                if (buf.length === expectedSize || header.startsWith('solid')) {
+                    detectedFormat = 'stl';
+                }
+            }
+        }
+        
+        if (detectedFormat === 'gltf' || detectedFormat === 'glb') {
+            const { GltfFormat } = require('./formats/gltf/GltfFormat');
+            const { GltfImporter } = require('./formats/gltf/GltfImporter');
+            const format = GltfFormat.getInstance();
+            const loadOptions = options || format.createLoadOptions();
+            const importer = new GltfImporter();
+            importer.importScene(this, buffer, loadOptions);
+        } else {
+            const { StlFormat } = require('./formats/stl/StlFormat');
+            const { StlImporter } = require('./formats/stl/StlImporter');
+            const format = StlFormat.getInstance();
+            const loadOptions = options || format.createLoadOptions();
+            const importer = new StlImporter();
+            importer.importScene(this, buffer, loadOptions);
+        }
     }
 
-    render(camera: any, file_name_or_bitmap: any, size?: any, format?: any, options?: any): void {
+    save(fileOrStream: any, formatOrOptions?: any, options?: any): void {
+        let format: any = null;
+        let saveOptions: any = null;
+        
+        if (formatOrOptions && typeof formatOrOptions === 'object' && formatOrOptions.constructor.name.endsWith('Format')) {
+            format = formatOrOptions;
+            saveOptions = options || format.createSaveOptions();
+        } else if (formatOrOptions && formatOrOptions.constructor.name.endsWith('SaveOptions')) {
+            saveOptions = formatOrOptions;
+        } else if (formatOrOptions && typeof formatOrOptions === 'string') {
+            const ext = formatOrOptions.toLowerCase();
+            if (ext === 'obj') {
+                const { ObjFormat } = require('./formats/obj/ObjFormat');
+                format = ObjFormat.getInstance();
+                saveOptions = format.createSaveOptions();
+            } else if (ext === 'stl') {
+                const { StlFormat } = require('./formats/stl/StlFormat');
+                format = StlFormat.getInstance();
+                saveOptions = format.createSaveOptions();
+            } else if (ext === 'gltf') {
+                const { GltfFormat } = require('./formats/gltf/GltfFormat');
+                format = GltfFormat.getInstance();
+                saveOptions = format.createSaveOptions();
+            } else if (ext === 'glb') {
+                const { GltfFormat } = require('./formats/gltf/GltfFormat');
+                format = GltfFormat.getInstance();
+                saveOptions = format.createSaveOptions();
+                saveOptions.binaryMode = true;
+            }
+        } else if (typeof fileOrStream === 'string') {
+            const ext = fileOrStream.split('.').pop()?.toLowerCase();
+            if (ext === 'obj') {
+                const { ObjFormat } = require('./formats/obj/ObjFormat');
+                format = ObjFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
+            } else if (ext === 'stl') {
+                const { StlFormat } = require('./formats/stl/StlFormat');
+                format = StlFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
+            } else if (ext === 'gltf') {
+                const { GltfFormat } = require('./formats/gltf/GltfFormat');
+                format = GltfFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
+            } else if (ext === 'glb') {
+                const { GltfFormat } = require('./formats/gltf/GltfFormat');
+                format = GltfFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
+                saveOptions.binaryMode = true;
+            }
+        }
+        
+        if (!format) {
+            const { ObjFormat } = require('./formats/obj/ObjFormat');
+            format = ObjFormat.getInstance();
+            saveOptions = saveOptions || format.createSaveOptions();
+        }
+        
+        let stream: any;
+        if (typeof fileOrStream === 'string') {
+            const fs = require('fs');
+            stream = {
+                content: '',
+                write(data: string | Buffer) {
+                    if (Buffer.isBuffer(data)) {
+                        fs.writeFileSync(fileOrStream, data);
+                    } else {
+                        this.content += data;
+                    }
+                },
+                close() {
+                    if (this.content) {
+                        fs.writeFileSync(fileOrStream, this.content, 'utf-8');
+                    }
+                }
+            };
+        } else if (fileOrStream && typeof fileOrStream.write === 'function') {
+            stream = fileOrStream;
+        } else {
+            throw new TypeError('fileOrStream must be a file path or a stream with write() method');
+        }
+        
+        const { ObjExporter } = require('./formats/obj/ObjExporter');
+        const { StlExporter } = require('./formats/stl/StlExporter');
+        const { GltfExporter } = require('./formats/gltf/GltfExporter');
+        
+        let exporter: any;
+        if (format.constructor.name === 'ObjFormat') {
+            exporter = new ObjExporter();
+        } else if (format.constructor.name === 'StlFormat') {
+            exporter = new StlExporter();
+        } else if (format.constructor.name === 'GltfFormat') {
+            exporter = new GltfExporter();
+        } else {
+            throw new Error(`Unsupported format: ${format.constructor.name}`);
+        }
+        
+        exporter.export(this, stream, saveOptions);
+        
+        if (stream.close) {
+            stream.close();
+        }
+    }
+
+    saveToBuffer(format: string = 'obj', _options?: any): Buffer {
+        let content = '';
+        const stream = {
+            write(data: string) {
+                content += data;
+            }
+        };
+        
+        this.save(stream, format);
+        return Buffer.from(content, 'utf-8');
+    }
+
+    render(_camera: any, _file_name_or_bitmap: any, _size?: any, _format?: any, _options?: any): void {
         throw new Error('render is not implemented');
     }
 

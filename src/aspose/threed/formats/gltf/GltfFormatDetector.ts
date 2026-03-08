@@ -1,5 +1,6 @@
 import { FormatDetector } from '../FormatDetector';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { GltfFormat } from './GltfFormat';
 
 export class GltfFormatDetector extends FormatDetector {
     constructor() {

@@ -1,9 +1,11 @@
 import { Scene } from '../src/aspose/threed';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4, Vector3 } from '../src/aspose/threed/utilities';
-import { GltfSaveOptions } from '../src/aspose/threed/formats/gltf';
-import { PbrMaterial } from '../src/aspose/threed/shading/gltf';
+import { GltfSaveOptions, GltfFormat } from '../src/aspose/threed/formats/gltf';
+import { PbrMaterial } from '../src/aspose/threed/shading';
 import * as fs from 'fs';
+
+import { VertexElementNormal, VertexElementUV } from '../src/aspose/threed/entities';
 
 describe('TestGltfExporter', () => {
     it('testSimpleTriangleAscii', () => {
@@ -17,7 +19,7 @@ describe('TestGltfExporter', () => {
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
 
-        scene.save('/tmp/test_simple.gltf', GltfFormat);
+        scene.save('/tmp/test_simple.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_simple.gltf')).toBe(true);
     });
@@ -36,12 +38,14 @@ describe('TestGltfExporter', () => {
         const options = new GltfSaveOptions();
         options.binaryMode = true;
 
-        scene.save('/tmp/test_simple.glb', GltfFormat, options);
+        scene.save('/tmp/test_simple.glb', GltfFormat.getInstance(), options);
 
         expect(fs.existsSync('/tmp/test_simple.glb')).toBe(true);
 
-        const content = fs.readFileSync('/tmp/test_simple.glb');
-        expect(content.length).toBeGreaterThan(0);
+        if (fs.existsSync('/tmp/test_simple.glb')) {
+            const content = fs.readFileSync('/tmp/test_simple.glb');
+            expect(content.length).toBeGreaterThan(0);
+        }
     });
 
     it('testExportWithPositions', () => {
@@ -55,7 +59,7 @@ describe('TestGltfExporter', () => {
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
 
-        scene.save('/tmp/test_positions.gltf', GltfFormat);
+        scene.save('/tmp/test_positions.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_positions.gltf')).toBe(true);
     });
@@ -69,12 +73,12 @@ describe('TestGltfExporter', () => {
         mesh.controlPoints.push(new Vector4(0.0, 1.0, 0.0, 1.0));
         mesh.createPolygon(0, 1, 2);
 
-        const normalElement = VertexElementNormal;
+        const normalElement = new VertexElementNormal();
         mesh.vertexElements.push(normalElement);
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
 
-        scene.save('/tmp/test_normales.gltf', GltfFormat);
+        scene.save('/tmp/test_normales.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_normales.gltf')).toBe(true);
     });
@@ -88,12 +92,12 @@ describe('TestGltfExporter', () => {
         mesh.controlPoints.push(new Vector4(0.0, 1.0, 0.0, 1.0));
         mesh.createPolygon(0, 1, 2);
 
-        const uvElement = VertexElementUV;
+        const uvElement = new VertexElementUV();
         mesh.vertexElements.push(uvElement);
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
 
-        scene.save('/tmp/test_uvs.gltf', GltfFormat);
+        scene.save('/tmp/test_uvs.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_uvs.gltf')).toBe(true);
     });
@@ -107,12 +111,10 @@ describe('TestGltfExporter', () => {
         mesh.controlPoints.push(new Vector4(0.0, 1.0, 0.0, 1.0));
         mesh.createPolygon(0, 1, 2);
 
-        const uvElement = VertexElementUV;
+        const uvElement = new VertexElementUV();
         mesh.vertexElements.push(uvElement);
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
-
-        const exporter = GltfExporter;
 
         const options1 = new GltfSaveOptions();
         options1.binaryMode = false;
@@ -122,8 +124,8 @@ describe('TestGltfExporter', () => {
         options2.binaryMode = false;
         options2.flipTexCoordV = false;
 
-        scene.save('/tmp/test_flip1.gltf', GltfFormat, options1);
-        scene.save('/tmp/test_flip2.gltf', GltfFormat, options2);
+        scene.save('/tmp/test_flip1.gltf', GltfFormat.getInstance(), options1);
+        scene.save('/tmp/test_flip2.gltf', GltfFormat.getInstance(), options2);
 
         expect(fs.existsSync('/tmp/test_flip1.gltf')).toBe(true);
         expect(fs.existsSync('/tmp/test_flip2.gltf')).toBe(true);
@@ -152,7 +154,7 @@ describe('TestGltfExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_material.gltf', GltfFormat);
+        scene.save('/tmp/test_material.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_material.gltf')).toBe(true);
     });
@@ -174,7 +176,7 @@ describe('TestGltfExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_emissive.gltf', GltfFormat);
+        scene.save('/tmp/test_emissive.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_emissive.gltf')).toBe(true);
     });
@@ -196,7 +198,7 @@ describe('TestGltfExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_transparent.gltf', GltfFormat);
+        scene.save('/tmp/test_transparent.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_transparent.gltf')).toBe(true);
     });
@@ -218,7 +220,7 @@ describe('TestGltfExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_blend.gltf', GltfFormat);
+        scene.save('/tmp/test_blend.gltf', GltfFormat.getInstance());
 
         expect(fs.existsSync('/tmp/test_blend.gltf')).toBe(true);
     });
