@@ -1,3 +1,5 @@
+import { FbxTokenizer } from '../src/aspose/threed/formats/fbx';
+
 describe('testFbxTokenizer', () => {
     it('testTokenizer', () => {
         const token_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/fbx7400ascii/box.fbx';
@@ -10,7 +12,7 @@ describe('testFbxTokenizer', () => {
 
             expect(tokens.length).toBeGreaterThan(0);
         } else {
-            pending(`File not found: ${token_path}`);
+            console.log(`Test skipped: File not found: ${token_path}`);
         }
     });
 });
