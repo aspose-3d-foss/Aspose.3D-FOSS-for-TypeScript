@@ -1,4 +1,4 @@
-import { A3DObject } from '../A3DObject';
+import { A3DObject } from './A3DObject';
 import { Vector3 } from './utilities/Vector3';
 import { Quaternion } from './utilities/Quaternion';
 import { Matrix4 } from './utilities/Matrix4';

@@ -1,3 +1,5 @@
+import { Property } from './Property';
+
 export class PropertyCollection {
     protected _properties: Property[] = [];
 

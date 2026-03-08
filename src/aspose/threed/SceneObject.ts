@@ -1,4 +1,5 @@
-import { A3DObject } from '../A3DObject';
+import { A3DObject } from './A3DObject';
+import { Scene } from './Scene';
 
 export class SceneObject extends A3DObject {
     protected _scene: Scene | null = null;
