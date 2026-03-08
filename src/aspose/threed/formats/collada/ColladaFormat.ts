@@ -4,6 +4,14 @@ import { ColladaSaveOptions } from './ColladaSaveOptions';
 
 export class ColladaFormat extends FileFormat {
     private static _instance: ColladaFormat | null = null;
+    
+    static get canExport(): boolean {
+        return true;
+    }
+    
+    static get canImport(): boolean {
+        return true;
+    }
 
     constructor() {
         super();

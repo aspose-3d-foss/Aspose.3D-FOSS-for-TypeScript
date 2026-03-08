@@ -205,6 +205,14 @@ export class Scene extends SceneObject {
                 format = GltfFormat.getInstance();
                 saveOptions = format.createSaveOptions();
                 saveOptions.binaryMode = true;
+            } else if (ext === 'dae') {
+                const { ColladaFormat } = require('./formats/collada/ColladaFormat');
+                format = ColladaFormat.getInstance();
+                saveOptions = format.createSaveOptions();
+            } else if (ext === '3mf') {
+                const { ThreeMfFormat } = require('./formats/threemf/ThreeMfFormat');
+                format = ThreeMfFormat.getInstance();
+                saveOptions = format.createSaveOptions();
             }
         } else if (typeof fileOrStream === 'string') {
             const ext = fileOrStream.split('.').pop()?.toLowerCase();
@@ -225,6 +233,14 @@ export class Scene extends SceneObject {
                 format = GltfFormat.getInstance();
                 saveOptions = saveOptions || format.createSaveOptions();
                 saveOptions.binaryMode = true;
+            } else if (ext === 'dae') {
+                const { ColladaFormat } = require('./formats/collada/ColladaFormat');
+                format = ColladaFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
+            } else if (ext === '3mf') {
+                const { ThreeMfFormat } = require('./formats/threemf/ThreeMfFormat');
+                format = ThreeMfFormat.getInstance();
+                saveOptions = saveOptions || format.createSaveOptions();
             }
         }
         
@@ -261,6 +277,8 @@ export class Scene extends SceneObject {
         const { ObjExporter } = require('./formats/obj/ObjExporter');
         const { StlExporter } = require('./formats/stl/StlExporter');
         const { GltfExporter } = require('./formats/gltf/GltfExporter');
+        const { ColladaExporter } = require('./formats/collada/ColladaExporter');
+        const { ThreeMfExporter } = require('./formats/threemf/ThreeMfExporter');
         
         let exporter: any;
         if (format.constructor.name === 'ObjFormat') {
@@ -269,6 +287,10 @@ export class Scene extends SceneObject {
             exporter = new StlExporter();
         } else if (format.constructor.name === 'GltfFormat') {
             exporter = new GltfExporter();
+        } else if (format.constructor.name === 'ColladaFormat') {
+            exporter = new ColladaExporter();
+        } else if (format.constructor.name === 'ThreeMfFormat') {
+            exporter = new ThreeMfExporter();
         } else {
             throw new Error(`Unsupported format: ${format.constructor.name}`);
         }

@@ -1,8 +1,8 @@
 import { Scene } from '../src/aspose/threed';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4, Vector3 } from '../src/aspose/threed/utilities';
-import { ColladaSaveOptions } from '../src/aspose/threed/formats/collada';
-import { PhongMaterial, LambertMaterial } from '../src/aspose/threed/shading/collada';
+import { ColladaSaveOptions, ColladaFormat } from '../src/aspose/threed/formats/collada';
+import { PhongMaterial, LambertMaterial } from '../src/aspose/threed/shading';
 
 describe('TestColladaExporter', () => {
     it('testSimpleTriangleExport', () => {
@@ -16,7 +16,7 @@ describe('TestColladaExporter', () => {
 
         scene.rootNode.createChildNode('TestNode').entity = mesh;
 
-        scene.save('/tmp/test_simple.dae', ColladaFormat);
+        scene.save('/tmp/test_simple.dae', ColladaFormat.getInstance());
         expect(true).toBe(true);
     });
 
@@ -38,7 +38,7 @@ describe('TestColladaExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_material.dae', ColladaFormat);
+        scene.save('/tmp/test_material.dae', ColladaFormat.getInstance());
         expect(true).toBe(true);
     });
 
@@ -58,7 +58,7 @@ describe('TestColladaExporter', () => {
         node.entity = mesh;
         node.material = material;
 
-        scene.save('/tmp/test_lambert.dae', ColladaFormat);
+        scene.save('/tmp/test_lambert.dae', ColladaFormat.getInstance());
         expect(true).toBe(true);
     });
 
