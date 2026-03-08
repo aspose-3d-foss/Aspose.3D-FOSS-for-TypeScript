@@ -1,4 +1,6 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { FbxLoadOptions } from './FbxLoadOptions';
+import { FbxSaveOptions } from './FbxSaveOptions';
 
 export class FbxFormat extends FileFormat {
     private static _instance: FbxFormat | null = null;

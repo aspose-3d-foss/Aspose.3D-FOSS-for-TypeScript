@@ -1,5 +1,4 @@
 import { SaveOptions } from '../SaveOptions';
-import { ColladaTransformStyle } from './ColladaTransformStyle';
 
 export class ColladaSaveOptions extends SaveOptions {
     private _flipCoordinateSystem: boolean = false;

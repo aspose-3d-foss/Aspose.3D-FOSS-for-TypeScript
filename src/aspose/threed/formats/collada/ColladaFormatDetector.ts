@@ -1,5 +1,6 @@
 import { FormatDetector } from '../FormatDetector';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { ColladaFormat } from './ColladaFormat';
 
 export class ColladaFormatDetector extends FormatDetector {
     constructor() {

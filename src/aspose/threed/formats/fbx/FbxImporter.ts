@@ -1,6 +1,19 @@
 import { Importer } from '../Importer';
 import { LoadOptions } from '../LoadOptions';
-import { Scene } from '../Scene';
+import { Scene } from '../../Scene';
+import { FileFormat } from '../../FileFormat';
+import { FbxFormat } from './FbxFormat';
+import { FbxParser } from './parser';
+import { FbxTokenizer } from './tokenizer';
+import { BinaryTokenizer } from './binary_tokenizer';
+import { Node } from '../../Node';
+import { Mesh } from '../../entities/Mesh';
+import { Vector4 } from '../../utilities/Vector4';
+import { LambertMaterial } from '../../shading/LambertMaterial';
+import { VertexElementType } from '../../entities/VertexElementType';
+import { TextureMapping } from '../../entities/TextureMapping';
+import { MappingMode } from '../../entities/MappingMode';
+import { Material } from '../../shading/Material';
 
 export class FbxImporter extends Importer {
     private _objectMap: { [key: number]: any } = {};
@@ -9,19 +22,13 @@ export class FbxImporter extends Importer {
         super();
     }
 
-    supportsFormat(fileFormat: any): boolean {
-        const { FbxFormat } = require('./FbxFormat');
+    supportsFormat(fileFormat: FileFormat): boolean {
         return fileFormat instanceof FbxFormat;
     }
 
     open(filename: string, options?: LoadOptions): Scene {
-        const { FbxLoadOptions } = require('./FbxLoadOptions');
-        const { FbxParser } = require('./parser');
-        const FbxTokenizer = require('./tokenizer').FbxTokenizer;
-        const BinaryTokenizer = require('./binary_tokenizer').BinaryTokenizer;
-        const { Scene } = require('../Scene');
-
         if (!options) {
+            const { FbxLoadOptions } = require('./FbxLoadOptions');
             options = new FbxLoadOptions();
         }
 
@@ -35,13 +42,8 @@ export class FbxImporter extends Importer {
     }
 
     openFromStream(stream: any, options?: LoadOptions): Scene {
-        const { FbxLoadOptions } = require('./FbxLoadOptions');
-        const { FbxParser } = require('./parser');
-        const FbxTokenizer = require('./tokenizer').FbxTokenizer;
-        const BinaryTokenizer = require('./binary_tokenizer').BinaryTokenizer;
-        const { Scene } = require('../Scene');
-
         if (!options) {
+            const { FbxLoadOptions } = require('./FbxLoadOptions');
             options = new FbxLoadOptions();
         }
 
@@ -54,8 +56,7 @@ export class FbxImporter extends Importer {
         return scene;
     }
 
-    importScene(scene: Scene, stream: any, options: LoadOptions): void {
-        const { FbxParser } = require('./parser');
+    importScene(scene: Scene, stream: any, _options: LoadOptions): void {
         const tokens = this._getTokensFromStream(stream);
         const parser = new FbxParser(tokens);
 
@@ -67,12 +68,10 @@ export class FbxImporter extends Importer {
         const data = fs.readFileSync(filename);
 
         if (this._isBinaryFile(data)) {
-            const BinaryTokenizer = require('./binary_tokenizer').BinaryTokenizer;
             const tokenizer = new BinaryTokenizer(data);
             return tokenizer.tokenize();
         } else {
             const content = data.toString('utf-8');
-            const FbxTokenizer = require('./tokenizer').FbxTokenizer;
             const tokenizer = new FbxTokenizer(content);
             return tokenizer.tokenize();
         }
@@ -83,17 +82,14 @@ export class FbxImporter extends Importer {
 
         if (content instanceof Buffer) {
             if (this._isBinaryFile(content)) {
-                const BinaryTokenizer = require('./binary_tokenizer').BinaryTokenizer;
                 const tokenizer = new BinaryTokenizer(content);
                 return tokenizer.tokenize();
             } else {
                 const contentStr = content.toString('utf-8');
-                const FbxTokenizer = require('./tokenizer').FbxTokenizer;
                 const tokenizer = new FbxTokenizer(contentStr);
                 return tokenizer.tokenize();
             }
         } else {
-            const FbxTokenizer = require('./tokenizer').FbxTokenizer;
             const tokenizer = new FbxTokenizer(content);
             return tokenizer.tokenize();
         }
@@ -122,16 +118,13 @@ export class FbxImporter extends Importer {
         const modelElements = objectsScope.getElements('Model');
         const materialElements = objectsScope.getElements('Material');
 
-        this._parseGeometries(geometryElements, scene);
-        this._parseModels(modelElements, scene);
-        this._parseMaterials(materialElements, scene);
+        this._parseGeometries(geometryElements);
+        this._parseModels(modelElements);
+        this._parseMaterials(materialElements);
         this._parseConnections(rootScope, scene);
     }
 
-    private _parseGeometries(geometryElements: any[], scene: Scene): void {
-        const { Mesh } = require('../entities/Mesh');
-        const { Vector4 } = require('../utilities/Vector4');
-
+    private _parseGeometries(geometryElements: any[]): void {
         for (const geomElem of geometryElements) {
             const geomScope = geomElem.compound;
             if (!geomScope) {
@@ -166,10 +159,10 @@ export class FbxImporter extends Importer {
                     const indices = this._parseIntArray(aElem.tokens[0].text);
                     for (const idx of indices) {
                         if (idx < 0) {
-                            mesh.polygons.push(Math.abs(idx) - 1);
-                            mesh.polygons.push(0xFFFFFFFF);
+                            mesh.polygons.push([Math.abs(idx) - 1]);
+                            mesh.polygons.push([0xFFFFFFFF]);
                         } else {
-                            mesh.polygons.push(idx);
+                            mesh.polygons.push([idx]);
                         }
                     }
                 }
@@ -180,13 +173,10 @@ export class FbxImporter extends Importer {
                 const aElem = normalElement.compound.getFirstElement('a');
                 if (aElem) {
                     const normals = this._parseFloatArray(aElem.tokens[0].text);
-                    const { VertexElementNormal } = require('../entities/VertexElementNormal');
-                    const { VertexElementType } = require('../entities/VertexElementType');
-                    const { FVector4 } = require('../utilities/FVector4');
-                    const vertexElement = mesh.createElement(VertexElementType.Normal);
-                    const { MappingMode } = require('../entities/MappingMode');
+                    const FVector4 = require('../../utilities/FVector4').FVector4;
+                    const vertexElement = mesh.createElement(VertexElementType.NORMAL) as any;
                     vertexElement.mappingMode = MappingMode.CONTROL_POINT;
-                    const normalData: FVector4[] = [];
+                    const normalData: any[] = [];
                     for (let i = 0; i < normals.length; i += 3) {
                         if (i + 2 < normals.length) {
                             normalData.push(new FVector4(normals[i], normals[i + 1], normals[i + 2], 0.0));
@@ -201,12 +191,10 @@ export class FbxImporter extends Importer {
                 const aElem = uvElement.compound.getFirstElement('a');
                 if (aElem) {
                     const uvs = this._parseFloatArray(aElem.tokens[0].text);
-                    const { TextureMapping } = require('../entities/TextureMapping');
-                    const { FVector2 } = require('../utilities/FVector2');
+                    const FVector2 = require('../../utilities/FVector2').FVector2;
                     const vertexElement = mesh.createElementUV(TextureMapping.DIFFUSE);
-                    const { MappingMode } = require('../entities/MappingMode');
                     vertexElement.mappingMode = MappingMode.CONTROL_POINT;
-                    const uvData: FVector2[] = [];
+                    const uvData: any[] = [];
                     for (let i = 0; i < uvs.length; i += 2) {
                         if (i + 1 < uvs.length) {
                             uvData.push(new FVector2(uvs[i], uvs[i + 1]));
@@ -218,9 +206,7 @@ export class FbxImporter extends Importer {
         }
     }
 
-    private _parseModels(modelElements: any[], scene: Scene): void {
-        const { Node } = require('../Node');
-
+    private _parseModels(modelElements: any[]): void {
         for (const modelElem of modelElements) {
             const modelId = this._parseId(modelElem.tokens[0].text);
             if (modelId === null) {
@@ -233,15 +219,13 @@ export class FbxImporter extends Importer {
             if (modelElem.tokens.length > 1) {
                 const tokenValue = modelElem.tokens[1].text;
                 if (typeof tokenValue === 'string') {
-                    node.name = tokenValue.trim('"');
+                    node.name = tokenValue.replace(/"/g, '');
                 }
             }
         }
     }
 
-    private _parseMaterials(materialElements: any[], scene: Scene): void {
-        const { LambertMaterial } = require('../shading/LambertMaterial');
-
+    private _parseMaterials(materialElements: any[]): void {
         for (const matElem of materialElements) {
             const matId = this._parseId(matElem.tokens[0].text);
             if (matId === null) {
@@ -254,7 +238,7 @@ export class FbxImporter extends Importer {
             if (matElem.tokens.length > 1) {
                 const tokenValue = matElem.tokens[1].text;
                 if (typeof tokenValue === 'string') {
-                    material.name = tokenValue.trim('"');
+                    material.name = tokenValue.replace(/"/g, '');
                 }
             }
 
@@ -283,7 +267,7 @@ export class FbxImporter extends Importer {
             if (typeof connType !== 'string') {
                 continue;
             }
-            connType.trim('"');
+            connType.replace(/"/g, '');
 
             if (connType === 'OO') {
                 const childId = this._parseId(connElem.tokens[1].text);
@@ -308,15 +292,14 @@ export class FbxImporter extends Importer {
         if (parentId === 0) {
             parentObj = scene.rootNode;
         } else {
+            if (parentId === null) {
+                return;
+            }
             parentObj = this._objectMap[parentId];
             if (!parentObj) {
                 return;
             }
         }
-
-        const { Mesh } = require('../entities/Mesh');
-        const { Node } = require('../Node');
-        const { Material } = require('../shading/Material');
 
         if (childObj instanceof Mesh && parentObj instanceof Node) {
             parentObj.entities.push(childObj);

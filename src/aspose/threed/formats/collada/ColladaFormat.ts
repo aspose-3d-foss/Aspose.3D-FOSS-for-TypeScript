@@ -1,4 +1,4 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { ColladaLoadOptions } from './ColladaLoadOptions';
 import { ColladaSaveOptions } from './ColladaSaveOptions';
 
