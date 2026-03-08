@@ -6,9 +6,8 @@ import { RotationOrder } from './RotationOrder';
 import { Axis } from '../Axis';
 
 export class TransformBuilder {
-    private _matrix: Matrix4;
-    private _composeOrder: ComposeOrder;
-    private _transformChain: Matrix4[] = [];
+    private _matrix!: Matrix4;
+    private _composeOrder!: ComposeOrder;
 
     constructor();
     constructor(initial: Matrix4, order: ComposeOrder);
@@ -203,7 +202,6 @@ export class TransformBuilder {
 
     reset(): void {
         this._matrix = Matrix4.identity;
-        this._transformChain = [];
     }
 
     get matrix(): Matrix4 {

@@ -1,6 +1,4 @@
 import { Matrix4 } from './Matrix4';
-import { FVector2 } from './FVector2';
-import { FVector3 } from './FVector3';
 import { FVector4 } from './FVector4';
 
 export class FMatrix4 {

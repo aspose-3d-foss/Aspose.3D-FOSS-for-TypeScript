@@ -3,17 +3,16 @@ import { PropertyCollection } from '../PropertyCollection';
 import { BindPoint } from './BindPoint';
 import { KeyframeSequence } from './KeyframeSequence';
 import { A3DObject as A3DObjectClass } from '../A3DObject';
-import { Property } from '../Property';
 
 export class AnimationNode extends A3DObject {
     private _bindPoints: BindPoint[] = [];
     private _subAnimations: AnimationNode[] = [];
 
-    constructor(name: string = null) {
-        super(name);
+    constructor(name: string | null = null) {
+        super(name ?? undefined);
     }
 
-    findBindPoint(target: A3DObjectClass, name: string): BindPoint {
+    findBindPoint(_target: A3DObjectClass, name: string): BindPoint | null {
         for (const bp of this._bindPoints) {
             if (bp.property.name === name) {
                 return bp;
@@ -22,12 +21,12 @@ export class AnimationNode extends A3DObject {
         return null;
     }
 
-    getBindPoint(target: A3DObjectClass, propName: string, create: boolean): BindPoint {
+    getBindPoint(target: A3DObjectClass, propName: string, create: boolean): BindPoint | null {
         const prop = target.findProperty(propName);
         if (prop) {
-            const bp = this.findBindPoint(target, propName);
+            let bp = this.findBindPoint(target, propName);
             if (bp === null && create) {
-                bp = new BindPoint(prop.scene, prop);
+                bp = new BindPoint(null, prop);
                 this._bindPoints.push(bp);
             }
             return bp;
@@ -35,17 +34,17 @@ export class AnimationNode extends A3DObject {
         return null;
     }
 
-    createBindPoint(obj: A3DObjectClass, propName: string): BindPoint {
+    createBindPoint(obj: A3DObjectClass, propName: string): BindPoint | null {
         const prop = obj.findProperty(propName);
         if (prop) {
-            const bp = new BindPoint(prop.scene, prop);
+            const bp = new BindPoint(null, prop);
             this._bindPoints.push(bp);
             return bp;
         }
         return null;
     }
 
-    getKeyframeSequence(target: A3DObjectClass, propName: string, channelName: string = null, create: boolean = true): KeyframeSequence {
+    getKeyframeSequence(target: A3DObjectClass, propName: string, channelName: string | null = null, create: boolean = true): KeyframeSequence | null {
         const bp = this.getBindPoint(target, propName, create);
         if (bp === null) {
             return null;
@@ -54,7 +53,7 @@ export class AnimationNode extends A3DObject {
         if (channelName) {
             const channel = bp.getChannel(channelName);
             if (channel) {
-                const seq = channel.keyframeSequence;
+                let seq = channel.keyframeSequence;
                 if (seq === null && create) {
                     seq = bp.createKeyframeSequence(channelName);
                     channel.keyframeSequence = seq;

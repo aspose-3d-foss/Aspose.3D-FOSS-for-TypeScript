@@ -2,17 +2,17 @@ import { Interpolation } from './Interpolation';
 import { WeightedMode } from './WeightedMode';
 import { StepMode } from './StepMode';
 import { KeyframeSequence } from './KeyframeSequence';
-import { FVector2, FVector3, FVector4 } from '../../utilities';
+import { FVector4 } from '../utilities/FVector4';
 
 export class KeyFrame {
-    private _curve: KeyframeSequence;
+    private _curve: KeyframeSequence | null = null;
     private _time: number;
     private _value = 0.0;
     private _interpolation = Interpolation.LINEAR;
     private _tangentWeightMode = WeightedMode.NONE;
     private _stepMode = StepMode.PREVIOUS_VALUE;
-    private _nextInTangent: FVector4 = null;
-    private _outTangent: FVector4 = null;
+    private _nextInTangent: FVector4 | null = null;
+    private _outTangent: FVector4 | null = null;
     private _outWeight = 0.0;
     private _nextInWeight = 0.0;
     private _tension = 0.0;
@@ -67,19 +67,19 @@ export class KeyFrame {
         this._stepMode = value;
     }
 
-    get nextInTangent(): FVector4 {
+    get nextInTangent(): FVector4 | null {
         return this._nextInTangent;
     }
 
-    set nextInTangent(value: FVector4) {
+    set nextInTangent(value: FVector4 | null) {
         this._nextInTangent = value;
     }
 
-    get outTangent(): FVector4 {
+    get outTangent(): FVector4 | null {
         return this._outTangent;
     }
 
-    set outTangent(value: FVector4) {
+    set outTangent(value: FVector4 | null) {
         this._outTangent = value;
     }
 
@@ -145,5 +145,9 @@ export class KeyFrame {
 
     set timeIndependentTangent(value: boolean) {
         this._timeIndependentTangent = value;
+    }
+
+    get curve(): KeyframeSequence | null {
+        return this._curve;
     }
 }

@@ -1,10 +1,10 @@
-import { FVector2, FVector3, FVector4 } from '.';
+import { FVector2, FVector3 } from '.';
 
 export class Vector4 {
-    private _x: number;
-    private _y: number;
-    private _z: number;
-    private _w: number;
+    private _x!: number;
+    private _y!: number;
+    private _z!: number;
+    private _w!: number;
 
     constructor();
     constructor(x: number, y: number, z: number, w: number);

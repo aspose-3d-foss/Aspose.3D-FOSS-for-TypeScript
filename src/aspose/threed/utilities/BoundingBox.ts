@@ -169,7 +169,6 @@ export class BoundingBox {
         if (this._isNull) {
             return new BoundingBoxExtent(0, 0, 0);
         }
-        const center = this.center;
         const size = this.size;
         return new BoundingBoxExtent(
             Math.abs(size.x * 0.5),

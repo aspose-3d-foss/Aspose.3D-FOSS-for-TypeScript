@@ -9,11 +9,11 @@ export abstract class VertexElement implements IIndexedVertexElement {
     private _mappingMode: MappingMode;
     private _referenceMode: ReferenceMode;
 
-    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode = null, referenceMode: ReferenceMode = null) {
+    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null) {
         this._vertexElementType = elementType;
         this._name = name;
-        this._mappingMode = mappingMode;
-        this._referenceMode = referenceMode;
+        this._mappingMode = mappingMode ?? MappingMode.CONTROL_POINT;
+        this._referenceMode = referenceMode ?? ReferenceMode.DIRECT;
     }
 
     get vertexElementType(): VertexElementType {
@@ -44,7 +44,7 @@ export abstract class VertexElement implements IIndexedVertexElement {
         this._referenceMode = value;
     }
 
-    setIndices(data: number[]): void {
+    setIndices(_data: number[]): void {
         throw new Error('set_indices is not implemented');
     }
 

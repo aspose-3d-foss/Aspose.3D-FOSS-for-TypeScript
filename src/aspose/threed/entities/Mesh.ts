@@ -1,33 +1,16 @@
 import { Geometry } from './Geometry';
-import { Vector4 } from '../utilities/Vector4';
-import { VertexElement } from './VertexElement';
-import { VertexElementUV } from './VertexElementUV';
-import { TextureMapping } from './TextureMapping';
-import { MappingMode } from './MappingMode';
-import { ReferenceMode } from './ReferenceMode';
-import { VertexElementType } from './VertexElementType';
-import { Vector2 } from '../utilities/Vector2';
-import { FVector2, FVector3, FVector4 } from '../utilities';
 
 export class Mesh extends Geometry {
-    private _controlPoints: Vector4[] = [];
     private _edges: number[] = [];
     private _polygons: number[] = [];
     private _polygonSizes: number[] = [];
 
-    constructor(name: string = null, heightMap: any = null, transform: any = null, triMesh: boolean = null) {
-        if (name === null) {
-            name = '';
-        }
-        super(name);
+    constructor(name: string | null = null, _heightMap: any = null, _transform: any = null, _triMesh: boolean | null = null) {
+        super(name ?? '');
 
-        if (heightMap !== null) {
+        if (_heightMap !== null) {
             throw new Error('height_map constructor is not implemented');
         }
-    }
-
-    get controlPoints(): Vector4[] {
-        return [...this._controlPoints];
     }
 
     get edges(): number[] {
@@ -92,11 +75,11 @@ export class Mesh extends Geometry {
         return this;
     }
 
-    optimize(vertexElements: boolean = false, toleranceControlPoint: number = 1e-9, toleranceNormal: number = 1e-9, toleranceUV: number = 1e-9): Mesh {
+    optimize(_vertexElements: boolean = false, _toleranceControlPoint: number = 1e-9, _toleranceNormal: number = 1e-9, _toleranceUV: number = 1e-9): Mesh {
         throw new Error('optimize is not implemented');
     }
 
-    static doBoolean(op: any, a: Mesh, transformA: any, b: Mesh, transformB: any): Mesh {
+    static doBoolean(_op: any, _a: Mesh, _transformA: any, _b: Mesh, _transformB: any): Mesh {
         throw new Error('do_boolean is not implemented');
     }
 
@@ -104,15 +87,15 @@ export class Mesh extends Geometry {
         throw new Error('is_manifold is not implemented');
     }
 
-    static union(a: Mesh, b: Mesh): Mesh {
+    static union(_a: Mesh, _b: Mesh): Mesh {
         throw new Error('union is not implemented');
     }
 
-    static difference(a: Mesh, b: Mesh): Mesh {
+    static difference(_a: Mesh, _b: Mesh): Mesh {
         throw new Error('difference is not implemented');
     }
 
-    static intersect(a: Mesh, b: Mesh): Mesh {
+    static intersect(_a: Mesh, _b: Mesh): Mesh {
         throw new Error('intersect is not implemented');
     }
 

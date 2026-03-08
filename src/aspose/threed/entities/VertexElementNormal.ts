@@ -4,7 +4,7 @@ import { MappingMode } from './MappingMode';
 import { ReferenceMode } from './ReferenceMode';
 
 export class VertexElementNormal extends VertexElementFVector {
-    constructor(name: string = '', mappingMode: MappingMode = null, referenceMode: ReferenceMode = null) {
+    constructor(name: string = '', mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null) {
         super(VertexElementType.NORMAL, name, mappingMode, referenceMode);
     }
 }

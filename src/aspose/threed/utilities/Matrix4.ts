@@ -1,3 +1,5 @@
+import { Quaternion } from './Quaternion';
+
 export class Matrix4 {
     private _m: number[];
 
@@ -236,9 +238,9 @@ export class Matrix4 {
     decompose(translation: any[], scaling: any[], rotation: any[]): void {
         const m = this._m;
 
-        const scaleX = Math.sqrt(m[0] ** 2 + m[1] ** 2 + m[2] ** 2);
-        const scaleY = Math.sqrt(m[4] ** 2 + m[5] ** 2 + m[6] ** 2);
-        const scaleZ = Math.sqrt(m[8] ** 2 + m[9] ** 2 + m[10] ** 2);
+        let scaleX = Math.sqrt(m[0] ** 2 + m[1] ** 2 + m[2] ** 2);
+        let scaleY = Math.sqrt(m[4] ** 2 + m[5] ** 2 + m[6] ** 2);
+        let scaleZ = Math.sqrt(m[8] ** 2 + m[9] ** 2 + m[10] ** 2);
 
         if (scaleX < 1e-10) { scaleX = 1.0; }
         if (scaleY < 1e-10) { scaleY = 1.0; }
@@ -297,12 +299,10 @@ export class Matrix4 {
             tz = translation[2];
         }
 
-        let q = rotation;
         if (typeof rotation === 'object' && rotation !== null && !('w' in rotation)) {
-            q = { w: 0, x: rotation.x, y: rotation.y, z: rotation.z };
+            rotation = { w: 0, x: rotation.x, y: rotation.y, z: rotation.z };
         } else if (Array.isArray(rotation) && rotation.length >= 3) {
-            const rx = rotation[0], ry = rotation[1], rz = rotation[2];
-            q = { w: 0, x: 0, y: 0, z: 0 };
+            rotation = { w: 0, x: 0, y: 0, z: 0 };
         }
 
         let sx: number, sy: number, sz: number;

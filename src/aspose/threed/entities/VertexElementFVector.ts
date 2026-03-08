@@ -8,18 +8,18 @@ export class VertexElementFVector extends VertexElement {
     private _data: FVector4[] = [];
     private _indices: number[] = [];
 
-    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode = null, referenceMode: ReferenceMode = null) {
+    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null) {
         super(elementType, name, mappingMode, referenceMode);
     }
 
     setData(data: FVector4[] | FVector3[] | FVector2[]): void {
         if (Array.isArray(data) && data.length > 0) {
             if (data[0] instanceof FVector2) {
-                this._data = data.map(v => new FVector4(v.x, v.y, 0.0, 0.0));
+                this._data = data.map(v => new FVector4((v as FVector2).x, (v as FVector2).y, 0.0, 0.0));
             } else if (data[0] instanceof FVector3) {
-                this._data = data.map(v => new FVector4(v.x, v.y, v.z, 0.0));
+                this._data = data.map(v => new FVector4((v as FVector3).x, (v as FVector3).y, (v as FVector3).z, 0.0));
             } else if (data[0] instanceof FVector4) {
-                this._data = [...data];
+                this._data = [...data] as FVector4[];
             } else {
                 throw new TypeError(`Unsupported data type for VertexElementFVector: ${typeof data[0]}`);
             }

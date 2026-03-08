@@ -1,14 +1,11 @@
 import { Entity } from '../Entity';
 import { Property } from '../Property';
-import { PropertyCollection } from '../PropertyCollection';
-import { Scene } from '../Scene';
 
 export class Camera extends Entity {
     private _projectionType: string = 'PERSPECTIVE';
-    private _apertureMode: any = null;
 
-    constructor(name: string = null, projectionType: any = null) {
-        super(name);
+    constructor(name: string | null = null, projectionType: any = null) {
+        super(name ?? '');
         this._projectionType = projectionType ? projectionType : 'PERSPECTIVE';
     }
 
@@ -28,133 +25,133 @@ export class Camera extends Entity {
         return false;
     }
 
-    set excluded(value: boolean) {
+    set excluded(_value: boolean) {
     }
 
     get parentNode(): any {
         return null;
     }
 
-    set parentNode(value: any) {
+    set parentNode(_value: any) {
     }
 
     get rotationMode(): any {
         return null;
     }
 
-    set rotationMode(value: any) {
+    set rotationMode(_value: any) {
     }
 
     get nearPlane(): number {
         return 0.1;
     }
 
-    set nearPlane(value: number) {
+    set nearPlane(_value: number) {
     }
 
     get farPlane(): number {
         return 1000.0;
     }
 
-    set farPlane(value: number) {
+    set farPlane(_value: number) {
     }
 
     get aspect(): number {
         return 1.0;
     }
 
-    set aspect(value: number) {
+    set aspect(_value: number) {
     }
 
     get orthoHeight(): number {
         return 100.0;
     }
 
-    set orthoHeight(value: number) {
+    set orthoHeight(_value: number) {
     }
 
     get up(): any {
         return null;
     }
 
-    set up(value: any) {
+    set up(_value: any) {
     }
 
     get lookAt(): any {
         return null;
     }
 
-    set lookAt(value: any) {
+    set lookAt(_value: any) {
     }
 
     get direction(): any {
         return null;
     }
 
-    set direction(value: any) {
+    set direction(_value: any) {
     }
 
     get target(): any {
         return null;
     }
 
-    set target(value: any) {
+    set target(_value: any) {
     }
 
     get apertureMode(): any {
         return null;
     }
 
-    set apertureMode(value: any) {
+    set apertureMode(_value: any) {
     }
 
     get fieldOfView(): number {
         return 0.0;
     }
 
-    set fieldOfView(value: number) {
+    set fieldOfView(_value: number) {
     }
 
     get fieldOfViewX(): number {
         return 0.0;
     }
 
-    set fieldOfViewX(value: number) {
+    set fieldOfViewX(_value: number) {
     }
 
     get fieldOfViewY(): number {
         return 0.0;
     }
 
-    set fieldOfViewY(value: number) {
+    set fieldOfViewY(_value: number) {
     }
 
     get width(): number {
         return 0.0;
     }
 
-    set width(value: number) {
+    set width(_value: number) {
     }
 
     get height(): number {
         return 0.0;
     }
 
-    set height(value: number) {
+    set height(_value: number) {
     }
 
     get aspectRatio(): number {
         return 1.0;
     }
 
-    set aspectRatio(value: number) {
+    set aspectRatio(_value: number) {
     }
 
     get magnification(): any {
         return null;
     }
 
-    set magnification(value: any) {
+    set magnification(_value: any) {
     }
 
     get projectionType(): string {
@@ -165,7 +162,7 @@ export class Camera extends Entity {
         this._projectionType = value;
     }
 
-    moveForward(distance: number): void {
+    moveForward(_distance: number): void {
     }
 
     getBoundingBox(): any {
@@ -176,18 +173,18 @@ export class Camera extends Entity {
         throw new Error('get_entity_renderer_key is not implemented for Camera');
     }
 
-    removeProperty(prop: Property | string): boolean {
+    removeProperty(_prop: Property | string): boolean {
         return false;
     }
 
-    getProperty(property: string): any {
+    getProperty(_property: string): any {
         return null;
     }
 
-    setProperty(property: string, value: any): void {
+    setProperty(_property: string, _value: any): void {
     }
 
-    findProperty(property: string): Property {
+    findProperty(_property: string): Property | null {
         return null;
     }
 }

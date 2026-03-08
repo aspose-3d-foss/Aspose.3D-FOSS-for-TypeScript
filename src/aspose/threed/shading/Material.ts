@@ -1,5 +1,4 @@
 import { A3DObject } from '../A3DObject';
-import { PropertyCollection } from '../PropertyCollection';
 import { TextureBase } from './TextureBase';
 
 export class Material extends A3DObject {
@@ -9,15 +8,14 @@ export class Material extends A3DObject {
     static MAP_AMBIENT = 'Ambient';
     static MAP_NORMAL = 'Normal';
 
-    constructor(name: string = null) {
-        super(name);
+    constructor(name?: string | null) {
+        super(name ?? undefined);
     }
 
-    getTexture(slotName: string): TextureBase {
-        throw new Error('getTexture is not implemented');
+    getTexture(_slotName: string): TextureBase | null {
+        return null;
     }
 
-    setTexture(slotName: string, texture: TextureBase): void {
-        throw new Error('setTexture is not implemented');
+    setTexture(_slotName: string, _texture: TextureBase): void {
     }
 }

@@ -1,16 +1,15 @@
 import { SceneObject } from '../SceneObject';
-import { Property } from '../Property';
 import { PropertyCollection } from '../PropertyCollection';
 import { AnimationNode } from './AnimationNode';
 
-export class AnimationClip extends SceneObject {
+export class AnimationClip extends SceneObject{
     private _animations: AnimationNode[] = [];
     private _description = '';
     private _start = 0.0;
     private _stop = 0.0;
 
-    constructor(name: string = null) {
-        super(name);
+    constructor(name?: string) {
+        super(name ?? '');
     }
 
     createAnimationNode(nodeName: string): AnimationNode {

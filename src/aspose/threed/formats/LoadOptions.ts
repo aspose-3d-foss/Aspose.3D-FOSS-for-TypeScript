@@ -1,11 +1,11 @@
 import { FileFormat } from '../FileFormat';
 
 export abstract class LoadOptions {
-    private _fileFormat: FileFormat | null = null;
-    private _encoding: string | null = null;
-    private _fileSystem: any | null = null;
-    private _lookupPaths: string[] = [];
-    private _fileName: string | null = null;
+    protected _fileFormat: FileFormat | null = null;
+    protected _encoding: string | null = null;
+    protected _fileSystem: any | null = null;
+    protected _lookupPaths: string[] = [];
+    protected _fileName: string | null = null;
 
     constructor() {}
 

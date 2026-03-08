@@ -1,10 +1,9 @@
-import { Vector4 } from './Vector4';
 import { FVector3 } from './FVector3';
 
 export class Vector3 {
-    private _x: number;
-    private _y: number;
-    private _z: number;
+    private _x!: number;
+    private _y!: number;
+    private _z!: number;
 
     constructor(x: number, y: number, z: number);
     constructor(vec: FVector3);

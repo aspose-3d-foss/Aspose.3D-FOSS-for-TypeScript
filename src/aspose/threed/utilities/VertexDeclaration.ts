@@ -1,13 +1,6 @@
-import { Vector2 } from './Vector2';
-import { Vector3 } from './Vector3';
-import { Vector4 } from './Vector4';
-import { FVector2 } from './FVector2';
-import { FVector3 } from './FVector3';
-import { FVector4 } from './FVector4';
 import { VertexFieldDataType } from './VertexFieldDataType';
 import { VertexFieldSemantic } from './VertexFieldSemantic';
 import { VertexField } from './VertexField';
-import { TriMesh } from '../entities/TriMesh';
 
 export class VertexDeclaration {
     private _fields: VertexField[] = [];
@@ -37,7 +30,7 @@ export class VertexDeclaration {
         return field;
     }
 
-    static fromGeometry(geometry: any, useFloat: boolean): VertexDeclaration {
+    static fromGeometry(_geometry: any, _useFloat: boolean): VertexDeclaration {
         throw new Error('fromGeometry is not implemented');
     }
 

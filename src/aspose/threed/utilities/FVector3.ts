@@ -1,14 +1,14 @@
-import { FVector2, FVector3, FVector4 } from '.';
+import { FVector2 } from '.';
 
 export class FVector3 {
-    private _x: number;
-    private _y: number;
-    private _z: number;
+    private _x: number = 0;
+    private _y: number = 0;
+    private _z: number = 0;
 
     constructor();
     constructor(x: number, y: number, z: number);
     constructor(vec2: FVector2, z: number);
-    constructor(x: number | FVector2, y?: number, z: number = 0.0) {
+    constructor(x?: number | FVector2, y?: number, z?: number) {
         if (x === undefined) {
             this._x = 0.0;
             this._y = 0.0;
@@ -16,11 +16,11 @@ export class FVector3 {
         } else if (x instanceof FVector2) {
             this._x = x.x;
             this._y = x.y;
-            this._z = Number(y!);
+            this._z = y ?? 0;
         } else if (typeof x === 'number') {
             this._x = x;
-            this._y = Number(y!);
-            this._z = Number(z);
+            this._y = y ?? 0;
+            this._z = z ?? 0;
         }
     }
 

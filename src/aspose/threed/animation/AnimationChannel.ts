@@ -1,15 +1,12 @@
 import { KeyframeSequence } from './KeyframeSequence';
-import { Interpolation } from './Interpolation';
-import { BindPoint } from './BindPoint';
-import { KeyFrame } from './KeyFrame';
 
 export class AnimationChannel extends KeyframeSequence {
     private _componentType: any = null;
     private _defaultValue: any = null;
-    private _keyframeSequence: KeyframeSequence = null;
+    private _keyframeSequence: KeyframeSequence | null = null;
 
-    constructor(name: string = null) {
-        super(name);
+    constructor(name?: string) {
+        super(name ?? '');
     }
 
     get componentType(): any {
@@ -24,7 +21,7 @@ export class AnimationChannel extends KeyframeSequence {
         this._defaultValue = value;
     }
 
-    get keyframeSequence(): KeyframeSequence {
+    get keyframeSequence(): KeyframeSequence | null {
         return this._keyframeSequence;
     }
 

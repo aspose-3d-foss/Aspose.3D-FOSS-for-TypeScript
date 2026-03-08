@@ -1,10 +1,9 @@
 import { Entity } from '../Entity';
 import { Property } from '../Property';
-import { PropertyCollection } from '../PropertyCollection';
-import { Scene } from '../Scene';
 import { Vector4 } from '../utilities/Vector4';
 import { VertexElement } from './VertexElement';
 import { VertexElementUV } from './VertexElementUV';
+import { VertexElementFVector } from './VertexElementFVector';
 import { TextureMapping } from './TextureMapping';
 import { MappingMode } from './MappingMode';
 import { ReferenceMode } from './ReferenceMode';
@@ -17,11 +16,8 @@ export class Geometry extends Entity {
     private _castShadows = true;
     private _receiveShadows = true;
 
-    constructor(name: string = null) {
-        if (name === null) {
-            name = '';
-        }
-        super(name);
+    constructor(name: string | null = null) {
+        super(name ?? '');
     }
 
     get visible(): boolean {
@@ -56,14 +52,22 @@ export class Geometry extends Entity {
         return [...this._controlPoints];
     }
 
-    createElement(elementType: VertexElementType, mappingMode: MappingMode = null, referenceMode: ReferenceMode = null): VertexElement {
-        const element = new VertexElementFVector(elementType, '', mappingMode, referenceMode);
+    set controlPoints(value: Vector4[]) {
+        this._controlPoints = [...value];
+    }
+
+    addControlPoint(point: Vector4): void {
+        this._controlPoints.push(point);
+    }
+
+    createElement(elementType: VertexElementType, mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null): VertexElement {
+        const element = new VertexElementFVector(elementType, '', mappingMode ?? MappingMode.CONTROL_POINT, referenceMode ?? ReferenceMode.DIRECT);
         this._vertexElements.push(element);
         return element;
     }
 
-    createElementUV(uvMapping: TextureMapping, mappingMode: MappingMode = null, referenceMode: ReferenceMode = null): VertexElementUV {
-        const element = new VertexElementUV(uvMapping, '', mappingMode, referenceMode);
+    createElementUV(uvMapping: TextureMapping, mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null): VertexElementUV {
+        const element = new VertexElementUV(uvMapping, '', mappingMode ?? MappingMode.CONTROL_POINT, referenceMode ?? ReferenceMode.DIRECT);
         this._vertexElements.push(element);
         return element;
     }
@@ -72,7 +76,7 @@ export class Geometry extends Entity {
         this._vertexElements.push(element);
     }
 
-    getElement(elementType: VertexElementType): VertexElement {
+    getElement(elementType: VertexElementType): VertexElement | null {
         for (const element of this._vertexElements) {
             if (element.vertexElementType === elementType) {
                 return element;
@@ -81,7 +85,7 @@ export class Geometry extends Entity {
         return null;
     }
 
-    getVertexElementOfUV(textureMapping: TextureMapping): VertexElementUV {
+    getVertexElementOfUV(textureMapping: TextureMapping): VertexElementUV | null {
         for (const element of this._vertexElements) {
             if (element instanceof VertexElementUV && element.textureMapping === textureMapping) {
                 return element;
@@ -90,18 +94,18 @@ export class Geometry extends Entity {
         return null;
     }
 
-    removeProperty(prop: Property | string): boolean {
+    removeProperty(_prop: Property | string): boolean {
         return false;
     }
 
-    getProperty(property: string): any {
+    getProperty(_property: string): any {
         return null;
     }
 
-    setProperty(property: string, value: any): void {
+    setProperty(_property: string, _value: any): void {
     }
 
-    findProperty(property: string): Property {
+    findProperty(_property: string): Property | null {
         return null;
     }
 

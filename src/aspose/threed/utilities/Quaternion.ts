@@ -1,10 +1,15 @@
 import { Vector3 } from './Vector3';
+import { Matrix4 } from './Matrix4';
+
+function copysign(x: number, y: number): number {
+    return Math.abs(x) * Math.sign(y);
+}
 
 export class Quaternion {
-    private _w: number;
-    private _x: number;
-    private _y: number;
-    private _z: number;
+    private _w: number = 1;
+    private _x: number = 0;
+    private _y: number = 0;
+    private _z: number = 0;
 
     constructor();
     constructor(w: number, x: number, y: number, z: number);
@@ -116,7 +121,7 @@ export class Quaternion {
         const sinY = 2.0 * (this._w * this._y - this._z * this._x);
         let ry: number;
         if (Math.abs(sinY) >= 1.0) {
-            ry = Math.copysign(Math.PI / 2.0, sinY);
+            ry = copysign(Math.PI / 2.0, sinY);
         } else {
             ry = Math.asin(sinY);
         }
@@ -244,5 +249,30 @@ export class Quaternion {
 
     equals(other: Quaternion): boolean {
         return this._w === other._w && this._x === other._x && this._y === other._y && this._z === other._z;
+    }
+
+    toMatrix(): Matrix4 {
+        const n = this._w * this._w + this._x * this._x + this._y * this._y + this._z * this._z;
+        const s = n === 0 ? 0 : 2 / n;
+
+        const wx = s * this._w * this._x;
+        const wy = s * this._w * this._y;
+        const wz = s * this._w * this._z;
+
+        const xx = s * this._x * this._x;
+        const xy = s * this._x * this._y;
+        const xz = s * this._x * this._z;
+
+        const yy = s * this._y * this._y;
+        const yz = s * this._y * this._z;
+
+        const zz = s * this._z * this._z;
+
+        return new Matrix4([
+            1 - yy - zz, xy - wz, xz + wy, 0,
+            xy + wz, 1 - xx - zz, yz - wx, 0,
+            xz - wy, yz + wx, 1 - xx - yy, 0,
+            0, 0, 0, 1
+        ]);
     }
 }

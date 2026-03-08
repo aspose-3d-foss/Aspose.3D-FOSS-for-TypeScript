@@ -7,12 +7,12 @@ import { KeyFrame } from './KeyFrame';
 
 export class KeyframeSequence extends A3DObject {
     private _keyFrames: KeyFrame[] = [];
-    private _bindPoint: BindPoint = null;
+    private _bindPoint: BindPoint | null = null;
     private _preBehavior = new Extrapolation();
     private _postBehavior = new Extrapolation();
 
-    constructor(name: string = null) {
-        super(name);
+    constructor(name: string | null = null) {
+        super(name ?? undefined);
     }
 
     reset(): void {
@@ -40,8 +40,12 @@ export class KeyframeSequence extends A3DObject {
         return this._properties;
     }
 
-    get bindPoint(): BindPoint {
+    get bindPoint(): BindPoint | null {
         return this._bindPoint;
+    }
+
+    setBindPoint(value: BindPoint): void {
+        this._bindPoint = value;
     }
 
     get keyFrames(): KeyFrame[] {

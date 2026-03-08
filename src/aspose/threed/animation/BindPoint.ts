@@ -6,24 +6,24 @@ import { AnimationChannel } from './AnimationChannel';
 import { KeyframeSequence } from './KeyframeSequence';
 
 export class BindPoint extends A3DObject {
-    private _scene: Scene;
+    private _scene: Scene | null;
     private _property: Property;
     private _channels: AnimationChannel[] = [];
 
-    constructor(scene: Scene, prop: Property) {
+    constructor(scene: Scene | null, prop: Property) {
         super();
         this._scene = scene;
         this._property = prop;
     }
 
-    addChannel(name: string, value: any, type?: any): boolean {
+    addChannel(name: string, value: any, _type?: any): boolean {
         const channel = new AnimationChannel(name);
         channel.defaultValue = value;
         this._channels.push(channel);
         return true;
     }
 
-    getKeyframeSequence(channelName: string): KeyframeSequence {
+    getKeyframeSequence(channelName: string): KeyframeSequence | null {
         for (const channel of this._channels) {
             if (channel.name === channelName && channel.keyframeSequence) {
                 return channel.keyframeSequence;
@@ -34,7 +34,7 @@ export class BindPoint extends A3DObject {
 
     createKeyframeSequence(name: string): KeyframeSequence {
         const seq = new KeyframeSequence(name);
-        seq.bindPoint = this;
+        seq.setBindPoint(this);
         return seq;
     }
 
@@ -43,14 +43,14 @@ export class BindPoint extends A3DObject {
             if (channel.name === channelName) {
                 channel.keyframeSequence = sequence;
                 if (sequence) {
-                    sequence.bindPoint = this;
+                    sequence.setBindPoint(this);
                 }
                 break;
             }
         }
     }
 
-    getChannel(channelName: string): AnimationChannel {
+    getChannel(channelName: string): AnimationChannel | null {
         for (const channel of this._channels) {
             if (channel.name === channelName) {
                 return channel;
@@ -81,5 +81,9 @@ export class BindPoint extends A3DObject {
 
     get channelsCount(): number {
         return this._channels.length;
+    }
+
+    get scene(): Scene | null {
+        return this._scene;
     }
 }

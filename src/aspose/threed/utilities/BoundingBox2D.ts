@@ -1,4 +1,5 @@
 import { Vector2 } from './Vector2';
+import { BoundingBoxExtent } from './BoundingBoxExtent';
 
 export class BoundingBox2D {
     private _minimum: Vector2;
@@ -64,9 +65,12 @@ export class BoundingBox2D {
         if (this._isNull) {
             return BoundingBoxExtent.null;
         }
-        const center = this.getCenter();
         const size = this.getSize();
-        return new BoundingBoxExtent(Math.abs(size.x * 0.5), Math.abs(size.y * 0.5), 0);
+        return new BoundingBoxExtent(
+            Math.abs(size.x * 0.5),
+            Math.abs(size.y * 0.5),
+            0
+        );
     }
 
     get minimum(): Vector2 {
@@ -121,41 +125,5 @@ export class BoundingBox2D {
             new Vector2(Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY),
             new Vector2(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY)
         );
-    }
-}
-
-export class BoundingBoxExtent {
-    private _extentX: number;
-    private _extentY: number;
-    private _extentZ: number;
-
-    constructor(extentX: number = 0.0, extentY: number = 0.0, extentZ: number = 0.0) {
-        this._extentX = Number(extentX);
-        this._extentY = Number(extentY);
-        this._extentZ = Number(extentZ);
-    }
-
-    get extentX(): number {
-        return this._extentX;
-    }
-
-    get extentY(): number {
-        return this._extentY;
-    }
-
-    get extentZ(): number {
-        return this._extentZ;
-    }
-
-    static get null(): BoundingBoxExtent {
-        return new BoundingBoxExtent(0, 0, 0);
-    }
-
-    static get finite(): BoundingBoxExtent {
-        return new BoundingBoxExtent(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
-    }
-
-    static get infinite(): BoundingBoxExtent {
-        return new BoundingBoxExtent(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY);
     }
 }

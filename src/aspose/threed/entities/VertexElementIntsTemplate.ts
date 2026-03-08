@@ -7,7 +7,7 @@ export class VertexElementIntsTemplate extends VertexElement {
     private _data: number[] = [];
     private _indices: number[] = [];
 
-    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode = null, referenceMode: ReferenceMode = null) {
+    constructor(elementType: VertexElementType, name: string = '', mappingMode: MappingMode | null = null, referenceMode: ReferenceMode | null = null) {
         super(elementType, name, mappingMode, referenceMode);
     }
 

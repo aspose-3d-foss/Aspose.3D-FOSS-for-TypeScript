@@ -1,6 +1,5 @@
 import { Vector4 } from '../utilities/Vector4';
 import { Vector3 } from '../utilities/Vector3';
-import { Vector2 } from '../utilities/Vector2';
 
 export class PolygonModifier {
     static triangulate(arg1: any, arg2: any = null, arg3: boolean = false, arg4: any = null): any {
@@ -50,6 +49,7 @@ export class PolygonModifier {
     }
 
     static _triangulateMesh(mesh: any): any {
+        const { Mesh } = require('./Mesh');
         const newMesh = new Mesh(mesh.name ? `${mesh.name}_triangulated` : 'triangulated');
         newMesh.controlPoints = [...mesh.controlPoints];
 
@@ -72,20 +72,21 @@ export class PolygonModifier {
         }
     }
 
-    static _triangulateControlPoints(controlPoints: Vector4[], polygons: number[][], generateNormals: boolean = false, norOut: Vector3[] = null): number[][] {
+    static _triangulateControlPoints(controlPoints: Vector4[], polygons: number[][], generateNormals: boolean = false, norOut: Vector3[] | null = null): number[][] {
         if (polygons === null) {
             polygons = [];
         }
 
         const result: number[][] = [];
-
-        if (generateNormals && norOut !== null) {
-            norOut = [];
-        }
+        const normals: Vector3[] = [];
 
         for (const polygon of polygons) {
-            const triangles = PolygonModifier._triangulatePolygon(controlPoints, polygon, generateNormals, norOut);
+            const triangles = PolygonModifier._triangulatePolygon(controlPoints, polygon, generateNormals, normals);
             result.push(...triangles);
+        }
+
+        if (generateNormals && norOut !== null && Array.isArray(norOut)) {
+            norOut.push(...normals);
         }
 
         return result;
@@ -100,7 +101,7 @@ export class PolygonModifier {
         return PolygonModifier._triangulatePolygon(controlPoints, polygon, false, null);
     }
 
-    static _triangulatePolygon(controlPoints: Vector4[], polygon: number[], generateNormals: boolean = false, norOut: Vector3[] = null): number[][] {
+    static _triangulatePolygon(controlPoints: Vector4[], polygon: number[], generateNormals: boolean = false, norOut: Vector3[] | null = null): number[][] {
         const n = polygon.length;
         if (n < 3) {
             return [];
