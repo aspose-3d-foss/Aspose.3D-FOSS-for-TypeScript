@@ -2,9 +2,8 @@ import { Plugin } from '../Plugin';
 import { Importer } from '../Importer';
 import { Exporter } from '../Exporter';
 import { FormatDetector } from '../FormatDetector';
-import { LoadOptions } from '../LoadOptions';
 import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { StlFormat } from './StlFormat';
 import { StlLoadOptions } from './StlLoadOptions';
 import { StlSaveOptions } from './StlSaveOptions';
@@ -47,6 +46,6 @@ export abstract class StlPlugin extends Plugin {
     }
 
     createSaveOptions(): SaveOptions {
-        return new StlSaveOptions(this);
+        return new StlSaveOptions(this.getFileFormat());
     }
 }

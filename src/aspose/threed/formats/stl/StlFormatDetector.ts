@@ -1,5 +1,6 @@
 import { FormatDetector } from '../FormatDetector';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
+import { StlFormat } from './StlFormat';
 
 export class StlFormatDetector extends FormatDetector {
     constructor() {

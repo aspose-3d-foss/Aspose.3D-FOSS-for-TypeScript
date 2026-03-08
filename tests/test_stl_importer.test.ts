@@ -1,5 +1,6 @@
 import { Scene } from '../src/aspose/threed';
-import { StlLoadOptions, StlFormat, StlImporter, StlFormatDetector } from '../src/aspose/threed/formats/stl';
+import { StlLoadOptions, StlFormat } from '../src/aspose/threed/formats/stl';
+import { Mesh } from '../src/aspose/threed/entities/Mesh';
 
 describe('TestStlImporter', () => {
     it('testAsciiStlImport', () => {
@@ -32,17 +33,16 @@ endsolid TestCube
         const node = scene.rootNode.childNodes[0];
         expect(node.entity).toBeDefined();
 
-        const mesh = node.entity;
+        const mesh = node.entity as Mesh;
         expect(mesh.controlPoints.length).toBe(6);
         expect(mesh.polygonCount).toBe(2);
     });
 
     it('testStlFormat', () => {
-        const stlFormat = StlFormat;
-        expect(stlFormat.canImport).toBe(true);
-        expect(stlFormat.canExport).toBe(true);
-        expect(stlFormat.extension).toBe("stl");
-        expect(stlFormat.extensions).toContain("stl");
+        expect(StlFormat.canImport).toBe(true);
+        expect(StlFormat.canExport).toBe(true);
+        expect(StlFormat.extension).toBe("stl");
+        expect(StlFormat.extensions).toContain("stl");
     });
 
     it('testLoadOptionsProperties', () => {

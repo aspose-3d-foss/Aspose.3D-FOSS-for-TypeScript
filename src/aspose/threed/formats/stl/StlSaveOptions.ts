@@ -1,8 +1,7 @@
 import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 
 export class StlSaveOptions extends SaveOptions {
-    private _fileFormat: FileFormat | null = null;
     private _flipCoordinateSystem: boolean = false;
     private _scale: number = 1.0;
     private _binaryMode: boolean = false;
@@ -12,10 +11,6 @@ export class StlSaveOptions extends SaveOptions {
         if (fileFormat) {
             this._fileFormat = fileFormat;
         }
-    }
-
-    get fileFormat(): FileFormat | null {
-        return this._fileFormat;
     }
 
     get flipCoordinateSystem(): boolean {

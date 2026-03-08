@@ -1,9 +1,25 @@
-import { FileFormat } from '../FileFormat';
+import { FileFormat } from '../../FileFormat';
 import { StlLoadOptions } from './StlLoadOptions';
 import { StlSaveOptions } from './StlSaveOptions';
 
 export class StlFormat extends FileFormat {
     private static _instance: StlFormat | null = null;
+
+    static get canImport(): boolean {
+        return true;
+    }
+
+    static get canExport(): boolean {
+        return true;
+    }
+
+    static get extension(): string {
+        return 'stl';
+    }
+
+    static get extensions(): string[] {
+        return ['stl'];
+    }
 
     constructor() {
         super();
@@ -53,6 +69,6 @@ export class StlFormat extends FileFormat {
     }
 
     createSaveOptions(): StlSaveOptions {
-        return new StlSaveOptions(this);
+        return new StlSaveOptions();
     }
 }

@@ -65,7 +65,7 @@ export class ObjExporter extends Exporter {
             nodeMap[nodeId] = node;
 
             const material = node.material;
-            if (material !== undefined && !Object.values(materialMap).includes(material)) {
+            if (material !== null && !Object.values(materialMap).includes(material)) {
                 materialMap[id(material)] = material;
             }
 
