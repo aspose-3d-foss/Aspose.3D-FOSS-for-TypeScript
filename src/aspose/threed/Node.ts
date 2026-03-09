@@ -134,6 +134,17 @@ export class Node extends SceneObject {
         }
     }
 
+    removeEntity(entity: Entity): void {
+        const index = this._entities.indexOf(entity);
+        if (index > -1) {
+            this._entities.splice(index, 1);
+        }
+    }
+
+    clearEntities(): void {
+        this._entities = [];
+    }
+
     addChildNode(node: Node): void {
         if (!this._childNodes.includes(node)) {
             this._childNodes.push(node);

@@ -21,7 +21,7 @@ describe('testMesh', () => {
         m.createPolygon([4, 5, 6, 7, 8]);
         expect(m.polygonCount).toBe(3);
 
-        const elem = m.createElement(VertexElementType.NORMAL, MappingMode.CONTROL_POINT, null);
+        m.createElement(VertexElementType.NORMAL, MappingMode.CONTROL_POINT, null);
         expect(m.vertexElements.length).toBe(1);
 
         const uvElem = m.createElementUV(TextureMapping.DIFFUSE);

@@ -1,43 +1,46 @@
 import { Plugin } from '../Plugin';
-import { Importer } from '../Importer';
-import { Exporter } from '../Exporter';
-import { FormatDetector } from '../FormatDetector';
-import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../../FileFormat';
+import { ObjImporter } from './ObjImporter';
+import { ObjExporter } from './ObjExporter';
+import { ObjFormatDetector } from './ObjFormatDetector';
 import { ObjFormat } from './ObjFormat';
 import { ObjLoadOptions } from './ObjLoadOptions';
 import { ObjSaveOptions } from './ObjSaveOptions';
-import { ObjFormatDetector } from './ObjFormatDetector';
+import { IOService } from '../IOService';
 
-export abstract class ObjPlugin extends Plugin {
-    protected _importer: Importer;
-    protected _exporter: Exporter;
-    protected _formatDetector: FormatDetector;
+export class ObjPlugin extends Plugin {
+    private static _instance: ObjPlugin | null = null;
+    private _importer: ObjImporter;
+    private _exporter: ObjExporter;
+    private _formatDetector: ObjFormatDetector;
 
     constructor() {
         super();
-        this._importer = this.createImporter();
-        this._exporter = this.createExporter();
+        this._importer = new ObjImporter();
+        this._exporter = new ObjExporter();
         this._formatDetector = new ObjFormatDetector();
     }
 
-    abstract createImporter(): Importer;
+    static getInstance(): ObjPlugin {
+        if (!ObjPlugin._instance) {
+            ObjPlugin._instance = new ObjPlugin();
+            IOService.instance.registerPlugin(ObjPlugin._instance);
+        }
+        return ObjPlugin._instance;
+    }
 
-    abstract createExporter(): Exporter;
-
-    getFileFormat(): FileFormat {
+    getFileFormat(): ObjFormat {
         return ObjFormat.getInstance();
     }
 
-    getImporter(): Importer {
+    getImporter(): ObjImporter {
         return this._importer;
     }
 
-    getExporter(): Exporter {
+    getExporter(): ObjExporter {
         return this._exporter;
     }
 
-    getFormatDetector(): FormatDetector {
+    getFormatDetector(): ObjFormatDetector {
         return this._formatDetector;
     }
 
@@ -45,7 +48,7 @@ export abstract class ObjPlugin extends Plugin {
         return new ObjLoadOptions();
     }
 
-    createSaveOptions(): SaveOptions {
+    createSaveOptions(): ObjSaveOptions {
         return new ObjSaveOptions();
     }
 }

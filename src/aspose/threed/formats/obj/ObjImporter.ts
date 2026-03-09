@@ -35,7 +35,10 @@ export class ObjImporter extends Importer {
         const currentVertexMap: { [key: number]: number } = {};
 
         let content = '';
-        if (stream && typeof stream === 'object' && stream.read) {
+        if (Buffer.isBuffer(stream) || stream instanceof Uint8Array) {
+            const buffer = stream instanceof Buffer ? stream : Buffer.from(stream);
+            content = buffer.toString('utf-8');
+        } else if (stream && typeof stream === 'object' && stream.read) {
             if (stream.seek) {
                 stream.seek(0);
             }

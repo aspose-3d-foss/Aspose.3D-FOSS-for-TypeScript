@@ -7,7 +7,7 @@ describe('TestColladaMaterials', () => {
         const options = new ColladaLoadOptions();
         options.enableMaterials = true;
 
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/collada/cube_triangulate.dae';
+        const file_path = '../foss.3d.python/examples/collada/cube_triangulate.dae';
 
         if (require('fs').existsSync(file_path)) {
             const scene = new Scene();
@@ -50,7 +50,7 @@ describe('TestColladaMaterials', () => {
         const options = new ColladaLoadOptions();
         options.enableMaterials = true;
 
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/collada/sphere.dae';
+        const file_path = '../foss.3d.python/examples/collada/sphere.dae';
 
         if (require('fs').existsSync(file_path)) {
             const scene = new Scene();
@@ -86,7 +86,7 @@ describe('TestColladaMaterials', () => {
         const options = new ColladaLoadOptions();
         options.enableMaterials = false;
 
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/collada/cube_triangulate.dae';
+        const file_path = '../foss.3d.python/examples/collada/cube_triangulate.dae';
 
         if (require('fs').existsSync(file_path)) {
             const scene = new Scene();

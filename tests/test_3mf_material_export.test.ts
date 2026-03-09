@@ -8,7 +8,7 @@ describe('Test3MFMaterialExport', () => {
     let plugin: ThreeMfPlugin;
 
     beforeEach(() => {
-        plugin = new ThreeMfPlugin();
+        plugin = ThreeMfPlugin.getInstance();
     });
 
     it('testExportObjectMaterial', () => {

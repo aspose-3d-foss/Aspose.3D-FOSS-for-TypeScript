@@ -2,7 +2,7 @@ import { FbxTokenizer } from '../src/aspose/threed/formats/fbx';
 
 describe('testFbxTokenizer', () => {
     it('testTokenizer', () => {
-        const token_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/fbx7400ascii/box.fbx';
+        const token_path = '../foss.3d.python/examples/fbx7400ascii/box.fbx';
 
         if (require('fs').existsSync(token_path)) {
             const content = require('fs').readFileSync(token_path, 'utf8');

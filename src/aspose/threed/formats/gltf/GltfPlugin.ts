@@ -9,6 +9,7 @@ import { GltfSaveOptions } from './GltfSaveOptions';
 import { GltfFormatDetector } from './GltfFormatDetector';
 import { GltfImporter } from './GltfImporter';
 import { GltfExporter } from './GltfExporter';
+import { IOService } from '../IOService';
 
 export class GltfPlugin extends Plugin {
     protected _importer: Importer;
@@ -26,6 +27,7 @@ export class GltfPlugin extends Plugin {
     static getInstance(): GltfPlugin {
         if (!GltfPlugin._instance) {
             GltfPlugin._instance = new GltfPlugin();
+            IOService.instance.registerPlugin(GltfPlugin._instance);
         }
         return GltfPlugin._instance;
     }

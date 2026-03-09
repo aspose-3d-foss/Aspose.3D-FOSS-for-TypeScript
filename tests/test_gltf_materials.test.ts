@@ -13,7 +13,7 @@ describe('TestGltfMaterialImport', () => {
     it('testMaterialImportFromBoombox', () => {
         const scene = new Scene();
         const options = new GltfLoadOptions();
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/gltf2/BoomBox/glTF/BoomBox.gltf';
+        const file_path = '../foss.3d.python/examples/gltf2/BoomBox/glTF/BoomBox.gltf';
 
         if (fs.existsSync(file_path)) {
             const buffer = fs.readFileSync(file_path);

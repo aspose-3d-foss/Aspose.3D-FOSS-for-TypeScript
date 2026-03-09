@@ -7,7 +7,7 @@ describe('TestColladaImporterMultipleFiles', () => {
     it('testImportMultipleFiles', () => {
         const options = new ColladaLoadOptions();
 
-        const examples_dir = path.join(__dirname, '../../../foss.python/examples/collada');
+        const examples_dir = path.join(__dirname, '../../foss.3d.python/examples/collada');
 
         if (fs.existsSync(examples_dir)) {
             const dae_files = fs.readdirSync(examples_dir)

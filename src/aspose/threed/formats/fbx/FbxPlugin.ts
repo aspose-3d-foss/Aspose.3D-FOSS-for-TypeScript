@@ -9,22 +9,43 @@ import { FbxExporter } from './FbxExporter';
 import { FbxFormatDetector } from './FbxFormatDetector';
 import { FbxLoadOptions } from './FbxLoadOptions';
 import { FbxSaveOptions } from './FbxSaveOptions';
+import { IOService } from '../IOService';
 
 export class FbxPlugin extends Plugin {
+    private static _instance: FbxPlugin | null = null;
+    private _importer: FbxImporter;
+    private _exporter: FbxExporter;
+    private _formatDetector: FbxFormatDetector;
+
+    constructor() {
+        super();
+        this._importer = new FbxImporter();
+        this._exporter = new FbxExporter();
+        this._formatDetector = new FbxFormatDetector();
+    }
+
+    static getInstance(): FbxPlugin {
+        if (!FbxPlugin._instance) {
+            FbxPlugin._instance = new FbxPlugin();
+            IOService.instance.registerPlugin(FbxPlugin._instance);
+        }
+        return FbxPlugin._instance;
+    }
+
     getFileFormat(): FileFormat {
         return FbxFormat.getInstance();
     }
 
     getImporter(): Importer {
-        return new FbxImporter();
+        return this._importer;
     }
 
     getExporter(): Exporter {
-        return new FbxExporter();
+        return this._exporter;
     }
 
     getFormatDetector(): FormatDetector {
-        return new FbxFormatDetector();
+        return this._formatDetector;
     }
 
     createLoadOptions(): FbxLoadOptions {

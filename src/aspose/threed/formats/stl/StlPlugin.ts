@@ -1,43 +1,46 @@
 import { Plugin } from '../Plugin';
-import { Importer } from '../Importer';
-import { Exporter } from '../Exporter';
-import { FormatDetector } from '../FormatDetector';
-import { SaveOptions } from '../SaveOptions';
-import { FileFormat } from '../../FileFormat';
+import { StlImporter } from './StlImporter';
+import { StlExporter } from './StlExporter';
+import { StlFormatDetector } from './StlFormatDetector';
 import { StlFormat } from './StlFormat';
 import { StlLoadOptions } from './StlLoadOptions';
 import { StlSaveOptions } from './StlSaveOptions';
-import { StlFormatDetector } from './StlFormatDetector';
+import { IOService } from '../IOService';
 
-export abstract class StlPlugin extends Plugin {
-    protected _importer: Importer;
-    protected _exporter: Exporter;
-    protected _formatDetector: FormatDetector;
+export class StlPlugin extends Plugin {
+    private static _instance: StlPlugin | null = null;
+    private _importer: StlImporter;
+    private _exporter: StlExporter;
+    private _formatDetector: StlFormatDetector;
 
     constructor() {
         super();
-        this._importer = this.createImporter();
-        this._exporter = this.createExporter();
+        this._importer = new StlImporter();
+        this._exporter = new StlExporter();
         this._formatDetector = new StlFormatDetector();
     }
 
-    abstract createImporter(): Importer;
+    static getInstance(): StlPlugin {
+        if (!StlPlugin._instance) {
+            StlPlugin._instance = new StlPlugin();
+            IOService.instance.registerPlugin(StlPlugin._instance);
+        }
+        return StlPlugin._instance;
+    }
 
-    abstract createExporter(): Exporter;
-
-    getFileFormat(): FileFormat {
+    getFileFormat(): StlFormat {
         return StlFormat.getInstance();
     }
 
-    getImporter(): Importer {
+    getImporter(): StlImporter {
         return this._importer;
     }
 
-    getExporter(): Exporter {
+    getExporter(): StlExporter {
         return this._exporter;
     }
 
-    getFormatDetector(): FormatDetector {
+    getFormatDetector(): StlFormatDetector {
         return this._formatDetector;
     }
 
@@ -45,7 +48,7 @@ export abstract class StlPlugin extends Plugin {
         return new StlLoadOptions();
     }
 
-    createSaveOptions(): SaveOptions {
-        return new StlSaveOptions(this.getFileFormat());
+    createSaveOptions(): StlSaveOptions {
+        return new StlSaveOptions();
     }
 }

@@ -3,7 +3,7 @@ import { Mesh } from '../src/aspose/threed/entities';
 
 describe('TestSceneOpenSTL', () => {
     it('testSceneOpenAsciiStlFile', () => {
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/stl/stl_ascii.stl';
+        const file_path = '../foss.3d.python/examples/stl/stl_ascii.stl';
 
         if (require('fs').existsSync(file_path)) {
             const scene = Scene.fromFile(file_path);
@@ -24,7 +24,7 @@ describe('TestSceneOpenSTL', () => {
     });
 
     it('testSceneOpenBinaryStlFile', () => {
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/stl/stl_binary.stl';
+        const file_path = '../foss.3d.python/examples/stl/stl_binary.stl';
 
         if (require('fs').existsSync(file_path)) {
             const scene = Scene.fromFile(file_path);

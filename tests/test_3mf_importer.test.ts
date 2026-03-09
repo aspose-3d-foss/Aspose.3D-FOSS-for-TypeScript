@@ -5,7 +5,7 @@ describe('Test3MFImporter', () => {
     let format: any;
 
     beforeEach(() => {
-        plugin = new ThreeMfPlugin();
+        plugin = ThreeMfPlugin.getInstance();
         format = plugin.getFileFormat();
     });
 

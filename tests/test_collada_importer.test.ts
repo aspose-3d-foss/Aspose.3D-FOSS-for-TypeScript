@@ -6,7 +6,7 @@ describe('TestColladaImporter', () => {
         const scene = new Scene();
         const options = new ColladaLoadOptions();
 
-        const file_path = '/home/lexchou/workspace/aspose/foss.3d.typescript/foss.python/examples/collada/cube_triangulate.dae';
+        const file_path = '../foss.3d.python/examples/collada/cube_triangulate.dae';
 
         if (require('fs').existsSync(file_path)) {
             scene.open(file_path, options);

@@ -4,7 +4,7 @@ import { IOService } from '../src/aspose/threed/formats/IOService';
 
 FileFormat.registerFormat(GltfFormat.getInstance());
 const ioService = IOService.instance;
-ioService.registerPlugin(new GltfPlugin());
+ioService.registerPlugin(GltfPlugin.getInstance());
 
 describe('TestGltfImport', () => {
     it('testGltfLoadOptions', () => {

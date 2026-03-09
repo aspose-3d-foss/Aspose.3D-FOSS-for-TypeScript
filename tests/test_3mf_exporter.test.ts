@@ -4,7 +4,7 @@ describe('Test3MFExporter', () => {
     let plugin: ThreeMfPlugin;
 
     beforeEach(() => {
-        plugin = new ThreeMfPlugin();
+        plugin = ThreeMfPlugin.getInstance();
     });
 
     it('testSaveOptions', () => {

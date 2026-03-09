@@ -1,5 +1,4 @@
 import { IOService } from '../src/aspose/threed/formats';
-import { Scene } from '../src/aspose/threed';
 import { StlLoadOptions } from '../src/aspose/threed/formats/stl';
 import { StlSaveOptions } from '../src/aspose/threed/formats/stl';
 

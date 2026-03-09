@@ -16,7 +16,7 @@ export class PolygonModifier {
                 if (arg2.length > 0 && Array.isArray(arg2[0])) {
                     const generateNormals = arg3;
                     const norOut = arg4;
-                    if (generateNormals && Array.isArray(norOut) && norOut.length > 0 && !Array.isArray(norOut[0])) {
+                    if (generateNormals && Array.isArray(norOut) && norOut.length > 0 && !(norOut[0] instanceof Vector3)) {
                         return PolygonModifier._triangulateControlPoints(arg1, arg2, generateNormals, norOut[0]);
                     } else {
                         return PolygonModifier._triangulateControlPoints(arg1, arg2, generateNormals, norOut);
@@ -32,10 +32,12 @@ export class PolygonModifier {
     static _triangulateScene(scene: any): void {
         const processNode = (node: any) => {
             if (node && node.entities) {
-                for (const entity of node.entities) {
+                const entities = [...node.entities];
+                for (const entity of entities) {
                     if (entity && entity.constructor && entity.constructor.name === 'Mesh') {
                         const triangulated = PolygonModifier._triangulateMesh(entity);
-                        node.entities = [triangulated];
+                        node.removeEntity(entity);
+                        node.addEntity(triangulated);
                     }
                 }
             }

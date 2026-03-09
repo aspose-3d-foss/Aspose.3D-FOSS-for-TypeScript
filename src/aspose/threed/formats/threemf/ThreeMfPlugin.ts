@@ -5,6 +5,7 @@ import { ThreeMfFormatDetector } from './ThreeMfFormatDetector';
 import { ThreeMfFormat } from './ThreeMfFormat';
 import { ThreeMfLoadOptions } from './ThreeMfLoadOptions';
 import { ThreeMfSaveOptions } from './ThreeMfSaveOptions';
+import { IOService } from '../IOService';
 
 export class ThreeMfPlugin extends Plugin {
     private static _instance: ThreeMfPlugin | null = null;
@@ -22,6 +23,7 @@ export class ThreeMfPlugin extends Plugin {
     static getInstance(): ThreeMfPlugin {
         if (!ThreeMfPlugin._instance) {
             ThreeMfPlugin._instance = new ThreeMfPlugin();
+            IOService.instance.registerPlugin(ThreeMfPlugin._instance);
         }
         return ThreeMfPlugin._instance;
     }

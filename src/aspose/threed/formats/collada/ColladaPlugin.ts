@@ -8,11 +8,15 @@ import { ColladaFormat } from './ColladaFormat';
 import { ColladaLoadOptions } from './ColladaLoadOptions';
 import { ColladaSaveOptions } from './ColladaSaveOptions';
 import { ColladaFormatDetector } from './ColladaFormatDetector';
+import { ColladaImporter } from './ColladaImporter';
+import { ColladaExporter } from './ColladaExporter';
+import { IOService } from '../IOService';
 
-export abstract class ColladaPlugin extends Plugin {
+export class ColladaPlugin extends Plugin {
     protected _importer: Importer;
     protected _exporter: Exporter;
     protected _formatDetector: FormatDetector;
+    private static _instance: ColladaPlugin | null = null;
 
     constructor() {
         super();
@@ -21,9 +25,21 @@ export abstract class ColladaPlugin extends Plugin {
         this._formatDetector = new ColladaFormatDetector();
     }
 
-    abstract createImporter(): Importer;
+    static getInstance(): ColladaPlugin {
+        if (!ColladaPlugin._instance) {
+            ColladaPlugin._instance = new ColladaPlugin();
+            IOService.instance.registerPlugin(ColladaPlugin._instance);
+        }
+        return ColladaPlugin._instance;
+    }
 
-    abstract createExporter(): Exporter;
+    createImporter(): Importer {
+        return new ColladaImporter();
+    }
+
+    createExporter(): Exporter {
+        return new ColladaExporter();
+    }
 
     getFileFormat(): FileFormat {
         return ColladaFormat.getInstance();
