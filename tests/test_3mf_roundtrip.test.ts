@@ -1,19 +1,13 @@
 import { Scene, Node } from '../src/aspose/threed';
-import { ThreeMfLoadOptions, ThreeMfSaveOptions, ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
+import { ThreeMfLoadOptions, ThreeMfSaveOptions } from '../src/aspose/threed/formats/threemf';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4 } from '../src/aspose/threed/utilities';
 
 describe('Test3MFRoundTrip', () => {
-    let plugin: ThreeMfPlugin;
-
-    beforeEach(() => {
-        plugin = new ThreeMfPlugin();
-    });
-
     it('testRoundTripExportImport', () => {
         const scene = new Scene();
-        const loadOptions = plugin.createLoadOptions();
-        const saveOptions = plugin.createSaveOptions();
+        const loadOptions = new ThreeMfLoadOptions();
+        const saveOptions = new ThreeMfSaveOptions();
 
         const mesh = new Mesh('test_cube');
 

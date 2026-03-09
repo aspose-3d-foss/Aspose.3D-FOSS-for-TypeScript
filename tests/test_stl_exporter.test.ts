@@ -1,7 +1,7 @@
 import { Scene, Node } from '../src/aspose/threed';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4 } from '../src/aspose/threed/utilities';
-import { StlExporter, StlSaveOptions, StlFormat } from '../src/aspose/threed/formats/stl';
+import { StlSaveOptions, StlFormat } from '../src/aspose/threed/formats/stl';
 import * as fs from 'fs';
 
 describe('TestStlExporter', () => {

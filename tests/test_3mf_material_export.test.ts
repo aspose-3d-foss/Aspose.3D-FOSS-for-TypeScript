@@ -1,5 +1,5 @@
 import { Scene, Node } from '../src/aspose/threed';
-import { ThreeMfSaveOptions, ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
+import { ThreeMfPlugin } from '../src/aspose/threed/formats/threemf';
 import { Mesh } from '../src/aspose/threed/entities';
 import { Vector4, Vector3 } from '../src/aspose/threed/utilities';
 import { LambertMaterial } from '../src/aspose/threed/shading';

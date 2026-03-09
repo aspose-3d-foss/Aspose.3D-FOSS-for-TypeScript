@@ -3,7 +3,7 @@ import { ObjFormat, StlFormat } from '../src/aspose/threed/formats';
 
 describe('TestPluginSystem', () => {
     test('test_plugin_registration', () => {
-        const ioService = new IOService();
+        const ioService = IOService.instance;
         
         const objPlugin = ioService.getPluginForExtension('.obj');
         const stlPlugin = ioService.getPluginForExtension('.stl');
@@ -19,14 +19,14 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_get_plugin_by_format', () => {
-        const ioService = new IOService();
+        const ioService = IOService.instance;
         const objFormat = new ObjFormat();
         const stlFormat = new StlFormat();
-        const threeMfFormat = ioService.getPluginForExtension('.3mf').getFileFormat();
+        const threeMfFormat = ioService.getPluginForExtension('.3mf')!.getFileFormat();
 
-        const objPlugin = ioService.getPluginForFormat(objFormat);
-        const stlPlugin = ioService.getPluginForFormat(stlFormat);
-        const threeMfPlugin = ioService.getPluginForFormat(threeMfFormat);
+        const objPlugin = ioService.getPluginForFormat(objFormat)!;
+        const stlPlugin = ioService.getPluginForFormat(stlFormat)!;
+        const threeMfPlugin = ioService.getPluginForFormat(threeMfFormat)!;
         
         const objPluginClass = objPlugin.constructor;
         const stlPluginClass = stlPlugin.constructor;
@@ -38,9 +38,9 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_get_plugin_by_extension', () => {
-        const ioService = new IOService();
-        const objPlugin = ioService.getPluginForExtension('.obj');
-        const stlPlugin = ioService.getPluginForExtension('.stl');
+        const ioService = IOService.instance;
+        const objPlugin = ioService.getPluginForExtension('.obj')!;
+        const stlPlugin = ioService.getPluginForExtension('.stl')!;
         
         const objPluginClass = objPlugin.constructor;
         const stlPluginClass = stlPlugin.constructor;
@@ -50,7 +50,7 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_get_plugin_by_extension_case_insensitive', () => {
-        const ioService = new IOService();
+        const ioService = IOService.instance;
         const objPlugin1 = ioService.getPluginForExtension('.obj');
         const objPlugin2 = ioService.getPluginForExtension('.OBJ');
         const objPlugin3 = ioService.getPluginForExtension('.Obj');
@@ -60,9 +60,9 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_plugin_creates_load_options', () => {
-        const ioService = new IOService();
-        const objPlugin = ioService.getPluginForExtension('.obj');
-        const stlPlugin = ioService.getPluginForExtension('.stl');
+        const ioService = IOService.instance;
+        const objPlugin = ioService.getPluginForExtension('.obj')!;
+        const stlPlugin = ioService.getPluginForExtension('.stl')!;
         
         const objLoadOpts = objPlugin.createLoadOptions();
         const stlLoadOpts = stlPlugin.createLoadOptions();
@@ -72,9 +72,9 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_plugin_creates_save_options', () => {
-        const ioService = new IOService();
-        const objPlugin = ioService.getPluginForExtension('.obj');
-        const stlPlugin = ioService.getPluginForExtension('.stl');
+        const ioService = IOService.instance;
+        const objPlugin = ioService.getPluginForExtension('.obj')!;
+        const stlPlugin = ioService.getPluginForExtension('.stl')!;
         
         const objSaveOpts = objPlugin.createSaveOptions();
         const stlSaveOpts = stlPlugin.createSaveOptions();
@@ -84,10 +84,10 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_plugin_registers_components', () => {
-        const ioService = new IOService();
+        const ioService = IOService.instance;
         
-        const objPlugin = ioService.getPluginForExtension('.obj');
-        const stlPlugin = ioService.getPluginForExtension('.stl');
+        const objPlugin = ioService.getPluginForExtension('.obj')!;
+        const stlPlugin = ioService.getPluginForExtension('.stl')!;
         
         const objImporter = objPlugin.getImporter();
         const objExporter = objPlugin.getExporter();
@@ -107,7 +107,7 @@ describe('TestPluginSystem', () => {
     });
 
     test('test_plugin_singleton', () => {
-        const ioService = new IOService();
+        const ioService = IOService.instance;
         const objPlugin1 = ioService.getPluginForExtension('.obj');
         const objPlugin2 = ioService.getPluginForExtension('.obj');
         

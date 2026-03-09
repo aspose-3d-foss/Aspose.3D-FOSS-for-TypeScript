@@ -118,9 +118,28 @@ export class Scene extends SceneObject {
         return null;
     }
 
-    open(_fileOrStream: any, _options?: any): void {
+    open(fileOrStream: any, options?: any): void {
         this.clear();
-        throw new Error('open is not implemented');
+        
+        if (typeof fileOrStream === 'string') {
+            const fs = require('fs');
+            const buffer = fs.readFileSync(fileOrStream);
+            this.openFromBuffer(buffer, options);
+        } else if (fileOrStream && typeof fileOrStream.read === 'function') {
+            const chunks: Buffer[] = [];
+            let totalLength = 0;
+            const stream = fileOrStream as NodeJS.ReadableStream;
+            stream.on('data', (chunk: Buffer) => {
+                chunks.push(chunk);
+                totalLength += chunk.length;
+            });
+            stream.on('end', () => {
+                const buffer = Buffer.concat(chunks, totalLength);
+                this.openFromBuffer(buffer, options);
+            });
+        } else {
+            throw new TypeError('fileOrStream must be a file path or a readable stream');
+        }
     }
 
     openFromBuffer(buffer: Buffer | Uint8Array, options?: any): void {
@@ -133,6 +152,8 @@ export class Scene extends SceneObject {
             const magic = buf.readUInt32LE(0);
             if (magic === 0x46546C67) {
                 detectedFormat = 'glb';
+            } else if (magic === 0x04034B50) {
+                detectedFormat = '3mf';
             }
         }
         
@@ -146,6 +167,10 @@ export class Scene extends SceneObject {
                     }
                 } catch {
                 }
+            } else if (content.startsWith('<') || content.includes('<?xml') || content.includes('<COLLADA')) {
+                detectedFormat = 'dae';
+            } else if (content.includes('mtllib') || content.includes('usemtl') || content.match(/^v\s+-?\d/)) {
+                detectedFormat = 'obj';
             }
         }
         
@@ -166,6 +191,27 @@ export class Scene extends SceneObject {
             const format = GltfFormat.getInstance();
             const loadOptions = options || format.createLoadOptions();
             const importer = new GltfImporter();
+            importer.importScene(this, buffer, loadOptions);
+        } else if (detectedFormat === '3mf') {
+            const { ThreeMfFormat } = require('./formats/threemf/ThreeMfFormat');
+            const { ThreeMfImporter } = require('./formats/threemf/ThreeMfImporter');
+            const format = ThreeMfFormat.getInstance();
+            const loadOptions = options || format.createLoadOptions();
+            const importer = new ThreeMfImporter();
+            importer.importScene(this, buffer, loadOptions);
+        } else if (detectedFormat === 'dae') {
+            const { ColladaFormat } = require('./formats/collada/ColladaFormat');
+            const { ColladaImporter } = require('./formats/collada/ColladaImporter');
+            const format = ColladaFormat.getInstance();
+            const loadOptions = options || format.createLoadOptions();
+            const importer = new ColladaImporter();
+            importer.importScene(this, buffer, loadOptions);
+        } else if (detectedFormat === 'obj') {
+            const { ObjFormat } = require('./formats/obj/ObjFormat');
+            const { ObjImporter } = require('./formats/obj/ObjImporter');
+            const format = ObjFormat.getInstance();
+            const loadOptions = options || format.createLoadOptions();
+            const importer = new ObjImporter();
             importer.importScene(this, buffer, loadOptions);
         } else {
             const { StlFormat } = require('./formats/stl/StlFormat');

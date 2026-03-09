@@ -73,7 +73,7 @@ describe('TestSceneSaveSTL', () => {
 
         expect(scene2.rootNode.childNodes.length).toBe(1);
         const node2 = scene2.rootNode.childNodes[0];
-        const mesh2 = node2.entity;
-        expect(mesh2.polygonCount).toBe(1);
+        const mesh2 = node2.entity as Mesh;
+        expect(mesh2!.polygonCount).toBe(1);
     });
 });

@@ -1,5 +1,5 @@
 import { Scene } from '../src/aspose/threed';
-import { StlFormat } from '../src/aspose/threed/formats/stl';
+import { Mesh } from '../src/aspose/threed/entities';
 
 describe('TestSceneOpenSTL', () => {
     it('testSceneOpenAsciiStlFile', () => {
@@ -14,9 +14,9 @@ describe('TestSceneOpenSTL', () => {
             const node = scene.rootNode.childNodes[0];
             expect(node.entity).toBeDefined();
 
-            const mesh = node.entity;
-            expect(mesh.controlPoints.length).toBe(6000);
-            expect(mesh.polygonCount).toBe(2000);
+            const mesh = node.entity as Mesh;
+            expect(mesh!.controlPoints.length).toBe(6000);
+            expect(mesh!.polygonCount).toBe(2000);
             expect(node.name).toBe("Object01");
         } else {
             pending(`File not found: ${file_path}`);
@@ -35,9 +35,9 @@ describe('TestSceneOpenSTL', () => {
             const node = scene.rootNode.childNodes[0];
             expect(node.entity).toBeDefined();
 
-            const mesh = node.entity;
-            expect(mesh.controlPoints.length).toBe(6000);
-            expect(mesh.polygonCount).toBe(2000);
+            const mesh = node.entity as Mesh;
+            expect(mesh!.controlPoints.length).toBe(6000);
+            expect(mesh!.polygonCount).toBe(2000);
         } else {
             pending(`File not found: ${file_path}`);
         }

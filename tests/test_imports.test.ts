@@ -1,6 +1,6 @@
 describe('testImports', () => {
     it('testModuleImports', () => {
-        const { Scene, Node, Entity, Light } = require('../src/aspose/threed');
+        const { Scene, Node, Light } = require('../src/aspose/threed');
         const { Vector3, Matrix4 } = require('../src/aspose/threed/utilities');
 
         const scene = new Scene();

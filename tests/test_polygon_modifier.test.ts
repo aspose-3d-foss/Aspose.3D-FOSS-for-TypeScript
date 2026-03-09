@@ -99,7 +99,7 @@ describe('PolygonModifier', () => {
         scene.rootNode.addChildNode(meshNode);
 
         PolygonModifier.triangulate(scene);
-        expect(meshNode.entity.polygonCount).toBe(6);
+        expect((meshNode.entity as Mesh).polygonCount).toBe(6);
     });
 
     test('triangulate_with_normals', () => {

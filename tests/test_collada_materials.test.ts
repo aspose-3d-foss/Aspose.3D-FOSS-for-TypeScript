@@ -1,5 +1,6 @@
-import { Scene } from '../src/aspose/threed';
+import { Scene, Node } from '../src/aspose/threed';
 import { ColladaLoadOptions } from '../src/aspose/threed/formats/collada';
+import { PhongMaterial, LambertMaterial } from '../src/aspose/threed/shading';
 
 describe('TestColladaMaterials', () => {
     it('testPhongMaterialImport', () => {
@@ -14,7 +15,7 @@ describe('TestColladaMaterials', () => {
 
             expect(scene.rootNode).toBeDefined();
 
-            let boxNode = null;
+            let boxNode: Node | null = null;
             for (const node of scene.rootNode.childNodes) {
                 if (node.name === 'Box') {
                     boxNode = node;
@@ -23,14 +24,16 @@ describe('TestColladaMaterials', () => {
             }
 
             expect(boxNode).toBeDefined();
-            expect(boxNode.material).toBeDefined();
-            expect(boxNode.material.constructor.name).toBe('PhongMaterial');
+            expect(boxNode).not.toBeNull();
+            const boxNodeChecked = boxNode!;
+            expect(boxNodeChecked.material).toBeDefined();
+            expect(boxNodeChecked.material!.constructor.name).toBe('PhongMaterial');
 
-            const material = boxNode.material;
+            const material = boxNodeChecked.material! as PhongMaterial;
             expect(material.diffuseColor).toBeDefined();
-            expect(material.diffuseColor.x).toBeCloseTo(0.137255, 5);
-            expect(material.diffuseColor.y).toBeCloseTo(0.403922, 5);
-            expect(material.diffuseColor.z).toBeCloseTo(0.870588, 5);
+            expect(material.diffuseColor!.x).toBeCloseTo(0.137255, 5);
+            expect(material.diffuseColor!.y).toBeCloseTo(0.403922, 5);
+            expect(material.diffuseColor!.z).toBeCloseTo(0.870588, 5);
 
             expect(material.specularColor).toBeDefined();
             expect(material.emissiveColor).toBeDefined();
@@ -55,7 +58,7 @@ describe('TestColladaMaterials', () => {
 
             expect(scene.rootNode).toBeDefined();
 
-            let sphereNode = null;
+            let sphereNode: Node | null = null;
             for (const node of scene.rootNode.childNodes) {
                 if (node.name.toLowerCase().includes('sphere')) {
                     sphereNode = node;
@@ -64,14 +67,16 @@ describe('TestColladaMaterials', () => {
             }
 
             expect(sphereNode).toBeDefined();
-            expect(sphereNode.material).toBeDefined();
-            expect(sphereNode.material.constructor.name).toBe('LambertMaterial');
+            expect(sphereNode).not.toBeNull();
+            const sphereNodeChecked = sphereNode!;
+            expect(sphereNodeChecked.material).toBeDefined();
+            expect(sphereNodeChecked.material!.constructor.name).toBe('LambertMaterial');
 
-            const material = sphereNode.material;
+            const material = sphereNodeChecked.material! as LambertMaterial;
             expect(material.diffuseColor).toBeDefined();
-            expect(material.diffuseColor.x).toBeCloseTo(0.5, 3);
-            expect(material.diffuseColor.y).toBeCloseTo(0.5, 3);
-            expect(material.diffuseColor.z).toBeCloseTo(0.5, 3);
+            expect(material.diffuseColor!.x).toBeCloseTo(0.5, 3);
+            expect(material.diffuseColor!.y).toBeCloseTo(0.5, 3);
+            expect(material.diffuseColor!.z).toBeCloseTo(0.5, 3);
         } else {
             pending(`File not found: ${file_path}`);
         }
@@ -89,7 +94,7 @@ describe('TestColladaMaterials', () => {
 
             expect(scene.rootNode).toBeDefined();
 
-            let boxNode = null;
+            let boxNode: Node | null = null;
             for (const node of scene.rootNode.childNodes) {
                 if (node.name === 'Box') {
                     boxNode = node;
@@ -98,7 +103,8 @@ describe('TestColladaMaterials', () => {
             }
 
             expect(boxNode).toBeDefined();
-            expect(boxNode.material).toBeNull();
+            expect(boxNode).not.toBeNull();
+            expect(boxNode!.material).toBeNull();
         } else {
             pending(`File not found: ${file_path}`);
         }

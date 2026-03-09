@@ -12,7 +12,8 @@ describe('verifyModule', () => {
     });
 
     it('testCoreClasses', () => {
-        const { Scene, Node, Entity, Transform, GlobalTransform } = require('../src/aspose/threed');
+        const { Scene, Node } = require('../src/aspose/threed');
+        const { Mesh } = require('../src/aspose/threed/entities');
 
         const scene = new Scene();
         const node = new Node("test");

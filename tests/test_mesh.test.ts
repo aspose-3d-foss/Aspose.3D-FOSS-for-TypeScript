@@ -1,5 +1,5 @@
 import { Mesh } from '../src/aspose/threed';
-import { VertexElementType, MappingMode, TextureMapping, VertexElementType as Vet, MappingMode as MM } from '../src/aspose/threed/entities';
+import { VertexElementType, MappingMode, TextureMapping } from '../src/aspose/threed/entities';
 import { Vector4 } from '../src/aspose/threed/utilities';
 
 describe('testMesh', () => {
@@ -21,7 +21,7 @@ describe('testMesh', () => {
         m.createPolygon([4, 5, 6, 7, 8]);
         expect(m.polygonCount).toBe(3);
 
-        const elem = m.createElement(Vet.NORMAL, MM.CONTROL_POINT, null);
+        const elem = m.createElement(VertexElementType.NORMAL, MappingMode.CONTROL_POINT, null);
         expect(m.vertexElements.length).toBe(1);
 
         const uvElem = m.createElementUV(TextureMapping.DIFFUSE);
