@@ -49,7 +49,7 @@ export class Geometry extends Entity {
     }
 
     get controlPoints(): Vector4[] {
-        return [...this._controlPoints];
+        return this._controlPoints;
     }
 
     set controlPoints(value: Vector4[]) {

@@ -24,14 +24,15 @@ export class StlImporter extends Importer {
         const isBinary = this._isBinarySTL(buffer);
         
         const mesh = new Mesh('STL_Mesh');
+        let objectName = 'STL_Node';
         
         if (isBinary) {
             this._parseBinarySTL(buffer, mesh, stlOptions);
         } else {
-            this._parseAsciiSTL(buffer, mesh, stlOptions);
+            objectName = this._parseAsciiSTL(buffer, mesh, stlOptions);
         }
         
-        const node = scene.rootNode.createChildNode('STL_Node', mesh);
+        const node = scene.rootNode.createChildNode(objectName, mesh);
         node.entity = mesh;
     }
 
@@ -59,7 +60,7 @@ export class StlImporter extends Importer {
         return buffer.length === expectedSize;
     }
 
-    private _parseAsciiSTL(buffer: Buffer, mesh: Mesh, options: StlLoadOptions): void {
+    private _parseAsciiSTL(buffer: Buffer, mesh: Mesh, options: StlLoadOptions): string {
         const content = buffer.toString('utf-8');
         const lines = content.split('\n');
         
@@ -67,12 +68,21 @@ export class StlImporter extends Importer {
         const flip = options.flipCoordinateSystem;
         
         let vertexIndex = 0;
+        let objectName = 'STL_Node';
         
         for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim().toLowerCase();
+            const line = lines[i].trim();
+            const lineLower = line.toLowerCase();
             
-            if (line.startsWith('vertex')) {
-                const parts = line.split(/\s+/);
+            if (i === 0 && lineLower.startsWith('solid')) {
+                const parts = line.trim().split(/\s+/);
+                if (parts.length > 1) {
+                    objectName = parts.slice(1).join(' ');
+                }
+            }
+            
+            if (lineLower.startsWith('vertex')) {
+                const parts = lineLower.split(/\s+/);
                 if (parts.length >= 4) {
                     let x = parseFloat(parts[1]) * scale;
                     let y = parseFloat(parts[2]) * scale;
@@ -92,6 +102,8 @@ export class StlImporter extends Importer {
                 }
             }
         }
+        
+        return objectName;
     }
 
     private _parseBinarySTL(buffer: Buffer, mesh: Mesh, options: StlLoadOptions): void {

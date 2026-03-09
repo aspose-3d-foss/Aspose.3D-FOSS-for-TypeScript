@@ -207,7 +207,7 @@ export class GltfImporter extends Importer {
                     material.albedo = new (require('../../utilities/Vector3').Vector3)(pbr.baseColorFactor[0], pbr.baseColorFactor[1], pbr.baseColorFactor[2]);
                 }
                 material.metallicFactor = pbr.metallicFactor ?? 0.0;
-                material.roughnessFactor = pbr.roughnessFactor ?? 0.0;
+                material.roughnessFactor = pbr.roughnessFactor ?? 1.0;
             }
             
             if (matDef.emissiveFactor && matDef.emissiveFactor.length >= 3) {

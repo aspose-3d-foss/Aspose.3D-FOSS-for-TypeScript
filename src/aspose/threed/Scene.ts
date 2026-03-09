@@ -232,6 +232,25 @@ export class Scene extends SceneObject {
             saveOptions = options || format.createSaveOptions();
         } else if (formatOrOptions && formatOrOptions.constructor.name.endsWith('SaveOptions')) {
             saveOptions = formatOrOptions;
+            if (typeof fileOrStream === 'string') {
+                const ext = fileOrStream.split('.').pop()?.toLowerCase();
+                if (ext === '3mf') {
+                    const { ThreeMfFormat } = require('./formats/threemf/ThreeMfFormat');
+                    format = ThreeMfFormat.getInstance();
+                } else if (ext === 'stl') {
+                    const { StlFormat } = require('./formats/stl/StlFormat');
+                    format = StlFormat.getInstance();
+                } else if (ext === 'gltf' || ext === 'glb') {
+                    const { GltfFormat } = require('./formats/gltf/GltfFormat');
+                    format = GltfFormat.getInstance();
+                } else if (ext === 'dae') {
+                    const { ColladaFormat } = require('./formats/collada/ColladaFormat');
+                    format = ColladaFormat.getInstance();
+                } else if (ext === 'obj') {
+                    const { ObjFormat } = require('./formats/obj/ObjFormat');
+                    format = ObjFormat.getInstance();
+                }
+            }
         } else if (formatOrOptions && typeof formatOrOptions === 'string') {
             const ext = formatOrOptions.toLowerCase();
             if (ext === 'obj') {
