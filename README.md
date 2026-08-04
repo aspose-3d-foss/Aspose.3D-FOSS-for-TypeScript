@@ -79,19 +79,43 @@ flowchart LR
 
 ## Key capabilities
 
+**Format support** — `scene.save()`/`scene.open()` pick the format from the target extension or an
+explicit format object; every format below supports both directions except where noted:
+
+| Format | Import | Export |
+|---|---|---|
+| OBJ (with `.mtl` materials) | ✅ | ✅ |
+| glTF 2.0 / GLB | ✅ | JSON/ASCII ✅ — binary (`.glb`) currently broken, see [Scope and limitations](#scope-and-limitations) |
+| STL (ASCII and binary) | ✅ | ✅ |
+| 3MF | ✅ | ✅ |
+| FBX | ✅ | ✅ |
+| COLLADA (.dae) | ✅ | ✅ |
+
+**Scene management**
 - Build 3D scenes from scratch with `Scene`, `Node`, `Mesh`, and `Transform`, or load existing files
   with `Scene.open()` / `Scene.openFromBuffer()`.
-- Import and export OBJ (with `.mtl` materials), glTF 2.0/GLB, STL (ASCII and binary), 3MF, FBX, and
-  COLLADA (DAE) — `scene.save()` picks the format from the target extension or an explicit format
-  object.
+- Hierarchical node structure via `Node.childNodes`/`parentNode`, with entity and material
+  attachment per node.
+
+**Materials**
 - Apply `LambertMaterial`, `PhongMaterial`, and `PbrMaterial` materials, including glTF-style
   metallic/roughness PBR channels.
+
+**Mesh operations**
 - Triangulate arbitrary polygons with `Mesh.triangulate()` or the standalone
   `PolygonModifier.triangulate()`.
-- Work with vector/matrix math primitives — `Vector2`, `Vector3`, `Vector4`, `Matrix4`, `Quaternion`,
-  `BoundingBox` — and keyframe animation types (`AnimationClip`, `KeyframeSequence`,
-  `Interpolation`).
-- Fully typed API compiled under strict TypeScript settings (`noImplicitAny`, `strictNullChecks`).
+- Manage per-vertex data through the typed `VertexElement` subclasses (normals, UVs, vertex
+  colors, smoothing groups).
+
+**3D primitives**
+- Vector/matrix math — `Vector2`, `Vector3`, `Vector4`, `Matrix4`, `Quaternion`, `BoundingBox`,
+  `BoundingBox2D`.
+- `Camera` and `Light` scene objects.
+
+**Animation**
+- Keyframe animation types — `AnimationClip`, `KeyframeSequence`, `Interpolation`.
+
+Fully typed API compiled under strict TypeScript settings (`noImplicitAny`, `strictNullChecks`).
 
 ## Installation
 
@@ -107,6 +131,11 @@ npm run build
 `npm run build` compiles `src/` to `dist/` with `tsc`, mirroring the source layout — the scene-graph
 API ends up at `dist/aspose/threed`, and each format module at `dist/aspose/threed/formats/<format>`
 (for example `dist/aspose/threed/formats/obj`).
+
+Built and tested against TypeScript `^5.8.3` (`tsconfig.json` targets `ES2020`, output `commonjs`).
+`package.json` declares no minimum Node.js version; development uses `@types/node` `^22.15.17`.
+This is a Node.js library — it reads files via the `fs` module directly, so consuming it in a
+browser would need a bundler and has not been verified there.
 
 ## Quick start
 
