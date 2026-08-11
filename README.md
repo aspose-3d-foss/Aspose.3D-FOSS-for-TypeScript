@@ -2,6 +2,8 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) [![Contributors](https://img.shields.io/github/contributors/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript.svg)](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/graphs/contributors)
 
+![Aspose.3D FOSS for TypeScript](https://products.aspose.org/media/3d/typescript/banner-readme.png)
+
 Aspose.3D FOSS for TypeScript is a free, open-source, MIT-licensed library for building, loading,
 and exporting 3D scenes in Node.js and TypeScript. It exposes a strongly-typed scene-graph API —
 `Scene`, `Node`, `Entity`, `Mesh`, `Camera`, `Light`, and `Transform` — together with importers and
@@ -20,64 +22,40 @@ exporters for OBJ, glTF 2.0/GLB, STL, 3MF, FBX, and COLLADA.
 - [Development and testing](#development-and-testing)
 - [License](#license)
 
-## At a glance
+## At a Glance
 
 ```mermaid
-flowchart LR
-  subgraph Inputs["Inputs and formats"]
-    I1["OBJ files"]
-    I2["glTF (JSON) — works; binary GLB export currently broken (RangeError)"]
-    I3["STL files"]
-    I4["3MF files"]
-    I5["FBX files"]
-    I6["COLLADA (.dae) files"]
-    I7["File paths"]
-    I8["Buffers and readable streams"]
+flowchart TD
+  subgraph StartingPoints["Starting Points"]
+    direction TB
+    sp1["OBJ, glTF, and STL files"]
+    sp2["FBX, COLLADA, and 3MF files"]
   end
-
   PRODUCT["Aspose.3D FOSS for TypeScript"]
-
-  subgraph Capabilities["Core capabilities"]
-    C1["Scene graph construction"]
-    C2["Multi-format import"]
-    C3["Multi-format export"]
-    C4["Material system"]
-    C5["Mesh triangulation"]
-    C6["Vector, matrix, and animation types"]
+  subgraph Capabilities["Core Capabilities"]
+    direction LR
+    subgraph capl[" "]
+      direction TB
+      c1["Multi-format import and export (OBJ, glTF, STL, 3MF, FBX, COLLADA)"]
+      c2["Scene management (Scene, Node, Mesh, Transform)"]
+      c3["Materials (Lambert, Phong, PBR)"]
+    end
+    subgraph capr[" "]
+      direction TB
+      c4["Mesh operations (triangulation, vertex element data)"]
+      c5["3D primitives (vector/matrix math, Camera, Light)"]
+      c6["Keyframe animation"]
+    end
   end
-
-  subgraph Outputs["Outputs and accessible content"]
-    O1["Node hierarchy and Mesh geometry"]
-    O2["Lambert, Phong, and PBR materials"]
-    O3["Exported 3D files"]
-    O4["Bounding boxes and transforms"]
-    O5["Keyframe animation data"]
+  subgraph Outputs["Outputs"]
+    direction TB
+    o1["OBJ, STL, and glTF files (binary glTF export currently broken)"]
+    o2["FBX, COLLADA, and 3MF files"]
   end
-
-  I1 --- PRODUCT
-  I2 --- PRODUCT
-  I3 --- PRODUCT
-  I4 --- PRODUCT
-  I5 --- PRODUCT
-  I6 --- PRODUCT
-  I7 --- PRODUCT
-  I8 --- PRODUCT
-  PRODUCT --- C1
-  PRODUCT --- C2
-  PRODUCT --- C3
-  PRODUCT --- C4
-  PRODUCT --- C5
-  PRODUCT --- C6
-  C1 --- O1
-  C2 --- O1
-  C3 --- O3
-  C4 --- O2
-  C5 --- O1
-  C6 --- O4
-  C6 --- O5
+  StartingPoints --> PRODUCT --> Capabilities --> Outputs
 ```
 
-## Key capabilities
+## Key Capabilities
 
 **Format support** — `scene.save()`/`scene.open()` pick the format from the target extension or an
 explicit format object; every format below supports both directions except where noted:
@@ -137,7 +115,7 @@ Built and tested against TypeScript `^5.8.3` (`tsconfig.json` targets `ES2020`, 
 This is a Node.js library — it reads files via the `fs` module directly, so consuming it in a
 browser would need a bundler and has not been verified there.
 
-## Quick start
+## Quick Start
 
 Load an OBJ file and inspect the imported scene:
 
@@ -163,13 +141,13 @@ Save the same scene as binary STL:
 scene.save('model.stl', 'stl');
 ```
 
-## Additional examples
+## Additional Examples
 
 Every example below is exercised by the project's own test suite. See the [`tests`](tests/)
 directory for the full set (there is no separate `examples/` directory). The most common
 operations are collected below.
 
-### Build a mesh from scratch and export to STL
+### Build a Mesh From Scratch and Export to STL
 
 ```typescript
 import { Scene, Node } from './dist/aspose/threed';
@@ -193,9 +171,9 @@ scene.save('triangle.stl');
 ```
 
 <details>
-<summary>View additional examples</summary>
+<summary>View Additional Examples</summary>
 
-### Apply a PBR material
+### Apply a PBR Material
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
@@ -221,7 +199,7 @@ node.entity = mesh;
 node.material = material;
 ```
 
-### Triangulate polygons directly with PolygonModifier
+### Triangulate Polygons Directly With PolygonModifier
 
 ```typescript
 import { PolygonModifier } from './dist/aspose/threed/entities';
@@ -239,7 +217,7 @@ const triangles = PolygonModifier.triangulate(controlPoints, [quad]);
 console.log(triangles.length); // 2
 ```
 
-### Export to COLLADA with a Phong material
+### Export to COLLADA With a Phong Material
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
@@ -266,7 +244,7 @@ node.material = material;
 scene.save('scene.dae');
 ```
 
-### Convert STL to glTF
+### Convert STL to GLTF
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
@@ -285,7 +263,7 @@ non-empty mesh — see [Scope and limitations](#scope-and-limitations). Use the
 JSON/ASCII form (`binaryMode = false`, the default) shown above until that is
 fixed upstream.
 
-### Inspect a PBR material imported from glTF
+### Inspect a PBR Material Imported From GLTF
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
@@ -304,7 +282,7 @@ if (node.material instanceof PbrMaterial) {
 }
 ```
 
-### Vector and quaternion math
+### Vector and Quaternion Math
 
 ```typescript
 import { Vector3, Quaternion, Matrix4 } from './dist/aspose/threed/utilities';
@@ -318,7 +296,7 @@ console.log(v.length, q.length, m.determinant);
 
 </details>
 
-## API reference
+## API Reference
 
 The public entry points are the scene-graph module (`Scene`, `Node`, `Entity`, `Mesh`, `Transform`,
 …) and one submodule per format (`formats/obj`, `formats/gltf`, `formats/stl`, `formats/threemf`,
@@ -327,9 +305,9 @@ library exposes 142 public classes and enums in total; the sections below cover 
 applications interact with directly.
 
 <details>
-<summary>View the supported public API surface</summary>
+<summary>View the Supported Public API Surface</summary>
 
-### Core scene graph
+### Core Scene Graph
 
 - `Scene` (extends `SceneObject`)
   - `open(fileOrStream, options?) -> void` — accepts a file path (read via `fs`) or a readable stream
@@ -361,7 +339,7 @@ applications interact with directly.
 - `GlobalTransform` — read-only `translation`, `scale`, `eulerAngles`, `rotation`,
   `transformMatrix`, built from `constructor(matrix)`
 
-### Geometry and mesh
+### Geometry and Mesh
 
 - `Geometry` (extends `Entity`) — `addControlPoint`, `createElement`, `createElementUV`,
   `addElement`, `getElement`, `getVertexElementOfUV`; properties `vertexElements`, `controlPoints`
@@ -389,7 +367,7 @@ applications interact with directly.
   `transparency`
 - `TextureBase` (extends `A3DObject`) — `content`
 
-### Camera and lighting
+### Camera and Lighting
 
 - `Camera` (extends `Entity`) — `moveForward`, `getBoundingBox`; properties `nearPlane`, `farPlane`,
   `aspect`, `orthoHeight`, `fieldOfView`, `fieldOfViewX/Y`, `projectionType`, `apertureMode`
@@ -397,17 +375,25 @@ applications interact with directly.
 - `ProjectionType` — `PERSPECTIVE`, `ORTHOGRAPHIC`
 - `LightType` — `POINT`, `DIRECTIONAL`, `SPOT`, `AREA`, `VOLUME`
 
-### Math utilities
+### Math Utilities
 
-- `Vector2(x, y)`, `Vector3(x, y, z)`, `Vector4(x, y, z, w)` — `dot`, `cross` (Vector3), `normalize`,
-  `equals`, `parse(input)`, index accessors
-- `FVector2`, `FVector3`, `FVector4` — single-precision counterparts with `add`, `sub`, `mul`, `div`
+- `Vector2(x, y)` — `equals`, `parse(input)`, index accessors. `Vector3(x, y, z)` — `dot`, `cross`,
+  `normalize`, `equals`, `parse(input)`, index accessors — the only one of the three with `dot`,
+  `cross`, or `normalize`. `Vector4(x, y, z, w)` — `equals` and index accessors only (no `dot`,
+  `normalize`, or `parse`)
+- `FVector2` — single-precision counterpart with arithmetic `add`, `sub`, `mul`, `div`, plus `dot`,
+  `length`, `normalize`, static `parse(input)`. `FVector3` — `normalize`, static
+  `zero`/`one`/`unitX`/`unitY`/`unitZ`, index accessors (no arithmetic operators). `FVector4` —
+  field accessors and `equals` only
 - `Matrix4()` / `Matrix4(matrix)` — `transpose`, `concatenate`, `inverse`, `decompose`, `setTRS`,
   `translate`, `scale`, `rotateFromEuler`, `rotate`, `toArray`; `identity()`
 - `Quaternion(w, x, y, z)` — `normalize`, `conjugate`, `inverse`, `dot`, `concat`, `eulerAngles`,
   `fromEulerAngle`, `fromAngleAxis`, `fromRotation`, `slerp`, `toMatrix`
-- `BoundingBox`, `BoundingBox2D`, `BoundingBoxExtent` — `merge`, `contains`, `overlapsWith`,
-  `static null()`, `static infinite()`
+- `BoundingBox` — `merge`, `contains`, `overlapsWith`, static `null`/`infinite`; properties
+  `minimum`, `maximum`, `center`, `size`, `extent`. `BoundingBox2D` — `merge`, `overlapsWith`
+  (no `contains`), static `null`/`infinite`; `getCenter()`, `getSize()`. `BoundingBoxExtent` — a
+  plain value holder (`extentX`, `extentY`, `extentZ`, static `null`/`finite`/`infinite`); no
+  `merge`, `contains`, or `overlapsWith`
 - `MathUtils` — `toDegree`, `toRadian`, `calcNormal`, `findIntersection`, `pointInsideTriangle`,
   `rayIntersect`, `clamp`
 - `TransformBuilder` — fluent composition of `scale`, `rotateDegree`/`rotateRadian`, `translate`,
@@ -443,21 +429,25 @@ Each of the six formats below follows the same `<Format>Format` / `<Format>Impor
 
 - **OBJ** (`formats/obj`) — `ObjLoadOptions`: `flipCoordinateSystem`, `enableMaterials`, `scale`,
   `normalizeNormal`. `ObjSaveOptions`: `applyUnitScale`, `pointCloud`, `verbose`, `serializeW`,
-  `enableMaterials`, `flipCoordinateSystem`, `axisSystem`.
+  `enableMaterials`, `flipCoordinateSystem`, `axisSystem`. The OBJ importer itself parses
+  vertices (`v`), texture coordinates (`vt`), vertex normals (`vn`), faces (`f`, including
+  multiple index formats), object/group/smoothing-group markers (`o`/`g`/`s`), and
+  `usemtl`/`mtllib` material references.
 - **glTF** (`formats/gltf`) — `GltfLoadOptions`: `flipTexCoordV`. `GltfSaveOptions`: `binaryMode`,
   `flipTexCoordV`.
 - **STL** (`formats/stl`) — `StlLoadOptions`: `flipCoordinateSystem`, `scale`. `StlSaveOptions`:
   `flipCoordinateSystem`, `scale`, `binaryMode`.
-- **3MF** (`formats/threemf`) — `ThreeMfFormat` adds `isBuildable`, `getTransformForBuild`,
-  `setBuildable`, `setObjectType`, `getObjectType`. `ThreeMfSaveOptions`: `enableCompression`,
-  `buildAll`, `flipCoordinateSystem`, `unit`, `prettyPrint`.
+- **3MF** (`formats/threemf`) — `ThreeMfLoadOptions`: `flipCoordinateSystem`. `ThreeMfFormat` adds
+  `isBuildable`, `getTransformForBuild`, `setBuildable`, `setObjectType`, `getObjectType`.
+  `ThreeMfSaveOptions`: `enableCompression`, `buildAll`, `flipCoordinateSystem`, `unit`,
+  `prettyPrint`.
 - **FBX** (`formats/fbx`) — `FbxLoadOptions`: `keepBuiltinGlobalSettings`. `FbxSaveOptions`:
   `embedTextures`.
 - **COLLADA** (`formats/collada`) — `ColladaLoadOptions`: `flipCoordinateSystem`,
   `enableMaterials`, `scale`, `normalizeNormal`. `ColladaSaveOptions`: `flipCoordinateSystem`,
   `enableMaterials`, `indented`. `ColladaTransformStyle`: `COMPONENTS`, `MATRIX`.
 
-### Properties and metadata
+### Properties and Metadata
 
 - `Property(name, value)` — `getExtra`, `setExtra`
 - `PropertyCollection` — `findProperty`, `get`, `removeProperty`, iterable, `count`, `length`
@@ -467,52 +457,40 @@ Each of the six formats below follows the same `<Format>Format` / `<Format>Impor
 
 </details>
 
-## Documentation & resources
+## Documentation & Resources
 
 - **[Getting started guide](https://docs.aspose.org/3d/typescript/)** — installation, walkthroughs, and feature guides for this library.
 - **[How-to guides & FAQ](https://kb.aspose.org/3d/typescript/)** — task-focused answers for common 3D-processing questions.
 - **[Full API reference](https://reference.aspose.org/3d/typescript/)** — the complete, browsable reference for all 142 public types (the [API reference](#api-reference) section above covers the essentials).
+- **[Contributor guide](AGENTS.md)** — architecture notes and conventions for contributors.
 - Found a bug or have a feature request? [Open an issue](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/issues) on GitHub.
 
-## Scope and limitations
+## Scope and Limitations
 
-This is a from-scratch TypeScript port of the Aspose.3D scene-graph model, not a native binding —
-there are no compiled add-ons to install. A number of methods are present in the public API surface
-but currently throw `not implemented` errors rather than performing the operation:
-
-- Mesh boolean operations — `Mesh.union()`, `Mesh.difference()`, `Mesh.intersect()`, and
-  `Mesh.doBoolean()` — plus `Mesh.optimize()` and `Mesh.isManifold()`.
-- `Watermark.encodeWatermark()` / `Watermark.decodeWatermark()`.
-- Path-based scene queries — `Node.selectSingleObject()` / `Node.selectObjects()`.
-- `Scene.render()` (rendering a scene to a bitmap/image).
-- The standalone `FileSystem` helpers (`createZipFileSystem`, `readFile`, `writeFile`,
+- This is a from-scratch TypeScript port of the Aspose.3D scene-graph model, not a native
+  binding — there are no compiled add-ons to install.
+- A number of methods are present in the public API surface but currently throw `not
+  implemented` errors rather than performing the operation: mesh boolean operations
+  (`Mesh.union()`, `Mesh.difference()`, `Mesh.intersect()`, `Mesh.doBoolean()`,
+  `Mesh.optimize()`, `Mesh.isManifold()`), `Watermark.encodeWatermark()`/
+  `Watermark.decodeWatermark()`, path-based scene queries
+  (`Node.selectSingleObject()`/`Node.selectObjects()`), `Scene.render()`, and the standalone
+  `FileSystem` helpers (`createZipFileSystem`, `readFile`, `writeFile`,
   `createLocalFileSystem`, `createDummyFileSystem`).
+- 3MF import/export (`ThreeMfImporter`/`ThreeMfExporter`) requires the `adm-zip` package at
+  runtime — see [upstream-issues.md](upstream-issues.md) for a real packaging gap that affects
+  consumers of the published package.
+- Binary glTF export (`binaryMode: true`) currently fails — JSON/ASCII glTF export (the
+  default) is unaffected. See [upstream-issues.md](upstream-issues.md) for details.
+- Re-importing a glTF file this library exported can produce extra, duplicate top-level nodes
+  not present in the original scene — see [upstream-issues.md](upstream-issues.md) for details.
+  Importing glTF files produced by other tools is unaffected.
 
-Separately, 3MF import/export (`ThreeMfImporter`/`ThreeMfExporter`) requires the `adm-zip` package
-at runtime, but `package.json` currently declares `adm-zip` only under `devDependencies`, not
-`dependencies` — a plain `npm install` from source pulls it in, but consuming this package as a
-dependency of another project would need `adm-zip` installed explicitly.
+These limitations don't apply to
+[Aspose.3D — Enterprise Edition](https://products.aspose.com/3d/), which adds rendering,
+additional exchange formats, and full production feature completeness.
 
-Two further runtime defects, both in `GltfExporter` (as of `24.12.0`):
-
-- **Binary glTF export throws.** `scene.save(path, { binaryMode: true })` (or a `GltfSaveOptions`
-  instance with `binaryMode = true`) throws `RangeError: The value of "offset" is out of range` for
-  any mesh with actual geometry — `GltfExporter._writeGlb()` sizes its output buffer from the
-  binary payload's *element* count instead of its *byte* length (4 bytes per float), so the buffer
-  is always too small once real data is written. JSON/ASCII glTF export (`binaryMode = false`, the
-  default) is unaffected.
-- **glTF export does not round-trip node hierarchy.** `GltfExporter.export()` writes every node in
-  the scene graph — not just true roots — into the exported file's `scenes[].nodes` array. Re-opening
-  a glTF file this library exported therefore produces extra, duplicate top-level nodes that were not
-  present in the original scene (a mesh node several levels deep ends up added directly under
-  `scene.rootNode` a second time), which shifts `childNodes` indices and can silently break code that
-  assumes `scene.rootNode.childNodes[0]` is the node it just exported. Importing well-formed glTF
-  files produced by other tools is unaffected — the bug is specific to this exporter's own output.
-
-For production feature completeness and formats beyond this open-source surface, see
-[Aspose.3D Enterprise Edition](https://products.aspose.com/3d/).
-
-## Development and testing
+## Development and Testing
 
 Install dependencies and build:
 
@@ -520,6 +498,9 @@ Install dependencies and build:
 npm install
 npm run build
 ```
+
+<details>
+<summary>Full Test and Type-Check Commands</summary>
 
 Run the test suite (Jest via `ts-jest`, covering `tests/**/*.test.ts`):
 
@@ -532,6 +513,8 @@ Type-check without emitting output:
 ```bash
 npm run typecheck
 ```
+
+</details>
 
 ## License
 
