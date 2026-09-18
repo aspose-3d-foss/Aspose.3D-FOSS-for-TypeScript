@@ -1,25 +1,28 @@
 # Aspose.3D FOSS for TypeScript
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) [![Contributors](https://img.shields.io/github/contributors/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript.svg)](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/graphs/contributors)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#license) [![Contributors](https://img.shields.io/github/contributors/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript.svg)](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/graphs/contributors)
 
-![Aspose.3D FOSS for TypeScript](https://products.aspose.org/media/3d/typescript/banner-readme.png)
+[![Aspose.3D FOSS for TypeScript](https://products.aspose.org/media/3d/typescript/banner-readme.png)](https://products.aspose.org/3d/typescript/)
 
-Aspose.3D FOSS for TypeScript is a free, open-source, MIT-licensed library for building, loading,
-and exporting 3D scenes in Node.js and TypeScript. It exposes a strongly-typed scene-graph API —
-`Scene`, `Node`, `Entity`, `Mesh`, `Camera`, `Light`, and `Transform` — together with importers and
-exporters for OBJ, glTF 2.0/GLB, STL, 3MF, FBX, and COLLADA.
+Aspose.3D FOSS for TypeScript is a free, open-source, MIT-licensed TypeScript/JavaScript library
+for building and converting 3D scenes in Node.js. It exposes an Aspose.3D-compatible scene-graph
+API — `Scene`, `Node`, `Mesh`, `Material` — for constructing scenes from meshes and vertex
+attribute data, assigning shading materials, animating node hierarchies with keyframes, and
+reading and writing widely used interchange formats such as glTF, OBJ, STL, FBX, and COLLADA, as
+pure TypeScript with no native bindings.
 
 ## Navigation
 
-- [At a glance](#at-a-glance)
-- [Key capabilities](#key-capabilities)
+- [At a Glance](#at-a-glance)
+- [Key Capabilities](#key-capabilities)
 - [Installation](#installation)
-- [Quick start](#quick-start)
-- [Additional examples](#additional-examples)
-- [API reference](#api-reference)
-- [Documentation & resources](#documentation--resources)
-- [Scope and limitations](#scope-and-limitations)
-- [Development and testing](#development-and-testing)
+- [Dependencies](#dependencies)
+- [Quick Start](#quick-start)
+- [Additional Examples](#additional-examples)
+- [API Reference](#api-reference)
+- [Documentation & Resources](#documentation--resources)
+- [Scope and Limitations](#scope-and-limitations)
+- [Development and Testing](#development-and-testing)
 - [License](#license)
 
 ## At a Glance
@@ -28,76 +31,67 @@ exporters for OBJ, glTF 2.0/GLB, STL, 3MF, FBX, and COLLADA.
 flowchart TD
   subgraph StartingPoints["Starting Points"]
     direction TB
-    sp1["OBJ, glTF, and STL files"]
-    sp2["FBX, COLLADA, and 3MF files"]
+    i1["An existing OBJ, STL, or glTF file (.gltf/.glb)"]
+    i2["An existing FBX or COLLADA file"]
+    i3["An existing 3MF (3D Manufacturing Format) archive"]
   end
   PRODUCT["Aspose.3D FOSS for TypeScript"]
   subgraph Capabilities["Core Capabilities"]
     direction LR
     subgraph capl[" "]
       direction TB
-      c1["Multi-format import and export (OBJ, glTF, STL, 3MF, FBX, COLLADA)"]
-      c2["Scene management (Scene, Node, Mesh, Transform)"]
-      c3["Materials (Lambert, Phong, PBR)"]
+      c1["Scene graph construction and traversal"]
+      c2["Mesh and vertex-attribute construction"]
+      c3["Material assignment (Lambert, Phong, PBR)"]
     end
     subgraph capr[" "]
       direction TB
-      c4["Mesh operations (triangulation, vertex element data)"]
-      c5["3D primitives (vector/matrix math, Camera, Light)"]
-      c6["Keyframe animation"]
+      c4["Camera and light placement"]
+      c5["Keyframe animation"]
+      c6["Multi-format import and export"]
     end
   end
   subgraph Outputs["Outputs"]
     direction TB
-    o1["OBJ, STL, and glTF files (binary glTF export currently broken)"]
-    o2["FBX, COLLADA, and 3MF files"]
+    o1["STL or glTF file"]
+    o2["FBX or COLLADA file"]
+    o3["3MF (3D Manufacturing Format) archive"]
   end
   StartingPoints --> PRODUCT --> Capabilities --> Outputs
 ```
 
 ## Key Capabilities
 
-**Format support** — `scene.save()`/`scene.open()` pick the format from the target extension or an
-explicit format object; every format below supports both directions except where noted:
-
-| Format | Import | Export |
-|---|---|---|
-| OBJ (with `.mtl` materials) | ✅ | ✅ |
-| glTF 2.0 / GLB | ✅ | JSON/ASCII ✅ — binary (`.glb`) currently broken, see [Scope and limitations](#scope-and-limitations) |
-| STL (ASCII and binary) | ✅ | ✅ |
-| 3MF | ✅ | ✅ |
-| FBX | ✅ | ✅ |
-| COLLADA (.dae) | ✅ | ✅ |
-
-**Scene management**
-- Build 3D scenes from scratch with `Scene`, `Node`, `Mesh`, and `Transform`, or load existing files
-  with `Scene.open()` / `Scene.openFromBuffer()`.
-- Hierarchical node structure via `Node.childNodes`/`parentNode`, with entity and material
-  attachment per node.
-
-**Materials**
-- Apply `LambertMaterial`, `PhongMaterial`, and `PbrMaterial` materials, including glTF-style
-  metallic/roughness PBR channels.
-
-**Mesh operations**
-- Triangulate arbitrary polygons with `Mesh.triangulate()` or the standalone
-  `PolygonModifier.triangulate()`.
-- Manage per-vertex data through the typed `VertexElement` subclasses (normals, UVs, vertex
-  colors, smoothing groups).
-
-**3D primitives**
-- Vector/matrix math — `Vector2`, `Vector3`, `Vector4`, `Matrix4`, `Quaternion`, `BoundingBox`,
-  `BoundingBox2D`.
-- `Camera` and `Light` scene objects.
-
-**Animation**
-- Keyframe animation types — `AnimationClip`, `KeyframeSequence`, `Interpolation`.
-
-Fully typed API compiled under strict TypeScript settings (`noImplicitAny`, `strictNullChecks`).
+- Build and traverse a hierarchical scene graph with `Scene` and `Node` — every node holds a
+  `Transform`, an optional `entity` (`Mesh`, `Camera`, or `Light`), and child nodes accessible via
+  `childNodes`.
+- Construct mesh geometry with `Mesh.controlPoints` and `createPolygon()`, and attach per-vertex
+  attribute channels — normals (`VertexElementNormal`), UVs (`VertexElementUV`), and vertex color
+  (`VertexElementVertexColor`) — through the `VertexElement` hierarchy.
+- Triangulate raw polygon data with the standalone `PolygonModifier.triangulate()` utility, or
+  triangulate an existing mesh's own polygons in place with `Mesh.triangulate()`.
+- Assign shading materials through `Material` subclasses — `LambertMaterial` (diffuse-only),
+  `PhongMaterial` (adds specular/shininess), and `PbrMaterial` (metallic/roughness, mapping
+  directly to the glTF 2.0 PBR model).
+- Place `Camera` (projection type, field of view, clip distances) and `Light` (`POINT`,
+  `DIRECTIONAL`, `SPOT`, `AREA`, `VOLUME`) entities as scene nodes.
+- Animate node properties with keyframes — `AnimationClip` groups `AnimationNode` tracks, each
+  holding `AnimationChannel`s of `KeyframeSequence` time/value samples with configurable
+  `Interpolation`/`Extrapolation`.
+- Read glTF 2.0 (JSON and binary GLB) and Wavefront OBJ scenes, and write STL (ASCII and binary),
+  FBX (ASCII), COLLADA (`.dae`, via `xmldom`), and glTF 2.0 JSON scenes through `scene.open()`/
+  `scene.openFromBuffer()` and `scene.save()` — OBJ export and binary GLB export both carry real,
+  current defects; see Scope and Limitations before relying on either.
+- Read and write 3MF (3D Manufacturing Format) archives — suited to modern 3D printing
+  workflows — through `ThreeMfImporter`/`ThreeMfExporter`; see the real npm packaging defect
+  disclosed in Scope and Limitations before relying on this format in production.
+- Configure per-format load/save behavior through dedicated options types (`ObjLoadOptions`/
+  `ObjSaveOptions`, `GltfLoadOptions`/`GltfSaveOptions`, `StlLoadOptions`/`StlSaveOptions`,
+  `FbxLoadOptions`/`FbxSaveOptions`).
 
 ## Installation
 
-An npm package has not been published yet. Install from source:
+Install from source:
 
 ```bash
 git clone https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript.git
@@ -106,385 +100,318 @@ npm install
 npm run build
 ```
 
-`npm run build` compiles `src/` to `dist/` with `tsc`, mirroring the source layout — the scene-graph
-API ends up at `dist/aspose/threed`, and each format module at `dist/aspose/threed/formats/<format>`
-(for example `dist/aspose/threed/formats/obj`).
+`npm run build` compiles `src/` to `dist/` with `tsc`. The package targets TypeScript 5.0+;
+`package.json` declares no minimum Node.js version, and development is verified on Node.js
+18/20/22.
 
-Built and tested against TypeScript `^5.8.3` (`tsconfig.json` targets `ES2020`, output `commonjs`).
-`package.json` declares no minimum Node.js version; development uses `@types/node` `^22.15.17`.
-This is a Node.js library — it reads files via the `fs` module directly, so consuming it in a
-browser would need a bundler and has not been verified there.
+## Dependencies
+
+### Required Package Dependencies
+
+- `xmldom` `^0.6.0` — parses and serializes XML for `ColladaImporter`/`ColladaExporter` and the
+  internal XML content inside 3MF archives (`ThreeMfImporter`).
+
+### Development Dependencies
+
+- `typescript` `^5.8.3` — compiler.
+- `jest` `^29.7.0`, `ts-jest` `^29.3.4` — test runner.
+- `eslint` `^8.57.1`, `@typescript-eslint/eslint-plugin` `^8.33.0`, `@typescript-eslint/parser`
+  `^8.33.0` — linting.
+- `adm-zip` `^0.5.16`, `@types/adm-zip` `^0.5.7` — 3MF archive handling used in tests (see Scope
+  and Limitations for a real packaging gap affecting a published install's use of this package).
+- `@types/jest` `^29.5.12`, `@types/node` `^22.15.17` — TypeScript type declarations.
 
 ## Quick Start
 
-Load an OBJ file and inspect the imported scene:
+Load an OBJ scene and re-save it as glTF (paths below assume you built the library per
+Installation — there is no published package to import by name yet):
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
-import { ObjLoadOptions } from './dist/aspose/threed/formats/obj';
 
 const scene = new Scene();
-const options = new ObjLoadOptions();
-options.enableMaterials = true;
-scene.open('model.obj', options);
-
-for (const node of scene.rootNode.childNodes) {
-  if (node.entity) {
-    console.log(`Node: ${node.name}`);
-  }
-}
-```
-
-Save the same scene as binary STL:
-
-```typescript
-scene.save('model.stl', 'stl');
+scene.open('model.obj');
+scene.save('model.gltf');
 ```
 
 ## Additional Examples
 
-Every example below is exercised by the project's own test suite. See the [`tests`](tests/)
-directory for the full set (there is no separate `examples/` directory). The most common
-operations are collected below.
+Additional worked examples cover per-node inspection and configuring format-specific options.
 
-### Build a Mesh From Scratch and Export to STL
-
-```typescript
-import { Scene, Node } from './dist/aspose/threed';
-import { Mesh } from './dist/aspose/threed/entities';
-import { Vector4 } from './dist/aspose/threed/utilities';
-
-const scene = new Scene();
-const mesh = new Mesh('triangle');
-mesh.controlPoints = [
-  new Vector4(0.0, 0.0, 0.0, 1.0),
-  new Vector4(1.0, 0.0, 0.0, 1.0),
-  new Vector4(1.0, 1.0, 0.0, 1.0),
-];
-mesh.createPolygon(0, 1, 2);
-
-const node = new Node('triangle_node');
-node.entity = mesh;
-node.parentNode = scene.rootNode;
-
-scene.save('triangle.stl');
-```
-
-<details>
-<summary>View Additional Examples</summary>
-
-### Apply a PBR Material
+Enumerate a loaded scene's node hierarchy and mesh statistics:
 
 ```typescript
 import { Scene } from './dist/aspose/threed';
-import { Mesh } from './dist/aspose/threed/entities';
-import { PbrMaterial } from './dist/aspose/threed/shading';
-import { Vector3, Vector4 } from './dist/aspose/threed/utilities';
 
 const scene = new Scene();
-const material = new PbrMaterial('red_metal');
-material.albedo = new Vector3(1.0, 0.0, 0.0);
-material.metallicFactor = 0.8;
-material.roughnessFactor = 0.3;
+scene.open('model.obj');
 
-const mesh = new Mesh('cube');
-mesh.controlPoints = [
-  new Vector4(0, 0, 0, 1), new Vector4(1, 0, 0, 1),
-  new Vector4(1, 1, 0, 1), new Vector4(0, 1, 0, 1),
-];
-mesh.createPolygon(0, 1, 2, 3);
-
-const node = scene.rootNode.createChildNode('cube');
-node.entity = mesh;
-node.material = material;
+for (const node of scene.rootNode.childNodes) {
+    if (node.entity) {
+        console.log(`Mesh: ${node.name}`);
+        console.log(`  Control points: ${node.entity.controlPoints.length}`);
+    }
+}
 ```
 
-### Triangulate Polygons Directly With PolygonModifier
+<details><summary>View Additional Examples</summary>
+
+### Load OBJ With Custom Options and Export to Binary STL
+
+Load OBJ with explicit options and export as binary STL:
+
+```typescript
+import { Scene } from './dist/aspose/threed';
+import { ObjLoadOptions } from './dist/aspose/threed/formats/obj';
+import { StlSaveOptions } from './dist/aspose/threed/formats/stl';
+
+const scene = new Scene();
+const loadOptions = new ObjLoadOptions();
+loadOptions.enableMaterials = true;
+loadOptions.normalizeNormal = true;
+scene.open('model.obj', loadOptions);
+
+const saveOptions = new StlSaveOptions();
+saveOptions.binaryMode = true;
+scene.save('model.stl', saveOptions);
+```
+
+### Triangulate Raw Control Points With PolygonModifier
+
+Triangulate raw control points directly with the standalone `PolygonModifier` utility (distinct
+from `Mesh.triangulate()`, which triangulates an existing mesh's own polygons in place):
 
 ```typescript
 import { PolygonModifier } from './dist/aspose/threed/entities';
 import { Vector4 } from './dist/aspose/threed/utilities';
 
 const controlPoints = [
-  new Vector4(0, 0, 0, 1),
-  new Vector4(1, 0, 0, 1),
-  new Vector4(0, 1, 0, 1),
-  new Vector4(1, 1, 0, 1),
+    new Vector4(0, 0, 0, 1),
+    new Vector4(1, 0, 0, 1),
+    new Vector4(0, 1, 0, 1),
+    new Vector4(1, 1, 0, 1),
 ];
 const quad = [0, 1, 3, 2];
-
 const triangles = PolygonModifier.triangulate(controlPoints, [quad]);
-console.log(triangles.length); // 2
-```
-
-### Export to COLLADA With a Phong Material
-
-```typescript
-import { Scene } from './dist/aspose/threed';
-import { Mesh } from './dist/aspose/threed/entities';
-import { Vector3, Vector4 } from './dist/aspose/threed/utilities';
-import { PhongMaterial } from './dist/aspose/threed/shading';
-
-const scene = new Scene();
-const mesh = new Mesh('TestMesh');
-mesh.controlPoints.push(new Vector4(0.0, 0.0, 0.0, 1.0));
-mesh.controlPoints.push(new Vector4(1.0, 0.0, 0.0, 1.0));
-mesh.controlPoints.push(new Vector4(0.0, 1.0, 0.0, 1.0));
-mesh.createPolygon(0, 1, 2);
-
-const material = new PhongMaterial('RedMaterial');
-material.diffuseColor = new Vector3(1.0, 0.0, 0.0);
-material.specularColor = new Vector3(1.0, 1.0, 1.0);
-material.shininess = 32.0;
-
-const node = scene.rootNode.createChildNode('TestNode');
-node.entity = mesh;
-node.material = material;
-
-scene.save('scene.dae');
-```
-
-### Convert STL to GLTF
-
-```typescript
-import { Scene } from './dist/aspose/threed';
-import { GltfSaveOptions } from './dist/aspose/threed/formats/gltf';
-
-const scene = new Scene();
-scene.open('mesh.stl');
-
-const opts = new GltfSaveOptions();
-opts.binaryMode = false;
-scene.save('mesh.gltf', opts);
-```
-
-Binary glTF (`.glb`, `binaryMode = true`) currently throws a `RangeError` for any
-non-empty mesh — see [Scope and limitations](#scope-and-limitations). Use the
-JSON/ASCII form (`binaryMode = false`, the default) shown above until that is
-fixed upstream.
-
-### Inspect a PBR Material Imported From GLTF
-
-```typescript
-import { Scene } from './dist/aspose/threed';
-import { GltfLoadOptions } from './dist/aspose/threed/formats/gltf';
-import { PbrMaterial } from './dist/aspose/threed/shading';
-import * as fs from 'fs';
-
-const scene = new Scene();
-const options = new GltfLoadOptions();
-const buffer = fs.readFileSync('model.gltf');
-scene.openFromBuffer(buffer, options);
-
-const node = scene.rootNode.childNodes[0];
-if (node.material instanceof PbrMaterial) {
-  console.log(node.material.name, node.material.metallicFactor, node.material.roughnessFactor);
-}
-```
-
-### Vector and Quaternion Math
-
-```typescript
-import { Vector3, Quaternion, Matrix4 } from './dist/aspose/threed/utilities';
-
-const v = new Vector3(1.0, 2.0, 3.0);
-const q = new Quaternion(1.0, 0.0, 0.0, 0.0);
-const m = new Matrix4();
-
-console.log(v.length, q.length, m.determinant);
 ```
 
 </details>
 
 ## API Reference
 
-The public entry points are the scene-graph module (`Scene`, `Node`, `Entity`, `Mesh`, `Transform`,
-…) and one submodule per format (`formats/obj`, `formats/gltf`, `formats/stl`, `formats/threemf`,
-`formats/fbx`, `formats/collada`) plus `entities`, `animation`, `shading`, and `utilities`. This
-library exposes 142 public classes and enums in total; the sections below cover the classes most
-applications interact with directly.
+`Scene` is the primary entry point: `scene.open()`/`scene.openFromBuffer()` load a file or
+buffer (format auto-detected), `scene.save()` writes output, and `scene.rootNode` exposes the
+node hierarchy.
 
 <details>
-<summary>View the Supported Public API Surface</summary>
+<summary>View Selected API Surface</summary>
 
 ### Core Scene Graph
 
-- `Scene` (extends `SceneObject`)
-  - `open(fileOrStream, options?) -> void` — accepts a file path (read via `fs`) or a readable stream
-  - `openFromBuffer(buffer, options?) -> void` — detects format from magic bytes/content
-  - `save(fileOrStream, formatOrOptions?, options?) -> void`
-  - `saveToBuffer(format?, options?) -> Buffer`
-  - `static fromFile(fileName) -> Scene`
-  - `clear() -> void`
-  - `createAnimationClip(name) -> AnimationClip`, `getAnimationClip(name) -> AnimationClip | null`
-  - Properties: `rootNode: Node`, `subScenes: Scene[]`, `library: CustomObject[]`,
-    `assetInfo: AssetInfo`, `animationClips: AnimationClip[]`, `currentAnimationClip`
-- `Node` (extends `SceneObject`)
-  - `addEntity(entity)`, `removeEntity(entity)`, `clearEntities()`
-  - `addChildNode(node)`, `createChildNode(nodeName, entity?, material?) -> Node`
-  - `getChild(indexOrName) -> Node | null`, `merge(node)`
-  - `evaluateGlobalTransform(withGeometricTransform) -> Matrix4`
-  - `getBoundingBox() -> BoundingBox`
-  - Properties: `parentNode`, `childNodes: Node[]`, `entities: Entity[]`, `entity`,
-    `materials: Material[]`, `material`, `transform: Transform`, `globalTransform`, `visible`,
-    `excluded`
-- `Entity` (extends `SceneObject`) — base for `Mesh`, `Camera`, `Light`; `getBoundingBox()`,
-  `parentNodes`, `excluded`
-- `SceneObject` (extends `A3DObject`) — adds `scene: Scene | null`
-- `A3DObject` (implements `INamedObject`) — `findProperty`, `getProperty`, `setProperty`,
-  `removeProperty`, `name`, `properties: PropertyCollection`
-- `Transform` (extends `A3DObject`) — `setTranslation`, `setScale`, `setEulerAngles`,
-  `setRotation`, `setPreRotation`/`setPostRotation`, `setGeometricTranslation`/`Scaling`/`Rotation`;
-  properties `translation`, `scaling`, `rotation`, `eulerAngles`, `transformMatrix`
-- `GlobalTransform` — read-only `translation`, `scale`, `eulerAngles`, `rotation`,
-  `transformMatrix`, built from `constructor(matrix)`
+| Class | Description |
+|---|---|
+| `Scene` | The root container for a 3D scene. Call `open()`/`openFromBuffer()` to load a file, `static fromFile(fileName)` to load one in a single call, and `save(fileOrStream, formatOrOptions?, options?)` to write output. Exposes `rootNode` as the entry point to the node hierarchy, and `createAnimationClip(name)`/`getAnimationClip(name)` to manage scene-level animation clips. |
+| `Node` | A named node in the scene tree. Holds a `Transform` and zero or more child nodes accessible via `childNodes`, plus `getChild(indexOrName)`, `merge(node)`, and `evaluateGlobalTransform(withGeometricTransform)` to compute the accumulated world-space `Matrix4`. The `entity` accessor gets/sets the first attached entity for convenience, but a node can carry several: `addEntity(entity)`, `removeEntity(entity)`, and `clearEntities()` manage the full collection (mesh, camera, light, or other `SceneObject`). |
+| `Entity` | Base class for all objects that can be attached to a `Node` as its primary entity. Subclassed by `Mesh`, `Camera`, and `Light`. |
+| `SceneObject` | Abstract base for named objects that belong to a scene. Provides the `name` property and scene-membership tracking shared by nodes, entities, and asset-level objects. |
+| `A3DObject` | Root base class for Aspose.3D objects. Provides the property system (`getProperty`, `setProperty`) and the `name` field shared across the class hierarchy. |
 
 ### Geometry and Mesh
 
-- `Geometry` (extends `Entity`) — `addControlPoint`, `createElement`, `createElementUV`,
-  `addElement`, `getElement`, `getVertexElementOfUV`; properties `vertexElements`, `controlPoints`
-- `Mesh` (extends `Geometry`) — `createPolygon(...)` (variadic: 3 or 4 indices, or an index array),
-  `getPolygonSize(index)`, `triangulate() -> Mesh`, `getBoundingBox()`; properties `edges`,
-  `polygonCount`, `polygons: number[][]`
-- `VertexElement`, `VertexElementFVector`, `VertexElementIntsTemplate` and the typed subclasses
-  `VertexElementNormal`, `VertexElementTangent`, `VertexElementBinormal`, `VertexElementUV`,
-  `VertexElementVertexColor`, `VertexElementSmoothingGroup` — `setData`, `setIndices`, `clear`,
-  `copyTo`
-- `PolygonModifier.triangulate(arg1, arg2, arg3?, arg4?) -> any` — standalone triangulation utility
-- `VertexDeclaration`, `VertexField`, `Vertex` — vertex-buffer layout and per-vertex field access
-  (`readVector3`, `readFVector4`, `readFloat`, …)
+| Class | Description |
+|---|---|
+| `Mesh` | Represents a polygon mesh. Contains a `controlPoints` array of `Vector4` vertices and polygon definitions created via `createPolygon()`. Call `triangulate()` to convert all polygons to triangles before export. Boolean operations (`union`/`difference`/`intersect`) and `optimize()`/`isManifold()` are not implemented in this FOSS build (see Scope and Limitations). |
+| `Geometry` | Base class for all geometry types. Holds `controlPoints` and the `vertexElements` collection (normals, UVs, colors) attached to the geometry, managed via `addControlPoint`, `addElement`, `getElement`, `createElement`, `createElementUV`, and `getVertexElementOfUV`. |
+| `VertexElement` | Base class for per-vertex attribute channels attached to a `Geometry`. Subclasses carry typed data arrays and `mappingMode`/`referenceMode` metadata. `setIndices()`/`clear()` are not implemented in this FOSS build. |
+| `VertexElementNormal` | A `VertexElement` subclass that stores surface normals, internally as `FVector4[]`. Required by most renderers for correct lighting. |
+| `VertexElementUV` | A `VertexElement` subclass that stores 2D texture coordinates. A single mesh may have multiple UV sets for different texture layers. |
+| `VertexElementVertexColor` | A `VertexElement` subclass that stores per-vertex RGBA color values. |
+| `VertexElementType` | Enumeration of the attribute channel types a `VertexElement` can represent (`NORMAL`, `UV`, `VERTEX_COLOR`, `TANGENT`, `BINORMAL`, and more). |
+| `MappingMode` | Enumeration controlling how element data maps onto geometry: `CONTROL_POINT`, `POLYGON_VERTEX`, `POLYGON`, `EDGE`, or `ALL_SAME`. |
+| `ReferenceMode` | Enumeration controlling how element indices reference data: `DIRECT` (one-to-one) or `INDEX_TO_DIRECT` (via an index array). |
+| `TextureMapping` | Enumeration of texture channel semantics: `DIFFUSE`, `SPECULAR`, `NORMAL`, `EMISSIVE`, `BUMP`, and more. |
+
+### Transform and Spatial
+
+| Class | Description |
+|---|---|
+| `Transform` | Holds the local position (`translation`), rotation (`rotation` as `Quaternion`), and scale (`scaling`) of a `Node`, plus `eulerAngles` and `transformMatrix`. Setters cover both direct assignment (`setTranslation`, `setScale`, `setRotation`, `setEulerAngles`) and the pre/post-rotation and geometric variants (`setPreRotation`/`setPostRotation`, `setGeometricTranslation`/`Scaling`/`Rotation`). Changes here affect the node and all its children. |
+| `GlobalTransform` | Read-only view of a node's world-space transform, computed by accumulating all ancestor `Transform` values. Access via `node.globalTransform`. |
+| `BoundingBox` | An axis-aligned bounding box defined by a `minimum` and `maximum` `Vector3` corner, with `center`, `size`, and `extent` properties, `merge`, `contains`, `overlapsWith`, and static `null`/`infinite` factories. Two related utility types (not yet in `reference.aspose.org`'s own index) round out the family: `BoundingBox2D`, the 2D counterpart (`merge`, `overlapsWith`, `getCenter()`, `getSize()`, static `null`/`infinite`, but no `contains`), and `BoundingBoxExtent`, a plain `extentX`/`extentY`/`extentZ` value holder with static `null`/`finite`/`infinite` factories and no `merge`/`contains`/`overlapsWith` of its own. Nested `Node` bounding boxes are independent of ancestor transformations — recompute after applying transformations to keep bounding boxes accurate. |
 
 ### Materials
 
-- `Material` (extends `A3DObject`) — `getTexture(slotName)`, `setTexture(slotName, texture)`
-- `LambertMaterial` (extends `Material`) — `emissiveColor`, `ambientColor`, `diffuseColor`,
-  `transparentColor`, `transparency`
-- `PhongMaterial` (extends `LambertMaterial`) — adds `specularColor`, `specularFactor`,
-  `shininess`, `reflectionColor`, `reflectionFactor`
-- `PbrMaterial` (extends `Material`) — `constructor(name?, albedo?)`, `static fromMaterial(material)`;
-  properties `albedo`, `albedoTexture`, `normalTexture`, `metallicFactor`, `roughnessFactor`,
-  `metallicRoughness`, `occlusionTexture`, `occlusionFactor`, `emissiveTexture`, `emissiveColor`,
-  `transparency`
-- `TextureBase` (extends `A3DObject`) — `content`
+| Class | Description |
+|---|---|
+| `Material` | Abstract base class for all material types. |
+| `LambertMaterial` | Diffuse-only material with `ambientColor`, `diffuseColor`, `emissiveColor`, `transparentColor`, and `transparency` properties. Suitable for non-specular surfaces. |
+| `PhongMaterial` | Extends `LambertMaterial` with specular color and shininess properties for Phong shading. |
+| `PbrMaterial` | Physically-based rendering material (`constructor(name?, albedo?)`, `static fromMaterial(material)`) with `albedo`, `albedoTexture`, `normalTexture`, `metallicFactor`, `roughnessFactor`, `metallicRoughness`, `occlusionTexture`, `occlusionFactor`, `emissiveTexture`, `emissiveColor`, and `transparency` properties. Maps directly to the glTF 2.0 PBR material model. |
 
 ### Camera and Lighting
 
-- `Camera` (extends `Entity`) — `moveForward`, `getBoundingBox`; properties `nearPlane`, `farPlane`,
-  `aspect`, `orthoHeight`, `fieldOfView`, `fieldOfViewX/Y`, `projectionType`, `apertureMode`
-- `Light` (extends `Camera`) — adds `lightType: string`
-- `ProjectionType` — `PERSPECTIVE`, `ORTHOGRAPHIC`
-- `LightType` — `POINT`, `DIRECTIONAL`, `SPOT`, `AREA`, `VOLUME`
+| Class | Description |
+|---|---|
+| `Camera` | A viewpoint node entity with `moveForward` and `getBoundingBox` methods, and `nearPlane`, `farPlane`, `aspect`, `orthoHeight`, `fieldOfView`, `fieldOfViewX`/`Y`, `projectionType`, and `apertureMode` properties. |
+| `Light` | A light-source node entity. Type is controlled by the `LightType` enumeration. |
+| `LightType` | Enumeration of supported light kinds: `POINT`, `DIRECTIONAL`, `SPOT`, `AREA`, `VOLUME`. |
+| `ProjectionType` | Enumeration of camera projection modes: `PERSPECTIVE` and `ORTHOGRAPHIC`. |
 
 ### Math Utilities
 
-- `Vector2(x, y)` — `equals`, `parse(input)`, index accessors. `Vector3(x, y, z)` — `dot`, `cross`,
-  `normalize`, `equals`, `parse(input)`, index accessors — the only one of the three with `dot`,
-  `cross`, or `normalize`. `Vector4(x, y, z, w)` — `equals` and index accessors only (no `dot`,
-  `normalize`, or `parse`)
-- `FVector2` — single-precision counterpart with arithmetic `add`, `sub`, `mul`, `div`, plus `dot`,
-  `length`, `normalize`, static `parse(input)`. `FVector3` — `normalize`, static
-  `zero`/`one`/`unitX`/`unitY`/`unitZ`, index accessors (no arithmetic operators). `FVector4` —
-  field accessors and `equals` only
-- `Matrix4()` / `Matrix4(matrix)` — `transpose`, `concatenate`, `inverse`, `decompose`, `setTRS`,
-  `translate`, `scale`, `rotateFromEuler`, `rotate`, `toArray`; `identity()`
-- `Quaternion(w, x, y, z)` — `normalize`, `conjugate`, `inverse`, `dot`, `concat`, `eulerAngles`,
-  `fromEulerAngle`, `fromAngleAxis`, `fromRotation`, `slerp`, `toMatrix`
-- `BoundingBox` — `merge`, `contains`, `overlapsWith`, static `null`/`infinite`; properties
-  `minimum`, `maximum`, `center`, `size`, `extent`. `BoundingBox2D` — `merge`, `overlapsWith`
-  (no `contains`), static `null`/`infinite`; `getCenter()`, `getSize()`. `BoundingBoxExtent` — a
-  plain value holder (`extentX`, `extentY`, `extentZ`, static `null`/`finite`/`infinite`); no
-  `merge`, `contains`, or `overlapsWith`
-- `MathUtils` — `toDegree`, `toRadian`, `calcNormal`, `findIntersection`, `pointInsideTriangle`,
-  `rayIntersect`, `clamp`
-- `TransformBuilder` — fluent composition of `scale`, `rotateDegree`/`rotateRadian`, `translate`,
-  `append`/`prepend`, producing a `Matrix4`
+| Class | Description |
+|---|---|
+| `Vector3` | A three-component floating-point vector with `x`, `y`, `z` fields and common arithmetic methods (`dot`, `cross`, `normalize`, `minus`, `times`). |
+| `Vector4` | A four-component floating-point vector with `x`, `y`, `z`, `w` fields. Used as the type of entries in `Mesh.controlPoints`. |
+| `Vector2` | A two-component double-precision vector with `x` and `y` fields. Used for UV texture coordinates. |
+| `FVector3` | A compact three-component single-precision float vector used in vertex element data arrays for normals and tangents. |
+| `Matrix4` | A 4x4 transformation matrix (`Matrix4()` / `Matrix4(matrix)`), with `identity()`, `transpose`, `concatenate`, `inverse`, `decompose`, `setTRS`, `translate`, `scale`, `rotate`, `rotateFromEuler`, and `toArray`. |
+| `Quaternion` | A unit quaternion for representing rotations without gimbal lock (`Quaternion(w, x, y, z)`). Provides `normalize`, `conjugate`, `inverse`, `dot`, `concat`, `slerp()` for smooth interpolation, `eulerAngles`, `fromEulerAngle`, `fromAngleAxis`, `fromRotation`, and `toMatrix`. |
 
 ### Animation
 
-- `AnimationClip` (extends `SceneObject`) — `createAnimationNode(nodeName)`; `animations`,
-  `description`, `start`, `stop`
-- `AnimationNode` (extends `A3DObject`) — `findBindPoint`, `getBindPoint`, `createBindPoint`,
-  `getKeyframeSequence`; `bindPoints`, `subAnimations`
-- `AnimationChannel` (extends `KeyframeSequence`) — `componentType`, `defaultValue`,
-  `keyframeSequence`
-- `BindPoint` (extends `A3DObject`) — `addChannel`, `getKeyframeSequence`, `createKeyframeSequence`,
-  `bindKeyframeSequence`, `getChannel`, `resetChannels`
-- `KeyframeSequence` (extends `A3DObject`) — `reset`, `add(time, value, interpolation)`,
-  `setBindPoint`; `keyFrames`, `postBehavior`, `preBehavior`
-- `KeyFrame` — `time`, `value`, `interpolation`, `tangentWeightMode`, `stepMode`, tangent fields
-- `Interpolation` — `CONSTANT`, `LINEAR`, `BEZIER`, `B_SPLINE`, `CARDINAL_SPLINE`, `TCB_SPLINE`
-- `Extrapolation` / `ExtrapolationType` — `CONSTANT`, `GRADIENT`, `CYCLE`, `CYCLE_RELATIVE`,
-  `OSCILLATE`
-- `StepMode` — `PREVIOUS_VALUE`, `NEXT_VALUE`; `WeightedMode` — `NONE`, `OUT_WEIGHT`,
-  `NEXT_IN_WEIGHT`, `BOTH`
+| Class | Description |
+|---|---|
+| `AnimationClip` | A named, time-bounded collection of `AnimationNode` tracks. The primary container for keyframe animation data loaded from FBX or COLLADA files. |
+| `AnimationNode` | A named animation track that targets a specific property path on a scene object. Contains one or more `AnimationChannel` objects, accessible via `subAnimations` and `bindPoints`, with `findBindPoint`, `getBindPoint`, `createBindPoint`, and `getKeyframeSequence` to navigate them. |
+| `AnimationChannel` | A single animated property channel within an `AnimationNode`. Holds a `KeyframeSequence` of time/value pairs. |
+| `KeyFrame` | A single time/value sample in a `KeyframeSequence`. Carries the time stamp (in seconds), the value, and tangent information for interpolation. |
+| `KeyframeSequence` | An ordered list of `KeyFrame` samples for one property channel, along with the `Interpolation` and `Extrapolation` settings that govern playback. |
+| `Interpolation` | Enumeration of keyframe interpolation modes. Known members include `LINEAR` and `CONSTANT`. |
+| `Extrapolation` | Defines behavior outside the keyframe range (before the first key and after the last key). Controlled by `ExtrapolationType`. |
+| `StepMode` | Enumeration controlling how stepped (constant) interpolation is applied at boundaries: `PREVIOUS_VALUE`, `NEXT_VALUE`. |
+| `WeightedMode` | Enumeration for Bezier tangent weight handling in keyframe animation: `NONE`, `OUT_WEIGHT`, `NEXT_IN_WEIGHT`, `BOTH`. |
+| `ExtrapolationType` | Enumeration of out-of-range behaviors: `CONSTANT`, `GRADIENT`, `CYCLE`, `CYCLE_RELATIVE`, and `OSCILLATE`. |
 
 ### Format I/O
 
-Base classes shared by every format: `FileFormat`, `Importer`, `Exporter`, `LoadOptions`,
-`SaveOptions`, `FormatDetector`, `Plugin`, `IOConfig`, `IOService`.
+| Class | Description |
+|---|---|
+| `FileFormat` | Base descriptor for a 3D file format. Each supported format provides a concrete singleton via `getInstance()`. |
+| `Importer` | Base class for format-specific import implementations. Not instantiated directly; invoked internally by `scene.open()`. |
+| `Exporter` | Base class for format-specific export implementations. Not instantiated directly; invoked internally by `scene.save()`. |
+| `LoadOptions` | Base class for format-specific load option objects. Pass a subclass instance to `scene.open()`/`scene.openFromBuffer()`. |
+| `SaveOptions` | Base class for format-specific save option objects. Pass a subclass instance to `scene.save()`. |
+| `IOService` | Internal service interface that abstracts file-system and buffer I/O for importers and exporters. |
 
-Each of the six formats below follows the same `<Format>Format` / `<Format>Importer` /
-`<Format>Exporter` / `<Format>LoadOptions` / `<Format>SaveOptions` / `<Format>FormatDetector` /
-`<Format>Plugin` pattern, obtained through a singleton `getInstance()`:
+### OBJ Format
 
-- **OBJ** (`formats/obj`) — `ObjLoadOptions`: `flipCoordinateSystem`, `enableMaterials`, `scale`,
-  `normalizeNormal`. `ObjSaveOptions`: `applyUnitScale`, `pointCloud`, `verbose`, `serializeW`,
-  `enableMaterials`, `flipCoordinateSystem`, `axisSystem`. The OBJ importer itself parses
-  vertices (`v`), texture coordinates (`vt`), vertex normals (`vn`), faces (`f`, including
-  multiple index formats), object/group/smoothing-group markers (`o`/`g`/`s`), and
-  `usemtl`/`mtllib` material references.
-- **glTF** (`formats/gltf`) — `GltfLoadOptions`: `flipTexCoordV`. `GltfSaveOptions`: `binaryMode`,
-  `flipTexCoordV`.
-- **STL** (`formats/stl`) — `StlLoadOptions`: `flipCoordinateSystem`, `scale`. `StlSaveOptions`:
-  `flipCoordinateSystem`, `scale`, `binaryMode`.
-- **3MF** (`formats/threemf`) — `ThreeMfLoadOptions`: `flipCoordinateSystem`. `ThreeMfFormat` adds
-  `isBuildable`, `getTransformForBuild`, `setBuildable`, `setObjectType`, `getObjectType`.
-  `ThreeMfSaveOptions`: `enableCompression`, `buildAll`, `flipCoordinateSystem`, `unit`,
-  `prettyPrint`.
-- **FBX** (`formats/fbx`) — `FbxLoadOptions`: `keepBuiltinGlobalSettings`. `FbxSaveOptions`:
-  `embedTextures`.
-- **COLLADA** (`formats/collada`) — `ColladaLoadOptions`: `flipCoordinateSystem`,
-  `enableMaterials`, `scale`, `normalizeNormal`. `ColladaSaveOptions`: `flipCoordinateSystem`,
-  `enableMaterials`, `indented`. `ColladaTransformStyle`: `COMPONENTS`, `MATRIX`.
+| Class | Description |
+|---|---|
+| `ObjImporter` | Reads Wavefront OBJ files (`v`/`vt`/`vn`/`f`/`o`/`g`/`s` keywords) and populates a `Scene`. Recognizes `usemtl` but does not currently assign the referenced material — see Scope and Limitations. |
+| `ObjExporter` | Writes Wavefront OBJ files, but only for geometry attached directly to `scene.rootNode` itself — see Scope and Limitations for the real traversal defect affecting the standard `createChildNode()` scene-construction pattern. Material data, when present, is embedded inline with no `mtllib`/`usemtl` linkage and no companion `.mtl` file. |
+| `ObjLoadOptions` | Load options for OBJ files: `enableMaterials` (default `true`, currently has no effect — see Scope and Limitations), `flipCoordinateSystem`, `normalizeNormal` (default `true`), `scale`. |
+| `ObjSaveOptions` | Save options for OBJ export. |
+| `ObjFormat` | Format descriptor singleton for OBJ. Both `canImport` and `canExport` are `true`. |
 
-### Properties and Metadata
+### GLTF Format
 
-- `Property(name, value)` — `getExtra`, `setExtra`
-- `PropertyCollection` — `findProperty`, `get`, `removeProperty`, iterable, `count`, `length`
-- `CustomObject` (extends `A3DObject`) — free-form property bag
-- `AssetInfo` (extends `A3DObject`) — scene-level metadata container
-- `ImageRenderOptions` — `width`, `height`
+| Class | Description |
+|---|---|
+| `GltfImporter` | Reads glTF 2.0 JSON (`.gltf`) and binary GLB (`.glb`) files, including embedded/external buffers, PBR materials, skins, and animation clips. |
+| `GltfExporter` | Writes glTF 2.0 JSON output with a companion `.bin` buffer. Binary GLB output (`GltfSaveOptions.binaryMode: true`) currently throws a `RangeError` for any non-empty mesh — see Scope and Limitations. |
+| `GltfLoadOptions` | Load options for glTF/GLB files, controlling buffer resolution and texture loading behavior. |
+| `GltfSaveOptions` | Save options: `binaryMode` (default `false`; `true` currently throws for non-empty meshes — see Scope and Limitations), `flipTexCoordV` (default `true`). |
+| `GltfFormat` | Format descriptor singleton. Obtain via `getInstance()` and pass to `scene.save()`. |
+
+### STL Format
+
+| Class | Description |
+|---|---|
+| `StlImporter` | Reads both ASCII and binary STL files into a `Scene` containing a single `Mesh` entity. |
+| `StlExporter` | Writes binary STL. Non-triangle polygons are triangulated automatically. |
+| `StlLoadOptions` | Load options for STL, controlling whether the importer flips normals during import. |
+| `StlSaveOptions` | Save options: `binaryMode` (default `false`), controlling ASCII vs. binary output. |
+| `StlFormat` | Format descriptor singleton. Obtain via `getInstance()`. |
+
+### 3MF Format
+
+| Class | Description |
+|---|---|
+| `ThreeMfImporter` | Reads Open Packaging Convention 3MF archives and populates a `Scene` with mesh objects, colors, and material properties. Depends on the `adm-zip` package at runtime — see Scope and Limitations for a real packaging defect. |
+| `ThreeMfExporter` | Writes a valid 3MF archive from the current scene, suitable for 3D printing workflows. Same `adm-zip` runtime dependency as `ThreeMfImporter`. |
+| `ThreeMfLoadOptions` | Load options for 3MF files: `flipCoordinateSystem`. |
+| `ThreeMfSaveOptions` | Save options for 3MF export: `enableCompression`, `buildAll`, `flipCoordinateSystem`, `unit`, `prettyPrint`. |
+| `ThreeMfFormat` | Format descriptor singleton. Obtain via `getInstance()`. Adds `isBuildable`, `getTransformForBuild`, `setBuildable`, `setObjectType`, and `getObjectType` for 3MF's build-instruction metadata. |
+
+### FBX Format
+
+| Class | Description |
+|---|---|
+| `FbxImporter` | Reads ASCII FBX files, including geometry, materials, and animation clips. |
+| `FbxExporter` | Writes ASCII FBX output from the current scene. |
+| `FbxLoadOptions` | Load options for FBX: `keepBuiltinGlobalSettings`. |
+| `FbxSaveOptions` | Save options for FBX export: `embedTextures` (default `false`). |
+| `FbxFormat` | Format descriptor singleton. Obtain via `getInstance()`. |
+
+### COLLADA Format
+
+| Class | Description |
+|---|---|
+| `ColladaImporter` | Reads COLLADA (`.dae`) XML files using `xmldom`. Handles geometry, materials, cameras, lights, and animation. |
+| `ColladaExporter` | Writes COLLADA XML output from the current scene, suitable for interchange with DCC tools (Blender, Maya, and similar). |
+| `ColladaFormat` | Format descriptor singleton. Obtain via `getInstance()`. |
+
+### Properties System
+
+| Class | Description |
+|---|---|
+| `Property` | A typed name/value pair that can be attached to any `A3DObject`. Supports scalar and vector value types. |
+| `PropertyCollection` | An ordered, iterable container of `Property` objects (`count`, `length`), with `findProperty`, `get`, and `removeProperty`. Accessible on any `A3DObject` via the `properties` accessor. |
+| `CustomObject` | A free-form property bag that extends `A3DObject`. Used to store arbitrary metadata that does not map to a standard class. |
+
+### Asset Info
+
+| Class | Description |
+|---|---|
+| `AssetInfo` | Carries scene-level metadata loaded from the source file: author, application name, creation date, unit scale, and coordinate axis information. |
+| `ImageRenderOptions` | Options controlling how textures and images are resolved and encoded when saving to formats that embed image data (e.g. GLB with `binaryMode: true`). |
 
 </details>
 
 ## Documentation & Resources
 
 - **[Getting started guide](https://docs.aspose.org/3d/typescript/)** — installation, walkthroughs, and feature guides for this library.
-- **[How-to guides & FAQ](https://kb.aspose.org/3d/typescript/)** — task-focused answers for common 3D-processing questions.
-- **[Full API reference](https://reference.aspose.org/3d/typescript/)** — the complete, browsable reference for all 142 public types (the [API reference](#api-reference) section above covers the essentials).
-- **[Contributor guide](AGENTS.md)** — architecture notes and conventions for contributors.
-- Found a bug or have a feature request? [Open an issue](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/issues) on GitHub.
+- **[How-to articles and FAQ](https://kb.aspose.org/3d/typescript/)** — task-focused how-tos and answers to common questions.
+- **[Full API reference](https://reference.aspose.org/3d/typescript/)** — complete, generated reference documentation for every public type.
+- **[Issues and feature requests](https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript/issues)** — report a bug or request a feature on GitHub.
 
 ## Scope and Limitations
 
-- This is a from-scratch TypeScript port of the Aspose.3D scene-graph model, not a native
-  binding — there are no compiled add-ons to install.
-- A number of methods are present in the public API surface but currently throw `not
-  implemented` errors rather than performing the operation: mesh boolean operations
-  (`Mesh.union()`, `Mesh.difference()`, `Mesh.intersect()`, `Mesh.doBoolean()`,
-  `Mesh.optimize()`, `Mesh.isManifold()`), `Watermark.encodeWatermark()`/
-  `Watermark.decodeWatermark()`, path-based scene queries
-  (`Node.selectSingleObject()`/`Node.selectObjects()`), `Scene.render()`, and the standalone
-  `FileSystem` helpers (`createZipFileSystem`, `readFile`, `writeFile`,
-  `createLocalFileSystem`, `createDummyFileSystem`).
-- 3MF import/export (`ThreeMfImporter`/`ThreeMfExporter`) requires the `adm-zip` package at
-  runtime — see [upstream-issues.md](upstream-issues.md) for a real packaging gap that affects
-  consumers of the published package.
-- Binary glTF export (`binaryMode: true`) currently fails — JSON/ASCII glTF export (the
-  default) is unaffected. See [upstream-issues.md](upstream-issues.md) for details.
-- Re-importing a glTF file this library exported can produce extra, duplicate top-level nodes
-  not present in the original scene — see [upstream-issues.md](upstream-issues.md) for details.
-  Importing glTF files produced by other tools is unaffected.
+- Rendering is not implemented in this FOSS build — `Scene.render()` throws an error.
+- A real npm packaging defect affects 3MF import/export in this FOSS build — a normal package
+  install does not pull in a dependency the 3MF code path needs at runtime, so using it throws
+  immediately.
+- `Mesh`'s Boolean operations (`union`, `difference`, `intersect`), `optimize()`, and
+  `isManifold()` all throw `Error('... is not implemented')` in this FOSS build — mesh
+  manipulation and modification beyond basic construction and triangulation is not currently
+  functional. `Mesh`'s height-map constructor path is also not implemented.
+- `VertexElement.setIndices()`/`clear()` throw `Error('... is not implemented')` in this FOSS
+  build.
+- `Node.selectSingleObject()`/`selectObjects()` throw `Error('... is not implemented')`.
+- Text watermarking is not currently functional in this FOSS build (the identical defect
+  independently confirmed on the sibling `3d/net` platform).
+- The `FileSystem` virtualization abstraction (`readFile`, `writeFile`, `createZipFileSystem`,
+  `createLocalFileSystem`, `createDummyFileSystem`) is entirely unimplemented in this FOSS build —
+  every method throws. This does not affect ordinary `scene.open()`/`scene.save()` usage, which
+  reads/writes directly through Node's own `fs` module rather than this abstraction.
+- A real npm packaging defect affects this package's declared entry point — the real build does
+  not produce the file `package.json` points consumers at, so a published install of this package
+  as currently configured would fail to resolve on import; this README's own examples import from
+  the real, present build output path instead of the package name.
+- OBJ import does not currently assign per-face materials from the source file, regardless of the
+  relevant load option's value — confirmed by direct testing against a real fixture.
+- OBJ export only writes geometry attached at the very top of the scene graph — geometry attached
+  via the standard child-node construction pattern used throughout this README and the product's
+  own test suite is silently omitted from the output. When export does produce output, any
+  material data present is not written in a form other tools can read back as a companion material
+  file. Confirmed by direct testing.
+- Binary GLB export currently fails for any non-empty mesh; the JSON/ASCII form (the default) is
+  unaffected. Binary GLB import is unaffected either way — reading a real, externally-produced
+  binary file into a scene works correctly. Confirmed by direct testing.
+- Re-importing a scene this library exported to glTF can come back with extra, duplicate top-level
+  nodes not present in the original — confirmed by direct testing. Importing files produced by
+  other tools is unaffected.
 
 These limitations don't apply to
 [Aspose.3D — Enterprise Edition](https://products.aspose.com/3d/), which adds rendering,
@@ -492,32 +419,26 @@ additional exchange formats, and full production feature completeness.
 
 ## Development and Testing
 
-Install dependencies and build:
+Clone the repository and run the test suite:
 
 ```bash
+git clone https://github.com/aspose-3d-foss/Aspose.3D-FOSS-for-TypeScript.git
+cd Aspose.3D-FOSS-for-TypeScript
 npm install
 npm run build
+npm test
 ```
 
-<details>
-<summary>Full Test and Type-Check Commands</summary>
-
-Run the test suite (Jest via `ts-jest`, covering `tests/**/*.test.ts`):
-
-```bash
-npm run test
-```
-
-Type-check without emitting output:
+Type-check and lint the source without emitting output:
 
 ```bash
 npm run typecheck
+npm run lint
 ```
 
-</details>
+See [AGENTS.md](AGENTS.md) in the repository root for implementation status and development
+guidelines.
 
 ## License
 
-This project is licensed under the MIT License. The MIT License permits use, copying,
-modification, distribution, sublicensing, and commercial use, provided its copyright and
-permission notice are retained. The software is provided without warranty.
+This project is licensed under the MIT License. The MIT License permits use, copying, modification, distribution, sublicensing, and commercial use, provided its copyright and permission notice are retained. The software is provided without warranty.
